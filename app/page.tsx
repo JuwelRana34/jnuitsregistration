@@ -2,7 +2,7 @@ import MemberForm from "@/components/member-form";
 
 export default function Home() {
   return (
-    <div>
+    <div className=" py-4">
       <MemberForm/>
     </div>
   );

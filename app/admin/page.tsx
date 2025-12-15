@@ -1,13 +1,8 @@
-// app/admin/page.js
-
 import { getUsers } from "@/action/registration";
 
-
-// পেজটি রিফ্রেশ না করে ডাটা আপডেট পেতে চাইলে:
 export const dynamic = 'force-dynamic'; 
 
 export default async function AdminPage() {
-  // ডাটা কল করা হচ্ছে
   const users = await getUsers();
 // console.log('users:', users); 
   return (

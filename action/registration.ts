@@ -1,36 +1,32 @@
 "use server";
-
+import { MemberSchema } from "@/app/constants/data";
 import { google } from "googleapis";
+import z from "zod";
 
-export type MemberData = {
-  name: string;
-  email: string;
-  phone: string;
-  gender: string;
-  TNXid: string;
-  address?: string;
-};
-
-export async function addMemberToSheet(data: MemberData) {
-     if (!process.env.GOOGLE_PRIVATE_KEY || !process.env.GOOGLE_CLIENT_EMAIL || !process.env.GOOGLE_SHEET_ID) {
+export type MemberType = z.infer<typeof MemberSchema>;
+export async function addMemberToSheet(data: MemberType) {
+  if (
+    !process.env.GOOGLE_PRIVATE_KEY ||
+    !process.env.GOOGLE_CLIENT_EMAIL ||
+    !process.env.GOOGLE_SHEET_ID
+  ) {
     throw new Error("Google Sheets env variables are missing");
   }
 
   try {
     const auth = new google.auth.GoogleAuth({
-        credentials: {
+      credentials: {
         client_email: process.env.GOOGLE_CLIENT_EMAIL!,
-        private_key: process.env.GOOGLE_PRIVATE_KEY!.replace(/\\n/g, '\n'), // নিউলাইন ফিক্স
+        private_key: process.env.GOOGLE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
       },
-      scopes: ['https://www.googleapis.com/auth/spreadsheets'],
-    }
-    );
+      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+    });
 
     const sheets = google.sheets({ version: "v4", auth });
 
     await sheets.spreadsheets.values.append({
       spreadsheetId: process.env.GOOGLE_SHEET_ID!,
-      range: "Sheet1!A:F",
+      range: "Sheet1!A:Z",
       valueInputOption: "USER_ENTERED",
       requestBody: {
         values: [
@@ -38,11 +34,30 @@ export async function addMemberToSheet(data: MemberData) {
             data.name,
             data.email,
             data.phone,
+            data.whatsapp_number ?? "",
             data.gender,
-            data.address ?? "",
-            new Date().toLocaleString(),
-            "pending",
-            data.TNXid,
+            data.studentId,
+           "pending", // status
+            data.department,
+            data.batch,
+
+            data.tech_skills.join(", "),
+            data.soft_skills.join(", "),
+
+            data.photoUrl ?? "",
+            data.paymentPhotoUrl ?? "",
+
+            data.transaction_id,
+
+            data.join_facebook ? "Yes" : "No",
+            data.join_whatsapp ? "Yes" : "No",
+            data.join_whatsapp_community ? "Yes" : "No",
+            data.facebook_link ?? "",
+            data.linkedin_link ?? "",
+            new Date().toLocaleString(), // created_at
+            data.why_join_us,
+            data.agreeEmail ? "Yes" : "No",
+
           ],
         ],
       },
@@ -57,12 +72,9 @@ export async function addMemberToSheet(data: MemberData) {
 
 
 
-// app/actions.js
-// ... আগের ইমপোর্টগুলো থাকবে ...
 
 export async function getUsers() {
   try {
-    // ১. অথেনটিকেশন (আগের মতোই)
     const auth = new google.auth.GoogleAuth({
       credentials: {
         client_email: process.env.GOOGLE_CLIENT_EMAIL!,
@@ -76,7 +88,7 @@ export async function getUsers() {
     // ২. ডাটা রিড করা (values.get)
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID!,
-      range: 'Sheet1!A2:I', // A2 দিয়ে শুরু করেছি যাতে হেডার (Name, Email...) বাদ যায়
+      range: 'Sheet1!A2:V',
     });
 
     // ৩. ডাটা রিটার্ন করা
@@ -86,14 +98,14 @@ export async function getUsers() {
       return [];
     }
 
-    // অ্যারে থেকে অবজেক্টে কনভার্ট করা (ফ্রন্টএন্ডে ব্যবহারের সুবিধার জন্য)
+    // অ্যারে থেকে অবজেক্টে কনভার্ট করা 
     const users = rows.map((row) => ({
       name: row[0] || '',
       email: row[1] || '',
       phone: row[2] || '',
       TNXid: row[7] || '',
       batch: row[8] || '',
-      createdAt: row[5] || '',
+      createdAt: row[19] || '',
       status: row[6] || '',
     }));
 

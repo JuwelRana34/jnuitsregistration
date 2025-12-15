@@ -56,7 +56,7 @@ export default async function AdminPage() {
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="py-6 text-center text-gray-500">
+                <td colSpan={4} className="py-6 text-center text-gray-500">
                   No registrations found yet.
                 </td>
               </tr>

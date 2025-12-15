@@ -19,8 +19,8 @@ export async function addMemberToSheet(data: MemberData) {
   try {
     const auth = new google.auth.GoogleAuth({
         credentials: {
-        client_email: process.env.GOOGLE_CLIENT_EMAIL,
-        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'), // নিউলাইন ফিক্স
+        client_email: process.env.GOOGLE_CLIENT_EMAIL!,
+        private_key: process.env.GOOGLE_PRIVATE_KEY!.replace(/\\n/g, '\n'), // নিউলাইন ফিক্স
       },
       scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     }
@@ -29,7 +29,7 @@ export async function addMemberToSheet(data: MemberData) {
     const sheets = google.sheets({ version: "v4", auth });
 
     await sheets.spreadsheets.values.append({
-      spreadsheetId: process.env.GOOGLE_SHEET_ID,
+      spreadsheetId: process.env.GOOGLE_SHEET_ID!,
       range: "Sheet1!A:F",
       valueInputOption: "USER_ENTERED",
       requestBody: {
@@ -65,8 +65,8 @@ export async function getUsers() {
     // ১. অথেনটিকেশন (আগের মতোই)
     const auth = new google.auth.GoogleAuth({
       credentials: {
-        client_email: process.env.GOOGLE_CLIENT_EMAIL,
-        private_key: process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+        client_email: process.env.GOOGLE_CLIENT_EMAIL!,
+        private_key: process.env.GOOGLE_PRIVATE_KEY!.replace(/\\n/g, '\n'),
       },
       scopes: ['https://www.googleapis.com/auth/spreadsheets'],
     });
@@ -75,7 +75,7 @@ export async function getUsers() {
 
     // ২. ডাটা রিড করা (values.get)
     const response = await sheets.spreadsheets.values.get({
-      spreadsheetId: process.env.GOOGLE_SHEET_ID,
+      spreadsheetId: process.env.GOOGLE_SHEET_ID!,
       range: 'Sheet1!A2:I', // A2 দিয়ে শুরু করেছি যাতে হেডার (Name, Email...) বাদ যায়
     });
 

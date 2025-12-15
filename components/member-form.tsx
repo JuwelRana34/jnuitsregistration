@@ -37,6 +37,7 @@ const MemberSchema = z.object({
   gender: z.string().min(1, "Gender is required"),
   TNXid: z.string().min(1, "Transaction id is required"),
   address: z.string().optional(),
+  batch: z.string().min(1, "Batch is required"),
 });
 
 type MemberFormType = z.infer<typeof MemberSchema>;
@@ -53,13 +54,15 @@ export default function MemberForm() {
       gender: "",
       TNXid: "",
       address: "",
+      batch: "",
     },
   });
 
   const onSubmit = async (data: MemberFormType) => {
     setLoading(true);
     try {
-      const result = await addMemberToSheet(data as MemberData);
+      const result = await addMemberToSheet(data);
+      // const result = await addMemberToSheet(data as MemberData);
       console.log("Server Action Result:", result);
       form.reset({
         name: "",
@@ -141,7 +144,7 @@ export default function MemberForm() {
                 <FormLabel>Batch</FormLabel>
                 <Select
                   onValueChange={field.onChange}
-                  defaultValue={field.value}
+                  value={field.value}
                 >
                   <FormControl>
                     <SelectTrigger>
@@ -165,7 +168,7 @@ export default function MemberForm() {
                 <FormLabel>Gender</FormLabel>
                 <Select
                   onValueChange={field.onChange}
-                  defaultValue={field.value}
+                  value={field.value}
                 >
                   <FormControl>
                     <SelectTrigger>

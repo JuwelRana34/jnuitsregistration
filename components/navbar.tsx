@@ -62,7 +62,7 @@ export default function Navbar() {
             </LogoutLink>
           ) : (
             <LoginLink>
-              <Button>admin Login</Button>
+              <Button variant="ghost" className={`${isActive("/admin") ? "bg-blue-500 text-white hover:bg-blue-600 hover:text-white" : ""}`}>Admin Login</Button>
             </LoginLink>
           )}
         </nav>
@@ -99,7 +99,7 @@ export default function Navbar() {
                 </LogoutLink>
               ) : (
                 <LoginLink>
-                  <Button className="w-full">admin Login</Button>
+                  <Button variant="ghost" className={` w-full ${isActive("/admin") ? "bg-blue-500 text-white hover:bg-blue-600 hover:text-white" : ""}`} >Admin Login</Button>
                 </LoginLink>
               )}
             </div>

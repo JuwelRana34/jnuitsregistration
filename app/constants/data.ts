@@ -92,8 +92,8 @@ export const MemberSchema = z.object({
   batch: z.string().min(1, "Batch is required"),
   department: z.string().min(1, "Department is required"),
 
-  photoUrl: z.string().url("Profile photo is required"),
-  paymentPhotoUrl: z.string().url("Payment screenshot is required"),
+  photoUrl: z.string().optional().or(z.literal("")),
+  paymentPhotoUrl: z.string().optional().or(z.literal("")),
 
   tech_skills: z
     .array(z.string())

@@ -1,5 +1,13 @@
 "use client";
 
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   BookOpen,
@@ -19,17 +27,6 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
-// Import ImageKit SDK
-
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-
 import { addMemberToSheet } from "@/action/registration";
 import {
   DEPARTMENTS,
@@ -47,6 +44,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { uploadToImageKit } from "@/lib/handelUpload";
 import z from "zod";
 import { MultiCheckbox } from "./Checkbox";
 import { FileUploadField } from "./HandelUpload";
@@ -56,6 +54,14 @@ export type MemberType = z.infer<typeof MemberSchema>;
 
 export default function MemberForm() {
   const [loading, setLoading] = useState(false);
+
+  // ফাইলগুলো আলাদা state এ
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [paymentFile, setPaymentFile] = useState<File | null>(null);
+
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [paymentPreview, setPaymentPreview] = useState<string | null>(null);
+
   const form = useForm<MemberType>({
     resolver: zodResolver(MemberSchema),
     defaultValues: {
@@ -83,18 +89,113 @@ export default function MemberForm() {
   });
 
   const onSubmit = async (data: MemberType) => {
+    // 1. Validation for manual file states
+    if (!photoFile) {
+      toast.error("Please select a formal photo", {
+        description: "A professional headshot is required.",
+      });
+      return;
+    }
+    if (!paymentFile) {
+      toast.error("Please select a payment screenshot", {
+        description: "We need proof of payment to verify registration.",
+      });
+      return;
+    }
+
     setLoading(true);
     try {
-      console.log("Submitting:", data);
-      await addMemberToSheet(data);
+      // 2. Parallel Uploads of Images
+      const uploadPromises = [
+        uploadToImageKit(photoFile),
+        uploadToImageKit(paymentFile),
+      ];
+
+      const [photoRes, paymentRes] = await Promise.all(uploadPromises);
+
+      // 3. Check for upload failures
+      if (!photoRes?.url || !paymentRes?.url) {
+        throw new Error("Image upload failed. Please try again.");
+      }
+
+      // 4. Construct Final Data
+      const finalData = {
+        ...data,
+        photoUrl: photoRes.url,
+        photoFileId: photoRes.fileId,
+        paymentPhotoUrl: paymentRes.url,
+        paymentPhotoFileId: paymentRes.fileId,
+      };
+
+      console.log("Submitting Payload:", finalData);
+
+      // 5. call Server Action
+      await addMemberToSheet(finalData);
+
+      // 6. Success State
       form.reset();
-      toast.success("Application submitted successfully!");
+      setPhotoFile(null);
+      setPaymentFile(null);
+      setPhotoPreview(null);
+      setPaymentPreview(null);
+      toast.success("Application submitted successfully!", {
+        description: "Check your email for confirmation.",
+      });
     } catch (e) {
-      console.error(e);
-      toast.error("Submission failed");
+      console.error("Submission Error:", e);
+      toast.error("Submission failed", {
+        description:
+          e instanceof Error
+            ? e.message
+            : "Please check your connection and try again.",
+      });
     } finally {
       setLoading(false);
     }
+  };
+
+  // --- HANDLER FUNCTIONS ---
+  const handlePhotoSelect = (file: File | null) => {
+    setPhotoFile(file);
+    // Create preview URL here
+
+    if (!file) {
+      if (photoPreview) URL.revokeObjectURL(photoPreview);
+      setPhotoPreview(null);
+      return;
+    }
+
+    if (photoPreview) URL.revokeObjectURL(photoPreview);
+
+    const url = URL.createObjectURL(file);
+    setPhotoPreview(url);
+  };
+
+  const handlePhotoClear = () => {
+    if (photoPreview) URL.revokeObjectURL(photoPreview);
+    setPhotoFile(null);
+    setPhotoPreview(null);
+  };
+
+  const handlePaymentSelect = (file: File | null) => {
+    setPaymentFile(file);
+
+    if (!file) {
+      if (paymentPreview) URL.revokeObjectURL(paymentPreview);
+      setPaymentPreview(null);
+      return;
+    }
+
+    if (paymentPreview) URL.revokeObjectURL(paymentPreview);
+
+    const url = URL.createObjectURL(file);
+    setPaymentPreview(url);
+  };
+
+  const handlePaymentClear = () => {
+    if (paymentPreview) URL.revokeObjectURL(paymentPreview);
+    setPaymentFile(null);
+    setPaymentPreview(null);
   };
 
   return (
@@ -307,12 +408,13 @@ export default function MemberForm() {
             <FormField
               name="photoUrl"
               control={form.control}
-              render={({ field }) => (
+              render={() => (
                 <FormItem>
                   <FileUploadField
                     label="Formal Photo"
-                    value={field.value}
-                    onChange={field.onChange}
+                    previewUrl={photoPreview} 
+                    onFileSelect={handlePhotoSelect}
+                    onClear={handlePhotoClear}
                   />
                   <FormMessage />
                 </FormItem>
@@ -322,12 +424,13 @@ export default function MemberForm() {
             <FormField
               name="paymentPhotoUrl"
               control={form.control}
-              render={({ field }) => (
+              render={() => (
                 <FormItem>
                   <FileUploadField
                     label="Payment Screenshot"
-                    value={field.value}
-                    onChange={field.onChange}
+                    previewUrl={paymentPreview}
+                    onFileSelect={handlePaymentSelect}
+                    onClear={handlePaymentClear}
                   />
                   <FormMessage />
                 </FormItem>
@@ -371,7 +474,7 @@ export default function MemberForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="label-required">
-                  Transaction ID (bKash/Nagad)
+                  Transaction ID (BKash/Nagad/Bank)
                 </FormLabel>
                 <FormControl>
                   <div className="relative">
@@ -457,7 +560,9 @@ export default function MemberForm() {
 
           {/* JOIN CHECKBOXES */}
           <div className="bg-gray-50 p-4 rounded-lg">
-            <p className="font-medium text-sm mb-3">have you join Community & Updates?</p>
+            <p className="font-medium text-sm mb-3">
+              have you join Community & Updates?
+            </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {(
                 [

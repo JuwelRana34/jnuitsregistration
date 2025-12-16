@@ -47,10 +47,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import z from "zod";
 import { MultiCheckbox } from "./Checkbox";
 import { FileUploadField } from "./HandelUpload";
 import { Textarea } from "./ui/textarea";
-import z from "zod";
 
 export type MemberType = z.infer<typeof MemberSchema>;
 
@@ -100,7 +100,7 @@ export default function MemberForm() {
   return (
     <div className="max-w-2xl mx-auto p-8 bg-white rounded-xl shadow-lg border border-gray-100">
       <h2 className="text-3xl font-bold mb-8 text-center text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-green-600">
-        Member Registration
+        New Member Registration
       </h2>
 
       <Form {...form}>
@@ -133,7 +133,9 @@ export default function MemberForm() {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="label-required">Email Address</FormLabel>
+                  <FormLabel className="label-required">
+                    Email Address
+                  </FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Mail className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -155,7 +157,9 @@ export default function MemberForm() {
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="label-required">Phone Number</FormLabel>
+                    <FormLabel className="label-required">
+                      Phone Number
+                    </FormLabel>
                     <FormControl>
                       <div className="relative">
                         <Phone className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -320,7 +324,7 @@ export default function MemberForm() {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FileUploadField 
+                  <FileUploadField
                     label="Payment Screenshot"
                     value={field.value}
                     onChange={field.onChange}
@@ -366,7 +370,9 @@ export default function MemberForm() {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="label-required">Transaction ID (bKash/Nagad)</FormLabel>
+                <FormLabel className="label-required">
+                  Transaction ID (bKash/Nagad)
+                </FormLabel>
                 <FormControl>
                   <div className="relative">
                     <CreditCard className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -386,11 +392,13 @@ export default function MemberForm() {
             control={form.control}
             render={({ field }) => (
               <FormItem>
-                <FormLabel className="label-required">Why are you interested in joining the Jagannath University IT Society?
-</FormLabel>
+                <FormLabel className="label-required">
+                  Why are you interested in joining the Jagannath University IT
+                  Society?
+                </FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <TextInitial  className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <TextInitial className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Textarea
                       className="pl-9"
                       placeholder="e.g. text..."
@@ -409,7 +417,7 @@ export default function MemberForm() {
               control={form.control}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel >Facebook Link</FormLabel>
+                  <FormLabel>Facebook Link</FormLabel>
                   <FormControl>
                     <div className="relative">
                       <Facebook className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -479,26 +487,32 @@ export default function MemberForm() {
           </div>
 
           <FormField
-  control={form.control}
-  name="agreeEmail"
-  render={({ field }) => (
-    <FormItem className="flex items-center gap-2 space-y-0 bg-white p-2 rounded border hover:border-blue-400 transition-colors cursor-pointer">
-      <FormControl>
-        <Checkbox
-          checked={field.value}
-          onCheckedChange={(checked) => field.onChange(checked === true)}
-        />
-      </FormControl>
+            control={form.control}
+            name="agreeEmail"
+            render={({ field }) => (
+              <FormItem className="flex items-center gap-2 space-y-0 bg-white p-2 rounded border hover:border-blue-400 transition-colors cursor-pointer">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={(checked) =>
+                      field.onChange(checked === true)
+                    }
+                  />
+                </FormControl>
 
-      <FormLabel className="font-normal cursor-pointer w-full text-xs sm:text-sm label-required">
-        An email will be sent to your Gmail account within 1 minute. Will you read it?
-      </FormLabel>
-    </FormItem>
-  )}
-/>
+                <FormLabel className="font-normal cursor-pointer w-full text-xs sm:text-sm label-required">
+                  An email will be sent to your Gmail account within 1 minute.
+                  Will you read it?
+                </FormLabel>
+              </FormItem>
+            )}
+          />
 
-
-          <Button type="submit" className="w-full bg-blue-500 hover:bg-blue-600" disabled={loading}>
+          <Button
+            type="submit"
+            className="w-full bg-blue-500 hover:bg-blue-600"
+            disabled={loading}
+          >
             {loading ? (
               <>
                 <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...
@@ -512,4 +526,3 @@ export default function MemberForm() {
     </div>
   );
 }
-

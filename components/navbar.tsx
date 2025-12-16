@@ -99,7 +99,7 @@ export default function Navbar() {
                 </LogoutLink>
               ) : (
                 <LoginLink>
-                  <Button className="w-full">Login</Button>
+                  <Button className="w-full">admin Login</Button>
                 </LoginLink>
               )}
             </div>

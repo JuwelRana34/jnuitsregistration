@@ -1,23 +1,19 @@
+import Navbar from "@/components/navbar";
 import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Figtree } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./providers/AuthProvider";
-import Navbar from "@/components/navbar";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const figtree = Figtree({
+  variable: "--font-figtree",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
   title: "JnU-ITS Member Registration",
-  description: "Join JNU ITS as a new member by filling out the registration form.",
+  description:
+    "Join JNU ITS as a new member by filling out the registration form.",
 
   icons: {
     icon: "/MainLogo.8e23e303.svg",
@@ -31,13 +27,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${figtree.variable} antialiased`}>
         <AuthProvider>
-          <Navbar/>
-        {children}
-        <Toaster richColors position="top-center" />
+          <Navbar />
+          {children}
+          <Toaster richColors position="top-center" />
         </AuthProvider>
       </body>
     </html>

@@ -289,8 +289,8 @@ export default function MemberForm() {
                       </div>
                     </FormControl>
                     <SelectContent>
+                      <SelectItem value="19th">19th Batch</SelectItem>
                       <SelectItem value="20th">20th Batch</SelectItem>
-                      <SelectItem value="21th">21th Batch</SelectItem>
                       <SelectItem value="others">Others</SelectItem>
                     </SelectContent>
                   </Select>
@@ -457,7 +457,7 @@ export default function MemberForm() {
 
           {/* JOIN CHECKBOXES */}
           <div className="bg-gray-50 p-4 rounded-lg">
-            <p className="font-medium text-sm mb-3">Community & Updates</p>
+            <p className="font-medium text-sm mb-3">have you join Community & Updates?</p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               {(
                 [

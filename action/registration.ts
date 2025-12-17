@@ -5,6 +5,7 @@ import z from "zod";
 import nodemailer from "nodemailer";
 
 export type MemberType = z.infer<typeof MemberSchema>;
+
 export async function addMemberToSheet(data: MemberType) {
   if (
     !process.env.GOOGLE_PRIVATE_KEY ||
@@ -57,7 +58,7 @@ export async function addMemberToSheet(data: MemberType) {
             data.join_whatsapp_community ? "Yes" : "No",
             data.facebook_link ?? "",
             data.linkedin_link ?? "",
-            new Date().toLocaleString(), // created_at
+            new Date().toLocaleString("en-US", { timeZone: "Asia/Dhaka" }),
             data.why_join_us,
             data.agreeEmail ? "Yes" : "No",
           ],
@@ -83,12 +84,12 @@ export async function addMemberToSheet(data: MemberType) {
   <div style="max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); border: 1px solid #e2e8f0; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;">
     
 
-    <div style="text-align: center; padding: 30px 20px; background-color: #ffffff; border-bottom: 1px solid #f1f5f9;">
+    <div style="text-align: center; padding: 20px 15px; background-color: #ffffff; border-bottom: 1px solid #f1f5f9;">
 
       <img src="https://res.cloudinary.com/dbwbwwteo/image/upload/v1742463559/MainLogo.8e23e303_uzxovz.png" alt="JNU IT Society Logo" style="max-width: 120px; height:auto; display: block; margin: 0 auto;">
     </div>
 
-    <div style="padding: 40px 30px;">
+    <div style="padding: 20px 25px;">
       <h1 style="color: #1e293b; margin-top: 0; margin-bottom: 24px; font-size: 22px; font-weight: 700; text-align: left;">Application Received</h1>
       
       <p style="color: #475569; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">Dear <strong>${
@@ -100,30 +101,30 @@ export async function addMemberToSheet(data: MemberType) {
       </p>
 
 
-      <div style="background-color: #f8fafc; border-left: 4px solid #2563EB; padding: 20px; margin: 30px 0; border-radius: 0 4px 4px 0;">
+      <div style="background-color: #f8fafc; border-left: 4px solid #2563EB; padding: 10px; margin: 20px 0; border-radius: 0 3px 3px 0;">
         <table style="width: 100%; border-collapse: collapse;">
           <tr>
-            <td style="padding: 6px 0; color: #64748b; font-size: 14px; width: 140px; font-weight: 500;">Student ID:</td>
-            <td style="padding: 6px 0; color: #0f172a; font-weight: 600; font-size: 14px;">${
+            <td style="padding: 3px 0; color: #64748b; font-size: 14px; width: 140px; font-weight: 500;">Student ID:</td>
+            <td style="padding: 3px 0; color: #0f172a; font-weight: 600; font-size: 14px;">${
               data.studentId
             }</td>
           </tr>
           <tr>
-            <td style="padding: 6px 0; color: #64748b; font-size: 14px; font-weight: 500;">Transaction ID:</td>
-            <td style="padding: 6px 0; color: #0f172a; font-weight: 600; font-size: 14px;">${
+            <td style="padding: 3px 0; color: #64748b; font-size: 14px; font-weight: 500;">Transaction ID:</td>
+            <td style="padding: 3px 0; color: #0f172a; font-weight: 600; font-size: 14px;">${
               data.transaction_id
             }</td>
           </tr>
           <tr>
-            <td style="padding: 6px 0; color: #64748b; font-size: 14px; font-weight: 500;">Department:</td>
-            <td style="padding: 6px 0; color: #0f172a; font-weight: 600; font-size: 14px;">${
+            <td style="padding: 3px 0; color: #64748b; font-size: 14px; font-weight: 500;">Department:</td>
+            <td style="padding: 3px 0; color: #0f172a; font-weight: 600; font-size: 14px;">${
               data.department
             }</td>
           </tr>
         </table>
       </div>
 
-      <p style="color: #475569; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+      <p style="color: #475569; font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
         Your application is currently under review by our executive committee. If your profile is shortlisted, you will receive a follow-up email outlining the <strong>next steps</strong> of the selection process.
       </p>
 
@@ -191,9 +192,10 @@ export async function getUsers() {
     // অ্যারে থেকে অবজেক্টে কনভার্ট করা
     const users = rows.map((row) => ({
       name: row[0] || "",
+      photo: row[11] || "",
       email: row[1] || "",
       phone: row[2] || "",
-      TNXid: row[7] || "",
+      TNXid: row[13] || "",
       batch: row[8] || "",
       createdAt: row[19] || "",
       status: row[6] || "",

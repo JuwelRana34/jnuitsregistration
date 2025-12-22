@@ -11,12 +11,52 @@ const figtree = Figtree({
 });
 
 export const metadata: Metadata = {
-  title: "JnU-ITS Member Registration",
+  title: "JnU-ITS Registration",
   description:
-    "Join JNU ITS as a new member by filling out the registration form.",
+    "Join JNU ITS as a new member by filling out the official registration form.",
+
+  keywords: [
+    "JnU ITS",
+    "JNU IT Society",
+    "JnU ITS member registration",
+    "Jagannath University IT Society",
+    "ITS membership",
+    "JNU student organization",
+    "IT society Bangladesh",
+  ],
 
   icons: {
     icon: "/MainLogo.8e23e303.svg",
+  },
+
+  openGraph: {
+    title: "JnU-ITS Member Registration",
+    description:
+      "Become a member of Jagannath University IT Society (JnU ITS). Register now to join the community.",
+    url: "https://join.jnuits.org.bd/",
+    siteName: "JnU ITS",
+    images: [
+      {
+        url: "/MainLogo.8e23e303.svg",
+        width: 1200,
+        height: 630,
+        alt: "JnU ITS Logo",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: "JnU-ITS Member Registration",
+    description:
+      "Register now to become a member of Jagannath University IT Society (JnU ITS).",
+    images: ["/MainLogo.8e23e303.svg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 

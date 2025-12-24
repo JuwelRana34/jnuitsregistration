@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     siteName: "JnU ITS",
     images: [
       {
-        url: "/MainLogo.8e23e303.svg",
+        url: "https://res.cloudinary.com/dbwbwwteo/image/upload/v1742463559/MainLogo.8e23e303_uzxovz.png",
         width: 1200,
         height: 630,
         alt: "JnU ITS Logo",
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     title: "JnU-ITS Member Registration",
     description:
       "Register now to become a member of Jagannath University IT Society (JnU ITS).",
-    images: ["/MainLogo.8e23e303.svg"],
+    images: ["https://res.cloudinary.com/dbwbwwteo/image/upload/v1742463559/MainLogo.8e23e303_uzxovz.png"],
   },
   robots: {
     index: true,

@@ -4,7 +4,7 @@ import { Menu } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 import {
   LoginLink,
@@ -76,31 +76,37 @@ export default function Navbar() {
           </SheetTrigger>
 
           <SheetContent side="right" className="w-65">
-            <div className="mt-6 flex flex-col gap-4">
+            <div className="mt-10 flex flex-col gap-4">
                {Navlink.map((link) => (
               <Link key={link.name} href={link.href}>
+                 <SheetClose asChild> 
                 <Button
                     variant="ghost"
-                    className={`${isActive(link.href) ? "bg-blue-500 text-white hover:bg-blue-600 hover:text-white" : ""}`}
+                    className={`w-full ${isActive(link.href) ? "bg-blue-500 text-white hover:bg-blue-600 hover:text-white" : ""}`}
                 >
                   {link.name}
                 </Button>
+                </SheetClose>
               </Link>
             ))}
 
               {isAuthenticated && (
                 <Link href="/admin">
+                  <SheetClose asChild>
                   <Button variant="ghost"  className={` w-full ${isActive("/admin") ? "bg-blue-500 text-white hover:bg-blue-600 hover:text-white" : ""}`}>
                     Admin
                   </Button>
+                  </SheetClose>
                 </Link>
               )}
 
               {isAuthenticated ? (
                 <LogoutLink postLogoutRedirectURL="/">
+                  <SheetClose asChild>
                   <Button variant="destructive" className="w-full">
                     Logout
                   </Button>
+                  </SheetClose>
                 </LogoutLink>
               ) : (
                 <LoginLink>

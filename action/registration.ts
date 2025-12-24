@@ -3,6 +3,7 @@ import { MemberSchema } from "@/app/constants/data";
 import { google } from "googleapis";
 import z from "zod";
 import nodemailer from "nodemailer";
+import { revalidatePath } from "next/cache";
 
 export type MemberType = z.infer<typeof MemberSchema>;
 
@@ -157,6 +158,7 @@ export async function addMemberToSheet(data: MemberType) {
       console.log("Confirmation email sent to:", data.email);
     }
 
+    revalidatePath("/admin");
     return { success: true };
   } catch (error) {
     console.error("Server Action Error:", error);

@@ -5,7 +5,6 @@ export const dynamic = "force-dynamic";
 
 export default async function AdminPage() {
   const users = await getUsers();
-  // console.log('users:', users);
 
   return (
     <div className="max-w-6xl mx-auto mt-10 p-6">

@@ -77,15 +77,20 @@ export default function Navbar() {
 
           <SheetContent side="right" className="w-65">
             <div className="mt-6 flex flex-col gap-4">
-              <Link href="/">
-                <Button variant="ghost" className="w-full">
-                  Home
+               {Navlink.map((link) => (
+              <Link key={link.name} href={link.href}>
+                <Button
+                    variant="ghost"
+                    className={`${isActive(link.href) ? "bg-blue-500 text-white hover:bg-blue-600 hover:text-white" : ""}`}
+                >
+                  {link.name}
                 </Button>
               </Link>
+            ))}
 
               {isAuthenticated && (
                 <Link href="/admin">
-                  <Button variant="ghost" className="w-full">
+                  <Button variant="ghost"  className={` w-full ${isActive("/admin") ? "bg-blue-500 text-white hover:bg-blue-600 hover:text-white" : ""}`}>
                     Admin
                   </Button>
                 </Link>

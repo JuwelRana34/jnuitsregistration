@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   ],
 
   icons: {
-    icon: "/MainLogo.8e23e303.svg",
+    icon: "/MainLogo.svg",
   },
 
   openGraph: {
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     siteName: "JnU ITS",
     images: [
       {
-        url: "https://res.cloudinary.com/dbwbwwteo/image/upload/v1742463559/MainLogo.8e23e303_uzxovz.png",
+        url: "https://res.cloudinary.com/dbwbwwteo/image/upload/v1746006142/jnu%20its/487071954_963461729311150_213539538489395892_n_nihhkj.jpg",
         width: 1200,
         height: 630,
         alt: "JnU ITS Logo",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     title: "JnU-ITS Member Registration",
     description:
       "Register now to become a member of Jagannath University IT Society (JnU ITS).",
-    images: ["https://res.cloudinary.com/dbwbwwteo/image/upload/v1742463559/MainLogo.8e23e303_uzxovz.png"],
+    images: ["https://res.cloudinary.com/dbwbwwteo/image/upload/v1746006142/jnu%20its/487071954_963461729311150_213539538489395892_n_nihhkj.jpg"],
   },
   robots: {
     index: true,

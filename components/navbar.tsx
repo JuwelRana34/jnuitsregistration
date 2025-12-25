@@ -11,6 +11,7 @@ import {
   LogoutLink,
   useKindeBrowserClient,
 } from "@kinde-oss/kinde-auth-nextjs";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
@@ -30,10 +31,18 @@ export default function Navbar() {
     <header className="sticky top-0 z-50 w-full border-b bg-white">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         {/* Logo */}
+        <div className="flex items-center gap-2">
+        <Image
+          src="/MainLogo.svg"
+          alt="JnU IT Society Logo"
+          width={90}
+          height={90}
+          className="h-16 w-16 "
+        />
         <Link href="/" className="text-xl font-bold text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-green-600">
           JnU IT Socity
         </Link>
-
+        </div>
         {/* Desktop Menu */}
         <nav className="hidden md:flex items-center gap-4">
             {Navlink.map((link) => (

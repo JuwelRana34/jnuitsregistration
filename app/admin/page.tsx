@@ -1,5 +1,6 @@
 import { getUsers } from "@/action/registration";
 import ImagekitImageShow from "@/components/ImagekitImageShow";
+import RefreshBtn from "@/components/RefreshBtn";
 
 export const revalidate = 86400; // ২৪ ঘন্টা
 export default async function AdminPage() {
@@ -20,12 +21,16 @@ export default async function AdminPage() {
               Manage and view all student registrations.
             </p>
           </div>
-          <div className="flex items-center gap-2">
+         <div className="flex items-center gap-3">
+            {/* Added Refresh Button Here */}
+            <RefreshBtn />
+            
             <span className="inline-flex items-center rounded-md bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
               Total: {users.length}
             </span>
           </div>
         </div>
+       
 
         {/* Table Card */}
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">

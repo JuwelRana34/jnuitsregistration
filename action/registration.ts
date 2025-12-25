@@ -209,3 +209,11 @@ export async function getUsers() {
     return [];
   }
 }
+
+
+
+export async function revalidateUserList() {
+  "use server";
+  // change "/admin/dashboard" to the actual URL path of your admin page
+  revalidatePath("/admin"); 
+}

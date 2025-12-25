@@ -22,6 +22,7 @@ import {
   Phone,
   TextInitial,
   User,
+  X,
 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -55,6 +56,7 @@ export type MemberType = z.infer<typeof MemberSchema>;
 export default function MemberForm() {
   const [loading, setLoading] = useState(false);
 
+  const [isOtherBatch, setIsOtherBatch] = useState(false);
   // ফাইলগুলো আলাদা state এ
   const [photoFile, setPhotoFile] = useState<File | null>(null);
   const [paymentFile, setPaymentFile] = useState<File | null>(null);
@@ -374,7 +376,7 @@ export default function MemberForm() {
               )}
             />
 
-            <FormField
+            {/* <FormField
               name="batch"
               control={form.control}
               render={({ field }) => (
@@ -398,7 +400,74 @@ export default function MemberForm() {
                   <FormMessage />
                 </FormItem>
               )}
+            /> */}
+
+            {/* --- MODIFIED BATCH FIELD --- */}
+            <FormField
+              name="batch"
+              control={form.control}
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="label-required">Batch</FormLabel>
+                  {isOtherBatch ? (
+                    // --- INPUT MODE ---
+                    <div className="flex items-center gap-2">
+                      <FormControl>
+                        <div className="relative w-full">
+                          <Briefcase className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                          <Input
+                            className="pl-9"
+                            placeholder="Enter your batch"
+                            {...field}
+                          />
+                        </div>
+                      </FormControl>
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="icon"
+                        className="shrink-0 text-red-500 hover:text-red-700 hover:bg-red-50"
+                        onClick={() => {
+                          setIsOtherBatch(false);
+                          field.onChange(""); // Reset value when going back
+                        }}
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  ) : (
+                    // --- SELECT MODE ---
+                    <Select
+                      value={field.value}
+                      onValueChange={(value) => {
+                        if (value === "others") {
+                          setIsOtherBatch(true);
+                          field.onChange(""); // Clear value so user can type
+                        } else {
+                          field.onChange(value);
+                        }
+                      }}
+                    >
+                      <FormControl>
+                        <div className="relative">
+                          <Briefcase className="absolute left-3 top-3 h-4 w-4 text-muted-foreground z-10 pointer-events-none" />
+                          <SelectTrigger className="pl-9">
+                            <SelectValue placeholder="Select Batch" />
+                          </SelectTrigger>
+                        </div>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="19th">19th Batch</SelectItem>
+                        <SelectItem value="20th">20th Batch</SelectItem>
+                        <SelectItem value="others">Others</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  )}
+                  <FormMessage />
+                </FormItem>
+              )}
             />
+
           </div>
 
           <div className="h-px bg-gray-100 my-4" />

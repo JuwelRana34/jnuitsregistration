@@ -11,6 +11,7 @@ const figtree = Figtree({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://join.jnuits.org.bd'),
   title: "JnU-ITS Registration",
   description:
     "Join JNU ITS as a new member by filling out the official registration form.",

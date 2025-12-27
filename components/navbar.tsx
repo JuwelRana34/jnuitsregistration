@@ -76,7 +76,16 @@ export default function Navbar() {
             <>
               {isAuthenticated && (
                 <Link href="/admin">
-                  <Button variant="ghost">Admin</Button>
+                  <Button
+                    variant="ghost"
+                    className={`${
+                      isActive("/admin")
+                        ? "bg-blue-500 text-white hover:bg-blue-600 hover:text-white"
+                        : ""
+                    }`}
+                  >
+                    Admin
+                  </Button>
                 </Link>
               )}
 
@@ -126,13 +135,22 @@ export default function Navbar() {
                 <>
                   {isAuthenticated && (
                     <Link href="/admin">
-                      <Button variant="ghost">Admin</Button>
+                      <Button
+                        variant="ghost"
+                        className={` w-full ${
+                          isActive("/admin")
+                            ? "bg-blue-500 text-white hover:bg-blue-600 hover:text-white"
+                            : ""
+                        }`}
+                      >
+                        Admin
+                      </Button>
                     </Link>
                   )}
 
                   {isAuthenticated ? (
                     <LogoutLink postLogoutRedirectURL="/">
-                      <Button variant="destructive">Logout</Button>
+                      <Button className="w-full rounded-none bg-red-100 text-red-700" variant="destructive">Logout</Button>
                     </LogoutLink>
                   ) : (
                     <LoginLink>

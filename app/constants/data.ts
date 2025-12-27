@@ -107,6 +107,7 @@ export const MemberSchema = z.object({
   agreeEmail: z.boolean().refine((val) => val === true, {
     message: "You must agree to receive emails",
   }),
+  suggestions_expectations: z.string().min(3, "This field is required"),
 });
 
 

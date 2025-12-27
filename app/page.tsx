@@ -7,20 +7,20 @@ import {
 } from "@/components/ui/accordion";
 
 import {
-  ClipboardList,
-  CalendarDays,
-  HelpCircle,
-  UserCheck,
-  Phone,
-  Wallet,
   Building2,
+  CalendarDays,
+  ClipboardList,
+  HelpCircle,
+  Phone,
+  UserCheck,
+  Wallet,
 } from "lucide-react";
+import Image from "next/image";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50 py-4 px-2">
-      <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-8">
-
+      <div className="mx-auto  max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* LEFT: INFO + ACCORDION */}
         <section className="bg-white rounded-xl shadow p-6">
           <h1 className="text-2xl md:text-3xl font-bold text-slate-700 mb-3">
@@ -38,8 +38,11 @@ export default function Home() {
             Be a Member, Be a Leader! 🚀
           </p>
 
-          <Accordion type="multiple" defaultValue={["steps"]} className="w-full">
-
+          <Accordion
+            type="multiple"
+            defaultValue={["steps"]}
+            className="w-full"
+          >
             {/* Steps */}
             <AccordionItem value="steps">
               <AccordionTrigger className="flex items-center gap-3">
@@ -63,10 +66,18 @@ export default function Home() {
                 <span>Registration Details</span>
               </AccordionTrigger>
               <AccordionContent className="space-y-1 text-gray-700">
-                <p><strong>Starts:</strong> 20th December 2025</p>
-                <p><strong>Ends:</strong> 12th January 2026</p>
-                <p><strong>Offline:</strong> On-campus (2–3 days, TBA)</p>
-                <p><strong>Fee:</strong> BDT 100/-</p>
+                <p>
+                  <strong>Starts:</strong> 20th December 2025
+                </p>
+                <p>
+                  <strong>Ends:</strong> 12th January 2026
+                </p>
+                <p>
+                  <strong>Offline:</strong> On-campus (2–3 days, TBA)
+                </p>
+                <p>
+                  <strong>Fee:</strong> BDT 100/-
+                </p>
               </AccordionContent>
             </AccordionItem>
 
@@ -78,7 +89,6 @@ export default function Home() {
               </AccordionTrigger>
 
               <AccordionContent className="space-y-5 text-gray-700">
-
                 {/* Bank */}
                 <div>
                   <div className="flex items-center gap-2 font-semibold mb-1">
@@ -88,13 +98,16 @@ export default function Home() {
 
                   <p>
                     <strong>Branch:</strong> Jagannath University Branch <br />
-                    <strong>Account Name:</strong> Jagannath University IT Society <br />
+                    <strong>Account Name:</strong> Jagannath University IT
+                    Society <br />
                     <strong>Account Number:</strong> 0200013199689
                   </p>
 
                   <ul className="list-disc pl-5 mt-2 space-y-1">
                     <li>Fill up a deposit form</li>
-                    <li>Deposit <strong>BDT 100/- only</strong></li>
+                    <li>
+                      Deposit <strong>BDT 100/- only</strong>
+                    </li>
                     <li>Collect the deposit slip</li>
                     <li>Take a clear photo of the slip</li>
                     <li>Upload the photo to the Google Form</li>
@@ -115,8 +128,12 @@ export default function Home() {
 
                   <ul className="list-disc pl-5 mt-2 space-y-1">
                     <li>Open your mobile wallet app</li>
-                    <li>Select <strong>Send Money</strong></li>
-                    <li>Send <strong>BDT 100/- only</strong></li>
+                    <li>
+                      Select <strong>Send Money</strong>
+                    </li>
+                    <li>
+                      Send <strong>BDT 100/- only</strong>
+                    </li>
                     <li>
                       In the <strong>Reference</strong> field, write your
                       <strong> Student ID</strong>
@@ -127,8 +144,9 @@ export default function Home() {
                 </div>
 
                 <p className="text-sm text-gray-600">
-                  Please ensure all payment details are correct before submitting.
-                  Incorrect or unclear payment proof may delay verification. 😊
+                  Please ensure all payment details are correct before
+                  submitting. Incorrect or unclear payment proof may delay
+                  verification. 😊
                 </p>
               </AccordionContent>
             </AccordionItem>
@@ -176,15 +194,22 @@ export default function Home() {
                 </p>
               </AccordionContent>
             </AccordionItem>
-
           </Accordion>
+          {/* Banner  */}
+
+          <Image
+            src="/banner.jpeg"
+            alt="Decorative"
+            width={1000}
+            height={1000}
+            className="mt-5"
+          />
         </section>
 
         {/* RIGHT: FORM */}
         <section className="bg-white rounded-xl shadow">
           <MemberForm />
         </section>
-
       </div>
     </div>
   );

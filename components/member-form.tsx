@@ -87,6 +87,7 @@ export default function MemberForm() {
       facebook_link: "",
       linkedin_link: "",
       agreeEmail: false,
+      suggestions_expectations: " ",
     },
   });
 
@@ -376,31 +377,6 @@ export default function MemberForm() {
               )}
             />
 
-            {/* <FormField
-              name="batch"
-              control={form.control}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="label-required">Batch</FormLabel>
-                  <Select value={field.value} onValueChange={field.onChange}>
-                    <FormControl>
-                      <div className="relative">
-                        <Briefcase className="absolute left-3 top-3 h-4 w-4 text-muted-foreground z-10 pointer-events-none" />
-                        <SelectTrigger className="pl-9">
-                          <SelectValue placeholder="Select Batch" />
-                        </SelectTrigger>
-                      </div>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="19th">19th Batch</SelectItem>
-                      <SelectItem value="20th">20th Batch</SelectItem>
-                      <SelectItem value="others">Others</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            /> */}
 
             {/* --- MODIFIED BATCH FIELD --- */}
             <FormField
@@ -559,6 +535,8 @@ export default function MemberForm() {
               </FormItem>
             )}
           />
+
+          {/* opinion form students  */}
           <FormField
             name="why_join_us"
             control={form.control}
@@ -574,6 +552,29 @@ export default function MemberForm() {
                     <Textarea
                       className="pl-9"
                       placeholder="e.g. text..."
+                      {...field}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          {/* FIXME: */}
+          <FormField
+            name="suggestions_expectations"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="label-required capitalize">
+                  suggestions/expectations from JnUITS?
+                </FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <TextInitial className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                    <Textarea
+                      className="pl-9"
+                      placeholder = "e.g. text..."
                       {...field}
                     />
                   </div>

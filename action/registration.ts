@@ -62,6 +62,7 @@ export async function addMemberToSheet(data: MemberType) {
             new Date().toLocaleString("en-US", { timeZone: "Asia/Dhaka" }),
             data.why_join_us,
             data.agreeEmail ? "Yes" : "No",
+            data.suggestions_expectations,
           ],
         ],
       },

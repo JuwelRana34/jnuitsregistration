@@ -4,7 +4,12 @@ import { Menu } from "lucide-react";
 import Link from "next/link";
 
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetClose, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 
 import {
   LoginLink,
@@ -13,9 +18,11 @@ import {
 } from "@kinde-oss/kinde-auth-nextjs";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import CountdownTimer from "./CountDown";
+import Loader from "./userLoader";
 
 export default function Navbar() {
-  const { isAuthenticated } = useKindeBrowserClient();
+  const { isAuthenticated, isLoading } = useKindeBrowserClient();
   const pathname = usePathname();
   const isActive = (path: string) =>
     pathname === path || pathname.startsWith(path + "/");
@@ -32,47 +39,57 @@ export default function Navbar() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
         {/* Logo */}
         <div className="flex items-center gap-2">
-        <Image
-          src="/MainLogo.svg"
-          alt="JnU IT Society Logo"
-          width={90}
-          height={90}
-          className="h-16 w-16 "
-        />
-        <Link href="/" className="text-xl font-bold text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-green-600">
-          JnU IT Socity
-        </Link>
+          <Image
+            src="/MainLogo.svg"
+            alt="JnU IT Society Logo"
+            width={90}
+            height={90}
+            className="h-16 w-16 "
+          />
+          <Link
+            href="/"
+            className="text-xl font-bold text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-green-600"
+          >
+            JnU IT Socity
+          </Link>
         </div>
         {/* Desktop Menu */}
         <nav className="hidden md:flex items-center gap-4">
-            {Navlink.map((link) => (
-              <Link key={link.name} href={link.href}>
-                <Button
-                    variant="ghost"
-                    className={`${isActive(link.href) ? "bg-blue-500 text-white hover:bg-blue-600 hover:text-white" : ""}`}
-                >
-                  {link.name}
-                </Button>
-              </Link>
-            ))}
-
-
-          {isAuthenticated && (
-            <Link href="/admin">
-              <Button variant="ghost" className={`${isActive("/admin") ? "bg-blue-500 text-white hover:bg-blue-600 hover:text-white" : ""}`}>
-                Admin
+          {Navlink.map((link) => (
+            <Link key={link.name} href={link.href}>
+              <Button
+                variant="ghost"
+                className={`${
+                  isActive(link.href)
+                    ? "bg-blue-500 text-white hover:bg-blue-600 hover:text-white"
+                    : ""
+                }`}
+              >
+                {link.name}
               </Button>
             </Link>
-          )}
+          ))}
 
-          {isAuthenticated ? (
-            <LogoutLink postLogoutRedirectURL="/">
-              <Button variant="destructive">Logout</Button>
-            </LogoutLink>
+          {isLoading ? (
+            <Loader />
           ) : (
-            <LoginLink>
-              <Button variant="ghost" className={`${isActive("/admin") ? "bg-blue-500 text-white hover:bg-blue-600 hover:text-white" : ""}`}>Admin Login</Button>
-            </LoginLink>
+            <>
+              {isAuthenticated && (
+                <Link href="/admin">
+                  <Button variant="ghost">Admin</Button>
+                </Link>
+              )}
+
+              {isAuthenticated ? (
+                <LogoutLink postLogoutRedirectURL="/">
+                  <Button variant="destructive">Logout</Button>
+                </LogoutLink>
+              ) : (
+                <LoginLink>
+                  <Button variant="ghost">Admin Login</Button>
+                </LoginLink>
+              )}
+            </>
           )}
         </nav>
 
@@ -86,45 +103,56 @@ export default function Navbar() {
 
           <SheetContent side="right" className="w-65">
             <div className="mt-10 flex flex-col gap-4">
-               {Navlink.map((link) => (
-              <Link key={link.name} href={link.href}>
-                 <SheetClose asChild> 
-                <Button
-                    variant="ghost"
-                    className={`w-full ${isActive(link.href) ? "bg-blue-500 text-white hover:bg-blue-600 hover:text-white" : ""}`}
-                >
-                  {link.name}
-                </Button>
-                </SheetClose>
-              </Link>
-            ))}
-
-              {isAuthenticated && (
-                <Link href="/admin">
+              {Navlink.map((link) => (
+                <Link key={link.name} href={link.href}>
                   <SheetClose asChild>
-                  <Button variant="ghost"  className={` w-full ${isActive("/admin") ? "bg-blue-500 text-white hover:bg-blue-600 hover:text-white" : ""}`}>
-                    Admin
-                  </Button>
+                    <Button
+                      variant="ghost"
+                      className={`w-full ${
+                        isActive(link.href)
+                          ? "bg-blue-500 text-white hover:bg-blue-600 hover:text-white"
+                          : ""
+                      }`}
+                    >
+                      {link.name}
+                    </Button>
                   </SheetClose>
                 </Link>
-              )}
+              ))}
 
-              {isAuthenticated ? (
-                <LogoutLink postLogoutRedirectURL="/">
-                  <SheetClose asChild>
-                  <Button variant="destructive" className="w-full">
-                    Logout
-                  </Button>
-                  </SheetClose>
-                </LogoutLink>
+              {isLoading ? (
+                <Loader />
               ) : (
-                <LoginLink>
-                  <Button variant="ghost" className={` w-full ${isActive("/admin") ? "bg-blue-500 text-white hover:bg-blue-600 hover:text-white" : ""}`} >Admin Login</Button>
-                </LoginLink>
+                <>
+                  {isAuthenticated && (
+                    <Link href="/admin">
+                      <Button variant="ghost">Admin</Button>
+                    </Link>
+                  )}
+
+                  {isAuthenticated ? (
+                    <LogoutLink postLogoutRedirectURL="/">
+                      <Button variant="destructive">Logout</Button>
+                    </LogoutLink>
+                  ) : (
+                    <LoginLink>
+                      <Button variant="ghost">Admin Login</Button>
+                    </LoginLink>
+                  )}
+                </>
               )}
             </div>
           </SheetContent>
         </Sheet>
+      </div>
+      {/* Countdown bottom center */}
+      <div className="absolute -bottom-8 shadow-2xl md:-bottom-5 bg-blue-100  rounded-xl left-1/2 -translate-x-1/2">
+        <div className="flex flex-col justify-center items-center p-2">
+          <span className="text-xs text-red-700 animate-pulse font-medium">
+            Time left{" "}
+          </span>
+          <CountdownTimer />
+        </div>
       </div>
     </header>
   );

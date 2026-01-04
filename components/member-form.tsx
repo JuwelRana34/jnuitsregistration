@@ -457,7 +457,7 @@ export default function MemberForm() {
                 <FormItem>
                   <FileUploadField
                     label="Formal Photo"
-                    previewUrl={photoPreview} 
+                    previewUrl={photoPreview}
                     onFileSelect={handlePhotoSelect}
                     onClear={handlePhotoClear}
                   />
@@ -574,7 +574,7 @@ export default function MemberForm() {
                     <TextInitial className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Textarea
                       className="pl-9"
-                      placeholder = "e.g. text..."
+                      placeholder="e.g. text..."
                       {...field}
                     />
                   </div>
@@ -685,16 +685,25 @@ export default function MemberForm() {
 
           <Button
             type="submit"
-            className="w-full bg-blue-500 hover:bg-blue-600"
+            className="w-full relative overflow-hidden bg-blue-500 hover:bg-blue-600 transition-all"
             disabled={loading}
           >
-            {loading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Submitting...
-              </>
-            ) : (
-              "Apply now"
-            )}
+            {/* ১. শিমার কন্টেইনার যা বাম থেকে ডানে মুভ করবে */}
+            <div className="absolute inset-0 -translate-x-full animate-shimmer  pointer-events-none">
+              {/* ২. আসল সরু এবং বাঁকানো শাইন লাইন */}
+              <div className="h-full w-48 bg-linear-to-r from-transparent via-blue-300/30 to-transparent -skew-x-45 blur-[2px]" />
+            </div>
+
+            <span className="relative z-10 flex items-center justify-center gap-2">
+              {loading ? (
+                <>
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                  Submitting...
+                </>
+              ) : (
+                "Apply now"
+              )}
+            </span>
           </Button>
         </form>
       </Form>

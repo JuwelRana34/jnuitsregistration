@@ -70,7 +70,7 @@ export default function Home() {
                   <strong>Starts:</strong> 20th December 2025
                 </p>
                 <p>
-                  <strong>Ends:</strong> 12th January 2026
+                  <strong>Ends:</strong> 15th January, 2026
                 </p>
                 <p>
                   <strong>Offline:</strong> On-campus (2–3 days, TBA)
@@ -159,7 +159,7 @@ export default function Home() {
               </AccordionTrigger>
               <AccordionContent className="space-y-3 text-gray-700">
                 <ul className="list-disc pl-5 space-y-1">
-                  <li>1st & 2nd year undergraduate students (19 & 20 batch)</li>
+                  <li>1st & 2nd year undergraduate students (19th and 20th batch)</li>
                   <li>Any department of Jagannath University</li>
                   <li>Interested in IT skill development & networking</li>
                 </ul>

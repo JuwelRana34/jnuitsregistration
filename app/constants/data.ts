@@ -16,9 +16,9 @@ export const TECH_SKILLS = [
   "Zoom Meeting",
   "Canva",
   "Adobe Photoshop",
-  "Adobe Premier Pro",
+  "Adobe Premiere Pro",
   "Adobe Illustrator",
-  "Website Maintainance",
+  "Website Maintenance",
 ];
 export const SOFT_SKILLS = [
   "Written communication (grammar, clarity, conciseness)",
@@ -50,7 +50,7 @@ export const DEPARTMENTS = [
   "Institute of Modern Languages",
   "Islamic History & Culture",
   "Islamic Studies",
-  "Land Management & Law",
+  "Law and Land Administration",
   "Law",
   "Management Studies",
   "Marketing",

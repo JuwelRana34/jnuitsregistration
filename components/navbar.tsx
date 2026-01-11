@@ -50,7 +50,7 @@ export default function Navbar() {
             href="/"
             className="text-xl font-bold text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-green-600"
           >
-            JnU IT Socity          
+            JnU IT Society          
           </Link>
         </div>
         {/* Desktop Menu */}

@@ -284,7 +284,7 @@ export default function MemberForm() {
                 control={form.control}
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Whatsapp (Recommended)</FormLabel>
+                    <FormLabel>WhatsApp(Recommended)</FormLabel>
                     <FormControl>
                       <div className="relative">
                         <MessageCircle className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />

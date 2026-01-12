@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import UserData, { getUserCount } from "./_components/UserData";
 import TableLoader from "./_components/TableLoader";
 
+export const revalidate = 86400; // Revalidate every 24 hours
 export default function AdminPage() {
   return (
     <div className="min-h-screen bg-gray-50/50 py-10 px-2 sm:px-6 lg:px-8">

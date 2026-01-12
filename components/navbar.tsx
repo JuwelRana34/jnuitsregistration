@@ -135,6 +135,7 @@ export default function Navbar() {
                 <>
                   {isAuthenticated && (
                     <Link href="/admin">
+                       <SheetClose asChild>
                       <Button
                         variant="ghost"
                         className={` w-full ${
@@ -145,6 +146,7 @@ export default function Navbar() {
                       >
                         Admin
                       </Button>
+                      </SheetClose>
                     </Link>
                   )}
 

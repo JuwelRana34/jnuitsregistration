@@ -1,7 +1,8 @@
 import RefreshBtn from "@/components/RefreshBtn";
+import { LoaderCircle } from "lucide-react";
 import { Suspense } from "react";
-import UserData, { getUserCount } from "./_components/UserData";
 import TableLoader from "./_components/TableLoader";
+import UserData, { getUserCount } from "./_components/UserData";
 
 export const revalidate = 86400; // Revalidate every 24 hours
 export default function AdminPage() {
@@ -23,9 +24,18 @@ export default function AdminPage() {
             {/* Added Refresh Button Here */}
             <RefreshBtn />
 
-            <span className="inline-flex items-center rounded-md bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-              Total: {getUserCount()}
-            </span>
+            <div className="inline-flex items-center rounded-md bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10 space-x-1">
+              Total:
+              <Suspense
+                fallback={
+                  <span className="animate-spin px-1">
+                    <LoaderCircle size={16} />
+                  </span>
+                }
+              >
+             <span className="px-1">{getUserCount()}</span>  
+              </Suspense>
+            </div>
           </div>
         </div>
 
@@ -33,7 +43,7 @@ export default function AdminPage() {
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
           {/* User Data Table Component */}
           <Suspense fallback={<TableLoader />}>
-            <UserData/>
+            <UserData />
           </Suspense>
         </div>
       </div>

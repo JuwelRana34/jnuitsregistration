@@ -34,6 +34,10 @@ export default function Navbar() {
     },
   ];
 
+  const showLoading = !isAuthenticated && isLoading;
+  const showAdmin = isAuthenticated && !isLoading;
+
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
@@ -70,7 +74,7 @@ export default function Navbar() {
             </Link>
           ))}
 
-          {isLoading ? (
+          {showLoading ? (
             <Loader />
           ) : (
             <>
@@ -89,7 +93,7 @@ export default function Navbar() {
                 </Link>
               )}
 
-              {isAuthenticated ? (
+              {showAdmin ? (
                 <LogoutLink postLogoutRedirectURL="/">
                   <Button variant="destructive">Logout</Button>
                 </LogoutLink>
@@ -129,7 +133,7 @@ export default function Navbar() {
                 </Link>
               ))}
 
-              {isLoading ? (
+              {showLoading ? (
                 <Loader />
               ) : (
                 <>
@@ -150,7 +154,7 @@ export default function Navbar() {
                     </Link>
                   )}
 
-                  {isAuthenticated ? (
+                  {showAdmin ? (
                     <LogoutLink postLogoutRedirectURL="/">
                       <Button className="w-full rounded-none bg-red-100 text-red-700" variant="destructive">Logout</Button>
                     </LogoutLink>

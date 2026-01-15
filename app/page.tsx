@@ -67,13 +67,13 @@ export default function Home() {
               </AccordionTrigger>
               <AccordionContent className="space-y-1 text-gray-700">
                 <p>
-                  <strong>Starts:</strong> 20th December 2025
+                  <strong>Starts:</strong> 20 December 2025
                 </p>
                 <p>
-                  <strong>Ends:</strong> 15th January, 2026
+                  <strong>Ends:</strong> <s>15</s> 22 January, 2026
                 </p>
                 <p>
-                  <strong>Offline:</strong> On-campus (2–3 days, TBA)
+                  <strong>Offline:</strong> On-campus(Shanto Chattar) 18,19,20 January, 2026
                 </p>
                 <p>
                   <strong>Fee:</strong> BDT 100/-

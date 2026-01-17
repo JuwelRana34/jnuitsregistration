@@ -5,7 +5,6 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
 import {
   Building2,
   CalendarDays,
@@ -20,7 +19,54 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50 py-4 px-2">
-      <div className="mx-auto  max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-8">
+      {/* Event Buttons Section */}
+      <div className="mx-auto max-w-7xl mb-8">
+        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+          {/* Odoo ERP Workshop Button */}
+          <a
+            href="https://events.jnuits.org.bd"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto"
+          >
+            <button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3 animate-pulse border-2 border-white/20">
+              <div className="relative">
+                <span className="absolute -top-1 -right-1 h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                </span>
+              </div>
+              <span className="text-lg">🚀 Odoo ERP Workshop</span>
+              <span className="text-sm bg-white/20 px-3 py-1 rounded-full">
+                Register Now
+              </span>
+            </button>
+          </a>
+
+          {/* Basic Computer Course Button */}
+          <a
+            href="https://events.jnuits.org.bd/bcc"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full sm:w-auto"
+          >
+            <button className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white font-bold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3 animate-pulse border-2 border-white/20">
+              <div className="relative">
+                <span className="absolute -top-1 -right-1 h-3 w-3">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>
+                </span>
+              </div>
+              <span className="text-lg">💻 Basic Computer Course</span>
+              <span className="text-sm bg-white/20 px-3 py-1 rounded-full">
+                Enroll Now
+              </span>
+            </button>
+          </a>
+        </div>
+      </div>
+
+      <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* LEFT: INFO + ACCORDION */}
         <section className="bg-white rounded-xl shadow p-6">
           <h1 className="text-2xl md:text-3xl font-bold text-slate-700 mb-3">
@@ -73,7 +119,8 @@ export default function Home() {
                   <strong>Ends:</strong> <s>15</s> 22 January, 2026
                 </p>
                 <p>
-                  <strong>Offline:</strong> On-campus(Shanto Chattar) 18,19,20 January, 2026
+                  <strong>Offline:</strong> On-campus(Shanto Chattar) 18,19,20
+                  January, 2026
                 </p>
                 <p>
                   <strong>Fee:</strong> BDT 100/-
@@ -122,7 +169,8 @@ export default function Home() {
                   </div>
 
                   <p>
-                    <strong>bKash Number:</strong> 01740960116 (Personal) <br />
+                    <strong>bKash Number:</strong> 01740960116 (Personal){" "}
+                    <br />
                     <strong>Nagad Number:</strong> 01740960116 (Personal)
                   </p>
 
@@ -159,7 +207,9 @@ export default function Home() {
               </AccordionTrigger>
               <AccordionContent className="space-y-3 text-gray-700">
                 <ul className="list-disc pl-5 space-y-1">
-                  <li>1st & 2nd year undergraduate students (19th and 20th batch)</li>
+                  <li>
+                    1st & 2nd year undergraduate students (19th and 20th batch)
+                  </li>
                   <li>Any department of Jagannath University</li>
                   <li>Interested in IT skill development & networking</li>
                 </ul>

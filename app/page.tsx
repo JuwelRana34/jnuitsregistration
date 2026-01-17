@@ -24,7 +24,7 @@ export default function Home() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
           {/* Odoo ERP Workshop Button */}
           <a
-            href="https://events.jnuits.org.bd"
+            href="https://forms.gle/Q9rnbUrqjvRyYEUL9"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto"
@@ -45,7 +45,7 @@ export default function Home() {
 
           {/* Basic Computer Course Button */}
           <a
-            href="https://events.jnuits.org.bd/bcc"
+            href="https://forms.gle/m2LULjADHWWSivjD7"
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto"

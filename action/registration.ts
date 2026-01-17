@@ -132,6 +132,7 @@ export async function addMemberToSheet(data: MemberType) {
 
       <p style="color: #475569; font-size: 16px; line-height: 1.6; margin-bottom: 0;">
         We appreciate your patience during this time.
+        Join our messenger group : https://m.me/j/AbYMoaVdoOH1ZXhJ/
       </p>
 
       <div style="margin-top: 40px; border-top: 1px solid #f1f5f9; padding-top: 20px;">

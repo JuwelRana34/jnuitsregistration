@@ -222,7 +222,7 @@ export default function MemberForm() {
                       <User className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                       <Input
                         className="pl-9"
-                        placeholder="e.g. John Doe"
+                        placeholder="e.g. Md. Rakibul Islam"
                         {...field}
                       />
                     </div>
@@ -245,7 +245,7 @@ export default function MemberForm() {
                       <Mail className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                       <Input
                         className="pl-9"
-                        placeholder="john@example.com"
+                        placeholder="b220303020@phy.jnu.ac.bd"
                         {...field}
                       />
                     </div>
@@ -262,7 +262,7 @@ export default function MemberForm() {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="label-required">
-                      Phone Number
+                      Phone Number (WhatsApp Recommended)
                     </FormLabel>
                     <FormControl>
                       <div className="relative">
@@ -279,7 +279,7 @@ export default function MemberForm() {
                 )}
               />
 
-              <FormField
+              {/* <FormField
                 name="whatsapp_number"
                 control={form.control}
                 render={({ field }) => (
@@ -298,7 +298,7 @@ export default function MemberForm() {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
             </div>
           </div>
 
@@ -449,7 +449,7 @@ export default function MemberForm() {
           <div className="h-px bg-gray-100 my-4" />
 
           {/* --- UPLOADS --- */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <FormField
               name="photoUrl"
               control={form.control}
@@ -464,9 +464,9 @@ export default function MemberForm() {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
 
-            <FormField
+            {/* <FormField
               name="paymentPhotoUrl"
               control={form.control}
               render={() => (
@@ -481,10 +481,10 @@ export default function MemberForm() {
                 </FormItem>
               )}
             />
-          </div>
+          </div> */}
 
           {/* --- SKILLS --- */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-4">
             <FormField
               name="tech_skills"
               control={form.control}
@@ -513,7 +513,7 @@ export default function MemberForm() {
           <div className="h-px bg-gray-100 my-4" />
 
           {/* --- PAYMENT & SOCIALS --- */}
-          <FormField
+          {/*-- <FormField
             name="transaction_id"
             control={form.control}
             render={({ field }) => (
@@ -535,8 +535,9 @@ export default function MemberForm() {
               </FormItem>
             )}
           />
-
+        
           {/* opinion form students  */}
+          {/*
           <FormField
             name="why_join_us"
             control={form.control}
@@ -560,8 +561,9 @@ export default function MemberForm() {
               </FormItem>
             )}
           />
+          */}
           {/* FIXME: */}
-          <FormField
+          {/* <FormField
             name="suggestions_expectations"
             control={form.control}
             render={({ field }) => (
@@ -582,7 +584,9 @@ export default function MemberForm() {
                 <FormMessage />
               </FormItem>
             )}
-          />
+          /> }
+
+          --*/}
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FormField

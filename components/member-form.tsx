@@ -40,8 +40,9 @@ import {
 } from "@/components/ui/select";
 import z from "zod";
 
-// Create simplified schema without photo/payment/skills/why_join
+// Keep original schema but make some fields optional for the user
 const SimplifiedMemberSchema = z.object({
+  // Required fields
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email"),
   phone: z.string().min(11, "Phone number must be at least 11 digits"),
@@ -51,7 +52,18 @@ const SimplifiedMemberSchema = z.object({
   batch: z.string().min(1, "Batch is required"),
   department: z.string().min(1, "Department is required"),
   agreeEmail: z.boolean().default(false),
+  
+  // Optional fields that will be auto-filled
+  whatsapp_number: z.string().optional(),
+  why_join_us: z.string().optional(),
   suggestions_expectations: z.string().optional(),
+  facebook_link: z.string().optional(),
+  linkedin_link: z.string().optional(),
+  
+  // Boolean fields with default values
+  join_facebook: z.boolean().default(false),
+  join_whatsapp: z.boolean().default(false),
+  join_whatsapp_community: z.boolean().default(false),
 });
 
 export type MemberType = z.infer<typeof SimplifiedMemberSchema>;
@@ -66,39 +78,48 @@ export default function MemberForm() {
       name: "",
       email: "",
       phone: "",
+      whatsapp_number: "",
       gender: "",
       studentId: "",
       transaction_id: "",
+      why_join_us: "",
       batch: "",
       department: "",
+      facebook_link: "",
+      linkedin_link: "",
       agreeEmail: false,
       suggestions_expectations: "",
+      join_facebook: false,
+      join_whatsapp: false,
+      join_whatsapp_community: false,
     },
   });
 
   const onSubmit = async (data: MemberType) => {
     setLoading(true);
     try {
-      // Construct Final Data with default values for removed fields
+      // Construct Final Data with auto-filled values
       const finalData = {
         ...data,
-        // Set default values for removed fields
-        photoUrl: "N/A",
-        paymentPhotoUrl: "N/A",
-        tech_skills: ["N/A"],
-        soft_skills: ["N/A"],
-        why_join_us: "N/A",
-        whatsapp_number: "N/A",
-        facebook_link: "N/A",
-        linkedin_link: "N/A",
-        join_facebook: false,
-        join_whatsapp: false,
-        join_whatsapp_community: false,
+        // Auto-fill missing fields for backward compatibility
+        whatsapp_number: data.whatsapp_number || data.phone, // Use phone if whatsapp not provided
+        why_join_us: data.why_join_us || "Not provided",
+        suggestions_expectations: data.suggestions_expectations || "Not provided",
+        facebook_link: data.facebook_link || "Not provided",
+        linkedin_link: data.linkedin_link || "Not provided",
+        
+        // Hardcoded values for removed sections (photos and skills)
+        photoUrl: "Not required",
+        paymentPhotoUrl: "Not required",
+        photoFileId: "N/A",
+        paymentPhotoFileId: "N/A",
+        tech_skills: ["General"],
+        soft_skills: ["General"],
       };
 
       console.log("Submitting Payload:", finalData);
 
-      // Call Server Action
+      // Call Server Action - this should work with existing implementation
       await addMemberToSheet(finalData);
 
       // Success State
@@ -374,6 +395,26 @@ export default function MemberForm() {
             )}
           />
 
+          {/* --- OPTIONAL: WHY JOIN US --- */}
+          <FormField
+            name="why_join_us"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Why do you want to join JnUITS? (Optional)</FormLabel>
+                <FormControl>
+                  <textarea
+                    className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                    placeholder="Share your motivation to join... (optional)"
+                    rows={2}
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
           {/* --- OFFICIAL PAGES LINKS --- */}
           <div className="bg-gray-50 p-4 rounded-lg">
             <p className="font-medium text-sm mb-3">
@@ -428,9 +469,24 @@ export default function MemberForm() {
               </div>
             </div>
 
-            <p className="text-xs text-gray-500 mt-3">
-              Please follow our pages to stay updated with JnUITS activities and announcements.
-            </p>
+            {/* Simple checkbox for Facebook */}
+            <div className="mt-3">
+              <FormField
+                control={form.control}
+                name="join_facebook"
+                render={({ field }) => (
+                  <FormItem className="flex items-center gap-2 space-y-0 bg-white p-2 rounded border hover:border-blue-400 transition-colors cursor-pointer">
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                    <FormLabel className="font-normal cursor-pointer w-full text-sm">
+                      I have followed/liked the Facebook page
+                    </FormLabel>
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
 
           {/* --- SUGGESTIONS (OPTIONAL) --- */}
@@ -443,8 +499,8 @@ export default function MemberForm() {
                 <FormControl>
                   <textarea
                     className="flex min-h-[80px] w-full rounded-md border border-input bg-transparent px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    placeholder="Your suggestions or feedback for JnUITS..."
-                    rows={3}
+                    placeholder="Your suggestions or feedback for JnUITS... (optional)"
+                    rows={2}
                     {...field}
                   />
                 </FormControl>

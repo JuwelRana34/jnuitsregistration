@@ -19,24 +19,30 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50 py-4 px-2">
-      {/* Event Buttons Section */}
-
       <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* LEFT: INFO + ACCORDION */}
         <section className="bg-white rounded-xl shadow p-6">
           <h1 className="text-2xl md:text-3xl font-bold text-slate-700 mb-3">
-            Join Jagannath University IT Society <a href="https://facebook.com/jnuits" target="_blank" rel="noopener noreferrer">(JnUITS)</a>  
+            Join Jagannath University IT Society{" "}
+            <a 
+              href="https://facebook.com/jnuits" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-800 hover:underline"
+            >
+              (JnUITS)
+            </a>
           </h1>
 
           <p className="text-gray-700 mb-4">
             Are you an undergraduate student looking to enhance your IT skills,
             expand your professional network, and contribute to an exciting
-            community? Join <strong>JnUITS</strong> and grow alongside peers who
+            community? Join <strong className="text-indigo-700">JnUITS</strong> and grow alongside peers who
             share your passion for innovation and learning!
           </p>
 
-          <p className="font-semibold text-indigo-600 mb-6">
-            Be a Member, Be a Leader! 🚀
+          <p className="font-semibold text-indigo-600 mb-6 flex items-center gap-2">
+            <span className="text-xl">🚀</span> Be a Member, Be a Leader!
           </p>
 
           <Accordion
@@ -46,12 +52,12 @@ export default function Home() {
           >
             {/* Steps */}
             <AccordionItem value="steps">
-              <AccordionTrigger className="flex items-center gap-3">
+              <AccordionTrigger className="flex items-center gap-3 hover:no-underline">
                 <ClipboardList className="h-5 w-5 text-indigo-600 shrink-0" />
-                <span>Simple Steps to Join</span>
+                <span className="text-left font-semibold">Simple Steps to Join</span>
               </AccordionTrigger>
-              <AccordionContent>
-                <ul className="list-disc pl-5 space-y-1 text-gray-700">
+              <AccordionContent className="pt-2">
+                <ul className="list-disc pl-5 space-y-2 text-gray-700">
                   <li>Pay the BDT 100 registration fee</li>
                   <li>Fill out the form below</li>
                   <li>Upload payment proof</li>
@@ -62,53 +68,53 @@ export default function Home() {
 
             {/* Registration Details */}
             <AccordionItem value="dates">
-              <AccordionTrigger className="flex items-center gap-3">
+              <AccordionTrigger className="flex items-center gap-3 hover:no-underline">
                 <CalendarDays className="h-5 w-5 text-indigo-600 shrink-0" />
-                <span>Registration Details</span>
+                <span className="text-left font-semibold">Registration Details</span>
               </AccordionTrigger>
-              <AccordionContent className="space-y-1 text-gray-700">
+              <AccordionContent className="space-y-2 text-gray-700 pt-2">
                 <p>
-                  <strong>Starts:</strong> 20 December 2025
+                  <strong className="text-slate-800">Starts:</strong> 20 December 2025
                 </p>
                 <p>
-                  <strong>Ends:</strong> <s>15</s> 22 January, 2026
+                  <strong className="text-slate-800">Ends:</strong> <s className="text-red-500">15</s> 22 January, 2026
                 </p>
                 <p>
-                  <strong>Offline:</strong> On-campus(Shanto Chattar) 18,19,20
+                  <strong className="text-slate-800">Offline:</strong> On-campus (Shanto Chattar) 18,19,20
                   January, 2026
                 </p>
                 <p>
-                  <strong>Fee:</strong> BDT 100/-
+                  <strong className="text-slate-800">Fee:</strong> BDT 100/-
                 </p>
               </AccordionContent>
             </AccordionItem>
 
             {/* Payment Instructions */}
             <AccordionItem value="payment">
-              <AccordionTrigger className="flex items-center gap-3">
+              <AccordionTrigger className="flex items-center gap-3 hover:no-underline">
                 <Wallet className="h-5 w-5 text-indigo-600 shrink-0" />
-                <span>Membership Fee Payment Instructions</span>
+                <span className="text-left font-semibold">Membership Fee Payment Instructions</span>
               </AccordionTrigger>
 
-              <AccordionContent className="space-y-5 text-gray-700">
+              <AccordionContent className="space-y-6 text-gray-700 pt-4">
                 {/* Bank */}
-                <div>
-                  <div className="flex items-center gap-2 font-semibold mb-1">
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <div className="flex items-center gap-2 font-semibold mb-2">
                     <Building2 className="h-4 w-4 text-indigo-600" />
                     <span>Agrani Bank (On-campus / Branch)</span>
                   </div>
 
-                  <p>
-                    <strong>Branch:</strong> Jagannath University Branch <br />
-                    <strong>Account Name:</strong> Jagannath University IT
+                  <p className="mb-3">
+                    <strong className="text-slate-800">Branch:</strong> Jagannath University Branch <br />
+                    <strong className="text-slate-800">Account Name:</strong> Jagannath University IT
                     Society <br />
-                    <strong>Account Number:</strong> 0200013199689
+                    <strong className="text-slate-800">Account Number:</strong> 0200013199689
                   </p>
 
-                  <ul className="list-disc pl-5 mt-2 space-y-1">
+                  <ul className="list-disc pl-5 mt-2 space-y-1.5">
                     <li>Fill up a deposit form</li>
                     <li>
-                      Deposit <strong>BDT 100/- only</strong>
+                      Deposit <strong className="text-slate-800">BDT 100/- only</strong>
                     </li>
                     <li>Collect the deposit slip</li>
                     <li>Take a clear photo of the slip</li>
@@ -117,51 +123,53 @@ export default function Home() {
                 </div>
 
                 {/* Mobile Wallet */}
-                <div>
-                  <div className="flex items-center gap-2 font-semibold mb-1">
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <div className="flex items-center gap-2 font-semibold mb-2">
                     <Wallet className="h-4 w-4 text-indigo-600" />
                     <span>bKash / Nagad (Send Money)</span>
                   </div>
 
-                  <p>
-                    <strong>bKash Number:</strong> 01740960116 (Personal){" "}
+                  <p className="mb-3">
+                    <strong className="text-slate-800">bKash Number:</strong> 01740960116 (Personal){" "}
                     <br />
-                    <strong>Nagad Number:</strong> 01740960116 (Personal)
+                    <strong className="text-slate-800">Nagad Number:</strong> 01740960116 (Personal)
                   </p>
 
-                  <ul className="list-disc pl-5 mt-2 space-y-1">
+                  <ul className="list-disc pl-5 mt-2 space-y-1.5">
                     <li>Open your mobile wallet app</li>
                     <li>
-                      Select <strong>Send Money</strong>
+                      Select <strong className="text-slate-800">Send Money</strong>
                     </li>
                     <li>
-                      Send <strong>BDT 100/- only</strong>
+                      Send <strong className="text-slate-800">BDT 100/- only</strong>
                     </li>
                     <li>
-                      In the <strong>Reference</strong> field, write your
-                      <strong> Student ID</strong>
+                      In the <strong className="text-slate-800">Reference</strong> field, write your{" "}
+                      <strong className="text-slate-800">Student ID</strong>
                     </li>
                     <li>Take a screenshot of the payment confirmation</li>
                     <li>Upload the screenshot to the Google Form</li>
                   </ul>
                 </div>
 
-                <p className="text-sm text-gray-600">
-                  Please ensure all payment details are correct before
-                  submitting. Incorrect or unclear payment proof may delay
-                  verification. 😊
-                </p>
+                <div className="bg-blue-50 border border-blue-100 p-4 rounded-lg">
+                  <p className="text-sm text-gray-700">
+                    <strong className="text-blue-700">Important:</strong> Please ensure all payment details are correct before
+                    submitting. Incorrect or unclear payment proof may delay
+                    verification. 😊
+                  </p>
+                </div>
               </AccordionContent>
             </AccordionItem>
 
             {/* Eligibility */}
             <AccordionItem value="eligibility">
-              <AccordionTrigger className="flex items-center gap-3">
+              <AccordionTrigger className="flex items-center gap-3 hover:no-underline">
                 <HelpCircle className="h-5 w-5 text-indigo-600 shrink-0" />
-                <span>Eligibility Criteria</span>
+                <span className="text-left font-semibold">Eligibility Criteria</span>
               </AccordionTrigger>
-              <AccordionContent className="space-y-3 text-gray-700">
-                <ul className="list-disc pl-5 space-y-1">
+              <AccordionContent className="space-y-3 text-gray-700 pt-2">
+                <ul className="list-disc pl-5 space-y-2">
                   <li>
                     1st & 2nd year undergraduate students (19th and 20th batch)
                   </li>
@@ -173,46 +181,73 @@ export default function Home() {
 
             {/* Selection */}
             <AccordionItem value="selection">
-              <AccordionTrigger className="flex items-center gap-3">
+              <AccordionTrigger className="flex items-center gap-3 hover:no-underline">
                 <UserCheck className="h-5 w-5 text-indigo-600 shrink-0" />
-                <span>Selection Process</span>
+                <span className="text-left font-semibold">Selection Process</span>
               </AccordionTrigger>
-              <AccordionContent className="space-y-2 text-gray-700">
-                <ol className="list-decimal pl-5 space-y-1">
+              <AccordionContent className="space-y-2 text-gray-700 pt-2">
+                <ol className="list-decimal pl-5 space-y-2">
                   <li>Introductory Class</li>
                   <li>MCQ Test</li>
                   <li>Viva (Interview)</li>
                 </ol>
+                <p className="text-sm text-gray-600 mt-3">
+                  Successful candidates will be notified via email.
+                </p>
               </AccordionContent>
             </AccordionItem>
 
             {/* Contact */}
             <AccordionItem value="contact">
-              <AccordionTrigger className="flex items-center gap-3">
+              <AccordionTrigger className="flex items-center gap-3 hover:no-underline">
                 <Phone className="h-5 w-5 text-indigo-600 shrink-0" />
-                <span>Contact & Important Notes</span>
+                <span className="text-left font-semibold">Contact & Important Notes</span>
               </AccordionTrigger>
-              <AccordionContent className="space-y-2 text-sm text-gray-700">
-                <p>
-                  <strong>Email:</strong> jnuitsbd@gmail.com <br />
-                  <strong>Phone:</strong> 01721129467, 01567934536
-                </p>
+              <AccordionContent className="space-y-4 text-gray-700 pt-2">
+                <div className="bg-gray-50 p-4 rounded-lg">
+                  <p className="mb-2">
+                    <strong className="text-slate-800">Email:</strong> jnuitsbd@gmail.com
+                  </p>
+                  <p className="mb-2">
+                    <strong className="text-slate-800">Phone:</strong> 01721129467, 01567934536
+                  </p>
+                  <p className="mb-2">
+                    <strong className="text-slate-800">Facebook:</strong>{" "}
+                    <a 
+                      href="https://facebook.com/jnuits" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="text-blue-600 hover:text-blue-800 hover:underline"
+                    >
+                      facebook.com/jnuits
+                    </a>
+                  </p>
+                </div>
+                <div className="bg-yellow-50 border border-yellow-100 p-4 rounded-lg">
+                  <p className="text-sm">
+                    <strong className="text-yellow-700">Note:</strong> Please keep your payment proof safe until your membership is confirmed. 
+                    For any query, feel free to contact us.
+                  </p>
+                </div>
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-          {/* Banner  */}
-
-          <Image
-            src="/banner.jpeg"
-            alt="Decorative"
-            width={1000}
-            height={1000}
-            className="mt-5"
-          />
+          
+          {/* Banner */}
+          <div className="mt-6 rounded-lg overflow-hidden border border-gray-200">
+            <Image
+              src="/banner.jpeg"
+              alt="JnUITS Membership Banner"
+              width={1000}
+              height={500}
+              className="w-full h-auto object-cover"
+              priority
+            />
+          </div>
         </section>
 
         {/* RIGHT: FORM */}
-        <section className="bg-white rounded-xl shadow">
+        <section className="bg-white rounded-xl shadow p-6">
           <MemberForm />
         </section>
       </div>

@@ -247,8 +247,18 @@ export default function Home() {
         </section>
 
         {/* RIGHT: FORM */}
-        <section className="bg-white rounded-xl shadow p-6">
-          <MemberForm />
+        <section className="bg-white rounded-xl shadow p-6 flex flex-col justify-center items-center text-center">
+          
+          {/* FORM COMMENTED OUT AS REQUESTED */}
+          {/* <MemberForm /> */}
+
+          <h1 className="text-4xl font-extrabold text-red-600 animate-pulse">
+            Registration Closed 🔒
+          </h1>
+          <p className="text-gray-500 mt-4">
+            Thank you for the overwhelming response.
+          </p>
+
         </section>
       </div>
     </div>

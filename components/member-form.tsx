@@ -51,7 +51,7 @@ const SimplifiedMemberSchema = z.object({
   transaction_id: z.string().min(1, "Transaction ID is required"),
   batch: z.string().min(1, "Batch is required"),
   department: z.string().min(1, "Department is required"),
-  agreeEmail: z.boolean().default(false),
+  agreeEmail: z.boolean().optional().default(false),
   
   // Optional fields that will be auto-filled
   whatsapp_number: z.string().optional(),
@@ -61,9 +61,9 @@ const SimplifiedMemberSchema = z.object({
   linkedin_link: z.string().optional(),
   
   // Boolean fields with default values
-  join_facebook: z.boolean().default(false),
-  join_whatsapp: z.boolean().default(false),
-  join_whatsapp_community: z.boolean().default(false),
+  join_facebook: z.boolean().optional().default(false),
+  join_whatsapp: z.boolean().optional().default(false),
+  join_whatsapp_community: z.boolean().optional().default(false),
 });
 
 export type MemberType = z.infer<typeof SimplifiedMemberSchema>;

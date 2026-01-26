@@ -1,5 +1,5 @@
 "use server";
-import { MemberSchema } from "@/app/constants/data";
+import { BccFormSchema, MemberSchema } from "@/app/constants/data";
 import { google } from "googleapis";
 import z from "zod";
 import nodemailer from "nodemailer";
@@ -165,6 +165,195 @@ export async function addMemberToSheet(data: MemberType) {
   } catch (error) {
     console.error("Server Action Error:", error);
     return { success: false, error };
+  }
+}
+
+export async function BccRegistration(data: z.infer<typeof BccFormSchema>) {
+  if (
+    !process.env.GOOGLE_PRIVATE_KEY ||
+    !process.env.GOOGLE_CLIENT_EMAIL ||
+    !process.env.GOOGLE_SHEET_ID ||
+    !process.env.SMTP_EMAIL ||
+    !process.env.SMTP_PASSWORD
+  ) {
+    throw new Error("env variables are missing");
+  }
+
+  try {
+    const auth = new google.auth.GoogleAuth({
+      credentials: {
+        client_email: process.env.GOOGLE_CLIENT_EMAIL!,
+        private_key: process.env.GOOGLE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
+      },
+      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+    });
+
+    const sheets = google.sheets({ version: "v4", auth });
+    const spreadsheetId = process.env.GOOGLE_SHEET_ID!;
+
+    
+    // ১. শিটের সব ডেটা নিয়ে আসি
+    const existingData = await sheets.spreadsheets.values.get({
+      spreadsheetId,
+      range: "bccRegistration!A:Z",
+    });
+
+    const rows = existingData.data.values || [];
+
+    // ২. লুপ চালিয়ে চেক করি
+    for (const row of rows) {   
+      const existingStudentId = row[4];
+      const existingTrxId = row[6];
+
+      // ১. Student ID চেক 
+      if (data.studentId && existingStudentId === data.studentId) {
+        return { 
+          success: false, 
+          error: `Student ID "${data.studentId}" is already registered!` 
+        };
+      }
+
+      // ২. Transaction ID চেক (এটা ইউনিক হতেই হবে)
+      if (data.transactionId && existingTrxId === data.transactionId) {
+        return { 
+          success: false, 
+          error: `Transaction ID "${data.transactionId}" is already used!` 
+        };
+      }
+    }
+
+
+    await sheets.spreadsheets.values.append({
+      spreadsheetId,
+      range: "bccRegistration!A:Z",
+      valueInputOption: "USER_ENTERED",
+      requestBody: {
+        values: [
+          [
+            data.fullName,            // Index 0
+            data.phoneNumber,         // Index 1
+            data.email,              // Index 2
+            data.gender,              // Index 3
+            data.studentId,           // Index 5 (Checked above)
+            "pending",                // Index 5
+            data.transactionId,       // Index 6 (Checked above)
+            data.paymentScreenshot,
+            data.department,
+            data.batch,
+            data.facebookLink ?? "",
+            new Date().toLocaleString("en-US", { timeZone: "Asia/Dhaka" }),
+            data.paymentScreenshotFileId,
+            data.paidAmount,
+            data.whatsappNumber,
+            data.emailReadConfirmation ? "Yes" : "No",
+          ],
+        ],
+      },
+    });
+
+    // ============================================================
+    //  (Email Logic)
+    // ============================================================
+    
+    if (data.emailReadConfirmation) {
+      const transporter = nodemailer.createTransport({
+        service: "gmail",
+        auth: {
+          user: process.env.SMTP_EMAIL,
+          pass: process.env.SMTP_PASSWORD,
+        },
+      });
+
+const mailOptions = {
+  from: `"JNU IT Society" <jnuitsbd@gmail.com>`,
+  to: data.email,
+  subject: "Registration Confirmed - BCC Season 8 (JnUITS)",
+  html: `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Registration Confirmation</title>
+    </head>
+    <body style="margin: 0; padding: 0; background-color: #f3f4f6; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+      
+      <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="background-color: #f3f4f6; padding: 20px 0;">
+        <tr>
+          <td align="center">
+            
+            <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0" style="max-width: 600px; background-color: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+              
+              <tr>
+                <td style="background-color: #ffffff; padding: 25px 20px; text-align: center; border-bottom: 1px solid #f1f5f9;">
+                  <img src="https://res.cloudinary.com/dbwbwwteo/image/upload/v1742463559/MainLogo.8e23e303_uzxovz.png" alt="JnU IT Society Logo" width="120" style="display: block; margin: 0 auto; max-width: 120px; height: auto;">
+                </td>
+              </tr>
+
+              <tr>
+                <td style="background-color: #2563eb; padding: 30px 20px; text-align: center;">
+                  <h1 style="color: #ffffff; margin: 0; font-size: 24px; font-weight: bold; letter-spacing: 0.5px;">Application Received!</h1>
+                  <p style="color: #dbeafe; margin: 8px 0 0; font-size: 16px;">Basic Computer Course (Season 8)</p>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="padding: 30px 25px;">
+                  <p style="color: #334155; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">
+                    Dear <strong>${data.fullName}</strong>,
+                  </p>
+                  <p style="color: #334155; font-size: 16px; line-height: 1.6; margin-bottom: 25px;">
+                    Congratulations! We have successfully received your application. Your payment verification is currently in process by our team.
+                  </p>
+
+                  <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-left: 4px solid #2563eb; padding: 15px; margin-bottom: 25px; border-radius: 4px;">
+                    <table role="presentation" width="100%" border="0" cellspacing="0" cellpadding="0">
+                      <tr>
+                        <td style="padding-bottom: 5px; color: #64748b; font-size: 14px; font-weight: 600;">Student ID:</td>
+                        <td style="padding-bottom: 5px; color: #0f172a; font-size: 14px;">${data.studentId}</td>
+                      </tr>
+                      <tr>
+                        <td style="color: #64748b; font-size: 14px; font-weight: 600;">Transaction ID:</td>
+                        <td style="color: #0f172a; font-size: 14px;">${data.transactionId}</td>
+                      </tr>
+                    </table>
+                  </div>
+                  
+                  <p style="color: #94a3b8; font-size: 13px; margin-top: 25px; text-align: center;">
+                    Please wait for the admin to verify your payment. Once verified, your status will be updated.
+                  </p>
+                </td>
+              </tr>
+
+              <tr>
+                <td style="background-color: #1e293b; padding: 25px; text-align: center;">
+                  <p style="color: #cbd5e1; font-size: 12px; margin: 0;">&copy; ${new Date().getFullYear()} Jagannath University IT Society</p>
+                  <p style="color: #64748b; font-size: 11px; margin: 5px 0 0;">Automated email, please do not reply directly.</p>
+                </td>
+              </tr>
+
+            </table>
+            
+          </td>
+        </tr>
+      </table>
+    </body>
+    </html>
+  `,
+};
+
+      await transporter.sendMail(mailOptions);
+    }
+
+    return { success: true };
+    
+  } catch (error) {
+    console.error("Server Action Error:", error);
+
+    return { 
+      success: false, 
+      error: error instanceof Error ? error.message : "Registration failed" 
+    };
   }
 }
 

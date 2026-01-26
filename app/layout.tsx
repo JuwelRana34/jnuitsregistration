@@ -1,9 +1,9 @@
-import NavbarWrapper from "@/components/Navbarwrapper";
 import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "./providers/AuthProvider";
+import Navbar from "@/components/navbar";
 
 const figtree = Figtree({
   variable: "--font-figtree",
@@ -72,7 +72,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${figtree.variable} antialiased`}>
         <AuthProvider>
-          <NavbarWrapper />
+          <Navbar />
           {children}
           <Toaster richColors position="top-center" />
         </AuthProvider>

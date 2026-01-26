@@ -18,21 +18,10 @@ import {
 } from "@kinde-oss/kinde-auth-nextjs";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import CountdownTimer from "./CountDown";
 import Loader from "./userLoader";
 
-type Event = {
-  id: number;
-  title: string;
-  target_date: string;
-  created_at: string;
-};
 
-export default function Navbar({
-  events,
-}: {
-  events: Event[] | null;
-}) {
+export default function Navbar() {
   const { isAuthenticated, isLoading } = useKindeBrowserClient();
   const pathname = usePathname();
   const isActive = (path: string) =>
@@ -181,15 +170,7 @@ export default function Navbar({
           </SheetContent>
         </Sheet>
       </div>
-      {/* Countdown bottom center */}
-    {events?.length === 0 ? "" : <div className="absolute -bottom-8 shadow-2xl md:-bottom-5 bg-blue-100  rounded-xl left-1/2 -translate-x-1/2">
-        <div className="flex flex-col justify-center items-center p-2">
-          <span className="text-xs text-red-700 animate-pulse font-medium">
-            Time left{" "}
-          </span>
-          <CountdownTimer events={events} />
-        </div>
-      </div>}
+   
     </header>
   );
 }

@@ -1,266 +1,125 @@
-import MemberForm from "@/components/member-form";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
-  Building2,
-  CalendarDays,
-  ClipboardList,
-  HelpCircle,
-  Phone,
-  UserCheck,
-  Wallet,
-} from "lucide-react";
-import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { ArrowRight, BookOpen, Calendar, Cpu, Trophy, Users } from "lucide-react";
+import Link from "next/link";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="min-h-screen bg-gray-50 py-4 px-2">
-      <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* LEFT: INFO + ACCORDION */}
-        <section className="bg-white rounded-xl shadow p-6">
-          <h1 className="text-2xl md:text-3xl font-bold text-slate-700 mb-3">
-            Join Jagannath University IT Society{" "}
-            <a 
-              href="https://facebook.com/jnuits" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 hover:underline"
-            >
-              (JnUITS)
-            </a>
+    <div className="min-h-screen bg-slate-50 font-sans selection:bg-blue-100">
+       
+
+      {/* --- Hero Section --- */}
+      <section className="relative pt-20 pb-32 px-6 overflow-hidden">
+        {/* Background Gradients */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-200 h-125 bg-blue-200/50 rounded-full blur-[100px] -z-10" />
+        
+        <div className="max-w-4xl mx-auto text-center space-y-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-sm font-medium">
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+            </span>
+            Registration Open until Feb 5, 2026
+          </div>
+
+          <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            Master the Digital World <br />
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-indigo-600">
+              with AI & Technology
+            </span>
           </h1>
 
-          <p className="text-gray-700 mb-4">
-            Are you an undergraduate student looking to enhance your IT skills,
-            expand your professional network, and contribute to an exciting
-            community? Join <strong className="text-indigo-700">JnUITS</strong> and grow alongside peers who
-            share your passion for innovation and learning!
+          <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            Join the <strong>Basic Computer Course (Season 8)</strong> by JnU IT Society. 
+            Equip yourself with essential skills for the 4th Industrial Revolution. 
+            Open for Students, Alumni, and Professionals.
           </p>
 
-          <p className="font-semibold text-indigo-600 mb-6 flex items-center gap-2">
-            <span className="text-xl">🚀</span> Be a Member, Be a Leader!
-          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+            {/* 🔥 MAIN CTA BUTTON LINKING TO FORM 🔥 */}
+            <Link href="/bcc"> 
+              <Button size="lg" className="h-12 px-8 text-lg rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all hover:scale-105">
+                Register Now <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </Link>
+            
+            <Link href="https://join.jnuits.org.bd/bcc" target="_blank">
+              <Button size="lg" variant="ghost" className="h-12 px-8 text-lg rounded-full">
+                Learn More
+              </Button>
+            </Link>
+          </div>
+        </div>
+      </section>
 
-          <Accordion
-            type="multiple"
-            defaultValue={["steps"]}
-            className="w-full"
-          >
-            {/* Steps */}
-            <AccordionItem value="steps">
-              <AccordionTrigger className="flex items-center gap-3 hover:no-underline">
-                <ClipboardList className="h-5 w-5 text-indigo-600 shrink-0" />
-                <span className="text-left font-semibold">Simple Steps to Join</span>
-              </AccordionTrigger>
-              <AccordionContent className="pt-2">
-                <ul className="list-disc pl-5 space-y-2 text-gray-700">
-                  <li>Pay the BDT 100 registration fee</li>
-                  <li>Fill out the form below</li>
-                  <li>Upload payment proof</li>
-                  <li>Check your email for confirmation</li>
-                </ul>
-              </AccordionContent>
-            </AccordionItem>
+      {/* --- Features Grid --- */}
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-slate-900">Why Join This Course?</h2>
+            <p className="text-slate-500 mt-2">Comprehensive learning designed for your career growth.</p>
+          </div>
 
-            {/* Registration Details */}
-            <AccordionItem value="dates">
-              <AccordionTrigger className="flex items-center gap-3 hover:no-underline">
-                <CalendarDays className="h-5 w-5 text-indigo-600 shrink-0" />
-                <span className="text-left font-semibold">Registration Details</span>
-              </AccordionTrigger>
-              <AccordionContent className="space-y-2 text-gray-700 pt-2">
-                <p>
-                  <strong className="text-slate-800">Starts:</strong> 20 December 2025
-                </p>
-                <p>
-                  <strong className="text-slate-800">Ends:</strong> <s className="text-red-500">15</s> 22 January, 2026
-                </p>
-                <p>
-                  <strong className="text-slate-800">Offline:</strong> On-campus (Shanto Chattar) 18,19,20
-                  January, 2026
-                </p>
-                <p>
-                  <strong className="text-slate-800">Fee:</strong> BDT 100/-
-                </p>
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* Payment Instructions */}
-            <AccordionItem value="payment">
-              <AccordionTrigger className="flex items-center gap-3 hover:no-underline">
-                <Wallet className="h-5 w-5 text-indigo-600 shrink-0" />
-                <span className="text-left font-semibold">Membership Fee Payment Instructions</span>
-              </AccordionTrigger>
-
-              <AccordionContent className="space-y-6 text-gray-700 pt-4">
-                {/* Bank */}
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="flex items-center gap-2 font-semibold mb-2">
-                    <Building2 className="h-4 w-4 text-indigo-600" />
-                    <span>Agrani Bank (On-campus / Branch)</span>
-                  </div>
-
-                  <p className="mb-3">
-                    <strong className="text-slate-800">Branch:</strong> Jagannath University Branch <br />
-                    <strong className="text-slate-800">Account Name:</strong> Jagannath University IT
-                    Society <br />
-                    <strong className="text-slate-800">Account Number:</strong> 0200013199689
-                  </p>
-
-                  <ul className="list-disc pl-5 mt-2 space-y-1.5">
-                    <li>Fill up a deposit form</li>
-                    <li>
-                      Deposit <strong className="text-slate-800">BDT 100/- only</strong>
-                    </li>
-                    <li>Collect the deposit slip</li>
-                    <li>Take a clear photo of the slip</li>
-                    <li>Upload the photo to the Google Form</li>
-                  </ul>
-                </div>
-
-                {/* Mobile Wallet */}
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <div className="flex items-center gap-2 font-semibold mb-2">
-                    <Wallet className="h-4 w-4 text-indigo-600" />
-                    <span>bKash / Nagad (Send Money)</span>
-                  </div>
-
-                  <p className="mb-3">
-                    <strong className="text-slate-800">bKash Number:</strong> 01740960116 (Personal){" "}
-                    <br />
-                    <strong className="text-slate-800">Nagad Number:</strong> 01740960116 (Personal)
-                  </p>
-
-                  <ul className="list-disc pl-5 mt-2 space-y-1.5">
-                    <li>Open your mobile wallet app</li>
-                    <li>
-                      Select <strong className="text-slate-800">Send Money</strong>
-                    </li>
-                    <li>
-                      Send <strong className="text-slate-800">BDT 100/- only</strong>
-                    </li>
-                    <li>
-                      In the <strong className="text-slate-800">Reference</strong> field, write your{" "}
-                      <strong className="text-slate-800">Student ID</strong>
-                    </li>
-                    <li>Take a screenshot of the payment confirmation</li>
-                    <li>Upload the screenshot to the Google Form</li>
-                  </ul>
-                </div>
-
-                <div className="bg-blue-50 border border-blue-100 p-4 rounded-lg">
-                  <p className="text-sm text-gray-700">
-                    <strong className="text-blue-700">Important:</strong> Please ensure all payment details are correct before
-                    submitting. Incorrect or unclear payment proof may delay
-                    verification. 😊
-                  </p>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* Eligibility */}
-            <AccordionItem value="eligibility">
-              <AccordionTrigger className="flex items-center gap-3 hover:no-underline">
-                <HelpCircle className="h-5 w-5 text-indigo-600 shrink-0" />
-                <span className="text-left font-semibold">Eligibility Criteria</span>
-              </AccordionTrigger>
-              <AccordionContent className="space-y-3 text-gray-700">
-                <ul className="list-disc pl-5 space-y-1">
-                  <li>
-                    1st & 2nd year undergraduate students (19th and 20th batch)
-                  </li>
-                  <li>Any department of Jagannath University</li>
-                  <li>Interested in IT skill development & networking</li>
-                </ul>
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* Selection */}
-            <AccordionItem value="selection">
-              <AccordionTrigger className="flex items-center gap-3 hover:no-underline">
-                <UserCheck className="h-5 w-5 text-indigo-600 shrink-0" />
-                <span className="text-left font-semibold">Selection Process</span>
-              </AccordionTrigger>
-              <AccordionContent className="space-y-2 text-gray-700 pt-2">
-                <ol className="list-decimal pl-5 space-y-2">
-                  <li>Introductory Class</li>
-                  <li>MCQ Test</li>
-                  <li>Viva (Interview)</li>
-                </ol>
-                <p className="text-sm text-gray-600 mt-3">
-                  Successful candidates will be notified via email.
-                </p>
-              </AccordionContent>
-            </AccordionItem>
-
-            {/* Contact */}
-            <AccordionItem value="contact">
-              <AccordionTrigger className="flex items-center gap-3 hover:no-underline">
-                <Phone className="h-5 w-5 text-indigo-600 shrink-0" />
-                <span className="text-left font-semibold">Contact & Important Notes</span>
-              </AccordionTrigger>
-              <AccordionContent className="space-y-4 text-gray-700 pt-2">
-                <div className="bg-gray-50 p-4 rounded-lg">
-                  <p className="mb-2">
-                    <strong className="text-slate-800">Email:</strong> jnuitsbd@gmail.com
-                  </p>
-                  <p className="mb-2">
-                    <strong className="text-slate-800">Phone:</strong> 01721129467, 01567934536
-                  </p>
-                  <p className="mb-2">
-                    <strong className="text-slate-800">Facebook:</strong>{" "}
-                    <a 
-                      href="https://facebook.com/jnuits" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:text-blue-800 hover:underline"
-                    >
-                      facebook.com/jnuits
-                    </a>
-                  </p>
-                </div>
-                <div className="bg-yellow-50 border border-yellow-100 p-4 rounded-lg">
-                  <p className="text-sm">
-                    <strong className="text-yellow-700">Note:</strong> Please keep your payment proof safe until your membership is confirmed. 
-                    For any query, feel free to contact us.
-                  </p>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-          
-          {/* Banner */}
-          <div className="mt-6 rounded-lg overflow-hidden border border-gray-200">
-            <Image
-              src="/banner.jpeg"
-              alt="JnUITS Membership Banner"
-              width={1000}
-              height={500}
-              className="w-full h-auto object-cover"
-              priority
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <FeatureCard 
+              icon={<Cpu className="h-8 w-8 text-indigo-500" />}
+              title="AI Integration"
+              desc="Learn how to use modern AI tools to boost your productivity 10x faster."
+            />
+            <FeatureCard 
+              icon={<BookOpen className="h-8 w-8 text-blue-500" />}
+              title="Practical Skills"
+              desc="Hands-on training on MS Office, Google Workspace, and essential computer basics."
+            />
+            <FeatureCard 
+              icon={<Trophy className="h-8 w-8 text-yellow-500" />}
+              title="Certification"
+              desc="Receive a prestigious certificate from JnUITS upon successful completion."
             />
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* RIGHT: FORM */}
-        <section className="bg-white rounded-xl shadow p-6 flex flex-col justify-center items-center text-center">
-          
-          {/* FORM COMMENTED OUT AS REQUESTED */}
-          {/* <MemberForm /> */}
+      {/* --- Details Strip --- */}
+      {/* <section className="py-12 bg-slate-900 text-white">
+        <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          <StatItem icon={<Users />} value="500+" label="Students Trained" />
+          <StatItem icon={<Calendar />} value="2 Days" label="Weekly Classes" />
+          <StatItem icon={<Cpu />} value="Online" label="Class Platform" />
+          <StatItem icon={<Trophy />} value="S-08" label="Current Season" />
+        </div>
+      </section> */}
 
-          <h1 className="text-4xl font-extrabold text-red-600 animate-pulse">
-            Registration Closed 🔒
-          </h1>
-          <p className="text-gray-500 mt-4">
-            Thank you for the overwhelming response.
-          </p>
+      {/* --- Footer --- */}
+      <footer className="py-8 bg-slate-950 text-slate-400 text-center text-sm">
+        <p>© {new Date().getFullYear()} Jagannath University IT Society. All rights reserved.</p>
+      </footer>
+    </div>
+  );
+}
 
-        </section>
-      </div>
+// --- Helper Components ---
+
+function FeatureCard({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
+  return (
+    <Card className="border-none shadow-md bg-slate-50 hover:bg-white hover:shadow-xl transition-all duration-300">
+      <CardContent className="p-6 text-center space-y-4">
+        <div className="w-16 h-16 mx-auto bg-white rounded-2xl flex items-center justify-center shadow-sm">
+          {icon}
+        </div>
+        <h3 className="text-xl font-bold text-slate-800">{title}</h3>
+        <p className="text-slate-600 leading-relaxed">{desc}</p>
+      </CardContent>
+    </Card>
+  );
+}
+
+function StatItem({ icon, value, label }: { icon: React.ReactNode; value: string; label: string }) {
+  return (
+    <div className="flex flex-col items-center space-y-2">
+      <div className="opacity-50 mb-1">{icon}</div>
+      <div className="text-3xl font-bold">{value}</div>
+      <div className="text-slate-400 text-sm uppercase tracking-wider">{label}</div>
     </div>
   );
 }

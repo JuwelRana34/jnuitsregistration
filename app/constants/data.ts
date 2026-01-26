@@ -95,9 +95,7 @@ export const MemberSchema = z.object({
   photoUrl: z.string().optional().or(z.literal("")),
   paymentPhotoUrl: z.string().optional().or(z.literal("")),
 
-  tech_skills: z
-    .array(z.string())
-    .min(1, "Select at least one tech skill"),
+  tech_skills: z.array(z.string()).min(1, "Select at least one tech skill"),
   soft_skills: z.array(z.string()).min(1, "Select at least one soft skill"),
   facebook_link: z.string().url().optional().or(z.literal("")),
   linkedin_link: z.string().url().optional().or(z.literal("")),
@@ -110,4 +108,59 @@ export const MemberSchema = z.object({
   suggestions_expectations: z.string().min(3, "This field is required"),
 });
 
+export const BccFormSchema = z.object({
+  // Category & Payment
+  category: z.enum(["jnu_student", "jnuits_member", "others"]),
+  couponCode: z.string().optional(),
 
+  // Personal Info
+  fullName: z.string().min(2, "Name must be at least 2 characters."),
+  gender: z.enum(["Male", "Female", "Other"]),
+  phoneNumber: z.string().min(11, "Valid phone number required."),
+  whatsappNumber: z.string().min(11, "Valid WhatsApp number required."),
+  facebookLink: z.string().url("Please enter a valid Facebook profile URL."),
+
+  // Academic Info (Conditional logic applied in UI, but schema allows optional for 'others')
+  studentId: z.string().optional(),
+  batch: z.string().optional(),
+  department: z.string().optional(),
+  email: z.string().email("Please enter a valid email address."),
+
+  // Transaction Info
+  transactionId: z.string().min(4, "Transaction ID is required."),
+
+  // Skills (Matrix)
+  skill_computerBasics: z.enum([
+    "Proficient",
+    "Intermediate",
+    "No Experience",
+    "Basic",
+  ]),
+  skill_msOffice: z.enum([
+    "Proficient",
+    "Intermediate",
+    "No Experience",
+    "Basic",
+  ]),
+  skill_googleWorkspace: z.enum([
+    "Proficient",
+    "Intermediate",
+    "No Experience",
+    "Basic",
+  ]),
+  skill_meetingTools: z.enum([
+    "Proficient",
+    "Intermediate",
+    "No Experience",
+    "Basic",
+  ]),
+
+  emailReadConfirmation: z
+    .boolean()
+    .refine((val) => val === true, "Please confirm you will check your email."),
+
+  // File Upload
+  paymentScreenshot: z.string().optional().or(z.literal("")),
+  paymentScreenshotFileId: z.string().optional().or(z.literal("")),
+  paidAmount: z.number().optional(),
+});

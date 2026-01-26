@@ -142,7 +142,7 @@ export default async function UserData() {
   );
 }
 
-export async function getUserCount(){
+export async function GetUserCount(){
   const users = await getUsers();
-  return users.length;
+  return  <span className="px-1">{users.length}</span>;
 }

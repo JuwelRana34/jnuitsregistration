@@ -3,13 +3,17 @@ import { LoaderCircle } from "lucide-react";
 import { Suspense } from "react";
 import TableLoader from "./_components/TableLoader";
 import UserData, { getUserCount } from "./_components/UserData";
+import EventTimerAdd from "./_components/EventTimerAdd";
+import { getActiveEvent } from "@/lib/CounterFetch";
+import EventCard from "./_components/EventCard";
 
 export const revalidate = 86400; // Revalidate every 24 hours
-export default function AdminPage() {
+export default async function AdminPage() {
+   const events = await getActiveEvent();
   return (
     <div className="min-h-screen bg-gray-50/50 py-10 px-2 sm:px-6 lg:px-8">
       {/* Container */}
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="max-w-7xl mb-4 mx-auto space-y-6">
         {/* Header Section */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
@@ -33,7 +37,7 @@ export default function AdminPage() {
                   </span>
                 }
               >
-             <span className="px-1">{getUserCount()}</span>  
+                <span className="px-1">{getUserCount()}</span>
               </Suspense>
             </div>
           </div>
@@ -46,6 +50,18 @@ export default function AdminPage() {
             <UserData />
           </Suspense>
         </div>
+      </div>
+      <EventTimerAdd />
+      {/* ইভেন্ট লিস্ট কন্টেইনার */}
+      <div className="space-y-4">
+        {events?.length === 0 ? (
+          <p className="text-gray-500 text-center">No events found.</p>
+        ) : (
+          events?.map((event) => (
+            // ৩. প্রতিটা ইভেন্টের জন্য কার্ড রেন্ডার করা
+            <EventCard key={event.id} event={event} />
+          ))
+        )}
       </div>
     </div>
   );

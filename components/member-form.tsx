@@ -72,6 +72,12 @@ export default function MemberForm() {
   const [loading, setLoading] = useState(false);
   const [isOtherBatch, setIsOtherBatch] = useState(false);
 
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [paymentFile, setPaymentFile] = useState<File | null>(null);
+
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+  const [paymentPreview, setPaymentPreview] = useState<string | null>(null);
+
   const form = useForm({
     resolver: zodResolver(SimplifiedMemberSchema),
     defaultValues: {
@@ -119,10 +125,8 @@ export default function MemberForm() {
 
       console.log("Submitting Payload:", finalData);
 
-      // Call Server Action - this should work with existing implementation
       await addMemberToSheet(finalData);
-
-      // Success State
+  
       form.reset();
       toast.success("Application submitted successfully!", {
         description: "Check your email for confirmation.",
@@ -140,9 +144,41 @@ export default function MemberForm() {
     }
   };
 
-  // External link handlers
-  const openFacebookPage = () => {
-    window.open("https://facebook.com/jnuits", "_blank", "noopener,noreferrer");
+
+  const handlePhotoSelect = (file: File | null) => {
+    setPhotoFile(file);
+
+    if (!file) {
+      if (photoPreview) URL.revokeObjectURL(photoPreview);
+      setPhotoPreview(null);
+      return;
+    }
+
+    if (photoPreview) URL.revokeObjectURL(photoPreview);
+
+    const url = URL.createObjectURL(file);
+    setPhotoPreview(url);
+  };
+
+  const handlePhotoClear = () => {
+    if (photoPreview) URL.revokeObjectURL(photoPreview);
+    setPhotoFile(null);
+    setPhotoPreview(null);
+  };
+
+  const handlePaymentSelect = (file: File | null) => {
+    setPaymentFile(file);
+
+    if (!file) {
+      if (paymentPreview) URL.revokeObjectURL(paymentPreview);
+      setPaymentPreview(null);
+      return;
+    }
+
+    if (paymentPreview) URL.revokeObjectURL(paymentPreview);
+
+    const url = URL.createObjectURL(file);
+    setPaymentPreview(url);
   };
 
   const openLinkedinPage = () => {

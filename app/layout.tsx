@@ -1,4 +1,4 @@
-import Navbar from "@/components/navbar";
+import NavbarWrapper from "@/components/Navbarwrapper";
 import { Toaster } from "@/components/ui/sonner";
 import type { Metadata } from "next";
 import { Figtree } from "next/font/google";
@@ -11,7 +11,7 @@ const figtree = Figtree({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://join.jnuits.org.bd'),
+  metadataBase: new URL("https://join.jnuits.org.bd"),
   title: "JnU-ITS Registration",
   description:
     "Join JNU ITS as a new member by filling out the official registration form.",
@@ -53,7 +53,9 @@ export const metadata: Metadata = {
     title: "JnU-ITS Member Registration",
     description:
       "Register now to become a member of Jagannath University IT Society (JnU ITS).",
-    images: ["https://res.cloudinary.com/dbwbwwteo/image/upload/v1746006142/jnu%20its/487071954_963461729311150_213539538489395892_n_nihhkj.jpg"],
+    images: [
+      "https://res.cloudinary.com/dbwbwwteo/image/upload/v1746006142/jnu%20its/487071954_963461729311150_213539538489395892_n_nihhkj.jpg",
+    ],
   },
   robots: {
     index: true,
@@ -70,7 +72,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${figtree.variable} antialiased`}>
         <AuthProvider>
-          <Navbar />
+          <NavbarWrapper />
           {children}
           <Toaster richColors position="top-center" />
         </AuthProvider>

@@ -2,11 +2,20 @@
 
 import { useDeadlineCountdown } from "@/hooks/useDeadlineCountdown";
 
+type Event = {
+  id: number;
+  title: string;
+  target_date: string;
+  created_at: string;
+};
 
 
-export default function CountdownTimer() {
-  // ✅ 15 January 2026, 23:59:59 (future date!)
-  const DEADLINE = new Date("2026-01-22T23:59:59").getTime();
+export default function CountdownTimer({
+  events,
+}: {
+  events: Event[] | null;
+}) {
+  const DEADLINE = new Date(events?.[0].target_date || "").getTime();
 
   const timeLeft = useDeadlineCountdown(DEADLINE);
 

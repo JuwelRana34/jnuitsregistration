@@ -21,7 +21,18 @@ import { usePathname } from "next/navigation";
 import CountdownTimer from "./CountDown";
 import Loader from "./userLoader";
 
-export default function Navbar() {
+type Event = {
+  id: number;
+  title: string;
+  target_date: string;
+  created_at: string;
+};
+
+export default function Navbar({
+  events,
+}: {
+  events: Event[] | null;
+}) {
   const { isAuthenticated, isLoading } = useKindeBrowserClient();
   const pathname = usePathname();
   const isActive = (path: string) =>
@@ -37,6 +48,7 @@ export default function Navbar() {
   const showLoading = !isAuthenticated && isLoading;
   const showAdmin = isAuthenticated && !isLoading;
 
+  
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white">
@@ -78,7 +90,7 @@ export default function Navbar() {
             <Loader />
           ) : (
             <>
-              {isAuthenticated && (
+              {showAdmin && (
                 <Link href="/admin">
                   <Button
                     variant="ghost"
@@ -137,7 +149,7 @@ export default function Navbar() {
                 <Loader />
               ) : (
                 <>
-                  {isAuthenticated && (
+                  {showAdmin && (
                     <Link href="/admin">
                        <SheetClose asChild>
                       <Button
@@ -170,14 +182,14 @@ export default function Navbar() {
         </Sheet>
       </div>
       {/* Countdown bottom center */}
-      <div className="absolute -bottom-8 shadow-2xl md:-bottom-5 bg-blue-100  rounded-xl left-1/2 -translate-x-1/2">
+    {events?.length === 0 ? "" : <div className="absolute -bottom-8 shadow-2xl md:-bottom-5 bg-blue-100  rounded-xl left-1/2 -translate-x-1/2">
         <div className="flex flex-col justify-center items-center p-2">
           <span className="text-xs text-red-700 animate-pulse font-medium">
             Time left{" "}
           </span>
-          <CountdownTimer />
+          <CountdownTimer events={events} />
         </div>
-      </div>
+      </div>}
     </header>
   );
 }

@@ -168,8 +168,8 @@ export default function Home() {
                 <HelpCircle className="h-5 w-5 text-indigo-600 shrink-0" />
                 <span className="text-left font-semibold">Eligibility Criteria</span>
               </AccordionTrigger>
-              <AccordionContent className="space-y-3 text-gray-700 pt-2">
-                <ul className="list-disc pl-5 space-y-2">
+              <AccordionContent className="space-y-3 text-gray-700">
+                <ul className="list-disc pl-5 space-y-1">
                   <li>
                     1st & 2nd year undergraduate students (19th and 20th batch)
                   </li>

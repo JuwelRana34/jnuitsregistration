@@ -79,6 +79,8 @@ export default async function BccRegistrationDatas() {
                   <td className="px-1 py-4 whitespace-nowrap">
                     {/* Pass current status and the ID needed to find the row in Google Sheet */}
                     <StatusDropdown
+                    fullName={user.name}
+                      email={user.email}
                       currentStatus={user.status}
                       tnxId={user.TNXid}
                     />

@@ -1,9 +1,9 @@
 "use server";
-import { BccFormSchema, MemberSchema } from "@/app/constants/data";
+import { BccFormSchema, BccMail, MemberSchema } from "@/app/constants/data";
 import { google } from "googleapis";
-import z from "zod";
-import nodemailer from "nodemailer";
 import { revalidatePath } from "next/cache";
+import nodemailer from "nodemailer";
+import z from "zod";
 
 export type MemberType = z.infer<typeof MemberSchema>;
 
@@ -191,7 +191,6 @@ export async function BccRegistration(data: z.infer<typeof BccFormSchema>) {
     const sheets = google.sheets({ version: "v4", auth });
     const spreadsheetId = process.env.GOOGLE_SHEET_ID!;
 
-    
     // ১. শিটের সব ডেটা নিয়ে আসি
     const existingData = await sheets.spreadsheets.values.get({
       spreadsheetId,
@@ -201,27 +200,26 @@ export async function BccRegistration(data: z.infer<typeof BccFormSchema>) {
     const rows = existingData.data.values || [];
 
     // ২. লুপ চালিয়ে চেক করি
-    for (const row of rows) {   
-      const existingStudentId = row[4];
+    for (const row of rows) {
+      const existingEmail = row[2];
       const existingTrxId = row[6];
 
-      // ১. Student ID চেক 
-      if (data.studentId && existingStudentId === data.studentId) {
-        return { 
-          success: false, 
-          error: `Student ID "${data.studentId}" is already registered!` 
+      // ১. Student ID চেক
+      if (data.email && existingEmail === data.email) {
+        return {
+          success: false,
+          error: `User "${data.email}" is already registered!`,
         };
       }
 
       // ২. Transaction ID চেক (এটা ইউনিক হতেই হবে)
       if (data.transactionId && existingTrxId === data.transactionId) {
-        return { 
-          success: false, 
-          error: `Transaction ID "${data.transactionId}" is already used!` 
+        return {
+          success: false,
+          error: `Transaction ID "${data.transactionId}" is already used!`,
         };
       }
     }
-
 
     await sheets.spreadsheets.values.append({
       spreadsheetId,
@@ -230,13 +228,13 @@ export async function BccRegistration(data: z.infer<typeof BccFormSchema>) {
       requestBody: {
         values: [
           [
-            data.fullName,            // Index 0
-            data.phoneNumber,         // Index 1
-            data.email,              // Index 2
-            data.gender,              // Index 3
-            data.studentId,           // Index 5 (Checked above)
-            "pending",                // Index 5
-            data.transactionId,       // Index 6 (Checked above)
+            data.fullName, // Index 0
+            data.phoneNumber, // Index 1
+            data.email, // Index 2
+            data.gender, // Index 3
+            data.studentId, // Index 5 (Checked above)
+            "pending", // Index 5
+            data.transactionId, // Index 6 (Checked above)
             data.paymentScreenshot,
             data.department,
             data.batch,
@@ -254,7 +252,7 @@ export async function BccRegistration(data: z.infer<typeof BccFormSchema>) {
     // ============================================================
     //  (Email Logic)
     // ============================================================
-    
+
     if (data.emailReadConfirmation) {
       const transporter = nodemailer.createTransport({
         service: "gmail",
@@ -264,11 +262,11 @@ export async function BccRegistration(data: z.infer<typeof BccFormSchema>) {
         },
       });
 
-const mailOptions = {
-  from: `"JNU IT Society" <jnuitsbd@gmail.com>`,
-  to: data.email,
-  subject: "Registration Confirmed - BCC Season 8 (JnUITS)",
-  html: `
+      const mailOptions = {
+        from: `"JNU IT Society" <jnuitsbd@gmail.com>`,
+        to: data.email,
+        subject: "Registration Confirmed - BCC Season 8 (JnUITS)",
+        html: `
     <!DOCTYPE html>
     <html>
     <head>
@@ -319,8 +317,8 @@ const mailOptions = {
                     </table>
                   </div>
                   
-                  <p style="color: #94a3b8; font-size: 13px; margin-top: 25px; text-align: center;">
-                    Please wait for the admin to verify your payment. Once verified, your status will be updated.
+                  <p style="color: #e11d48; font-size: 13px; margin-top: 25px; text-align: center;">
+                   **note**: Please wait for the admin to verify your payment. Once verified, you will be notified via email. and complete the next steps.
                   </p>
                 </td>
               </tr>
@@ -340,19 +338,18 @@ const mailOptions = {
     </body>
     </html>
   `,
-};
+      };
 
       await transporter.sendMail(mailOptions);
     }
 
     return { success: true };
-    
   } catch (error) {
     console.error("Server Action Error:", error);
 
-    return { 
-      success: false, 
-      error: error instanceof Error ? error.message : "Registration failed" 
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Registration failed",
     };
   }
 }
@@ -401,7 +398,7 @@ export async function getUsers() {
   }
 }
 
-// bcc section 
+// bcc section
 export async function BccRegistrationData() {
   try {
     const auth = new google.auth.GoogleAuth({
@@ -436,7 +433,6 @@ export async function BccRegistrationData() {
       batch: row[9] || "",
       createdAt: row[11] || "",
       status: row[5] || "",
-
     }));
 
     return users;
@@ -446,7 +442,12 @@ export async function BccRegistrationData() {
   }
 }
 
-export async function updateBccStatus(tnxId: string, newStatus: string) {
+export async function updateBccStatus(
+  fullName: string,
+  email: string,
+  tnxId: string,
+  newStatus: string,
+) {
   if (
     !process.env.GOOGLE_PRIVATE_KEY ||
     !process.env.GOOGLE_CLIENT_EMAIL ||
@@ -500,18 +501,34 @@ export async function updateBccStatus(tnxId: string, newStatus: string) {
       },
     });
 
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.SMTP_EMAIL,
+        pass: process.env.SMTP_PASSWORD,
+      },
+    });
+
+    if (newStatus === "success") {
+    const mailOptions = BccMail(email, fullName);
+
+      await transporter.sendMail(mailOptions);
+    }
     // ৫. ক্যাশ রিভ্যালিডেট করা
-    revalidatePath("/admin"); // বা আপনার ড্যাশবোর্ড পাথ
+    revalidatePath("/admin");
 
     return { success: true, message: newStatus };
   } catch (error) {
     console.error("Update Status Error:", error);
-    return { success: false, error: error instanceof Error ? error.message : "Update failed" };
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Update failed",
+    };
   }
 }
 
 export async function revalidateUserList() {
   "use server";
   // change "/admin/dashboard" to the actual URL path of your admin page
-  revalidatePath("/admin"); 
+  revalidatePath("/admin");
 }

@@ -1,11 +1,12 @@
 import RefreshBtn from "@/components/RefreshBtn";
-import { getActiveEvent } from "@/lib/CounterFetch";
-import EventCard from "./_components/EventCard";
-import EventTimerAdd from "./_components/EventTimerAdd";
+import { Suspense } from "react";
+import { LoaderCircle } from "lucide-react";
+import BccRegistrationDatas from "./_components/BccRegistrationDatas";
+import TableLoader from "./_components/TableLoader";
+import { GetBccRegistrationCount } from "./_components/UserData";
 
-export const revalidate = 86400; // Revalidate every 24 hours
+export const revalidate = 86400;
 export default async function AdminPage() {
-  const events = await getActiveEvent();
   return (
     <div className="min-h-screen bg-gray-50/50 py-10 px-2 sm:px-6 lg:px-8">
       {/* Container */}
@@ -24,7 +25,7 @@ export default async function AdminPage() {
             {/* Added Refresh Button Here */}
             <RefreshBtn />
 
-            {/* <div className="inline-flex items-center rounded-md bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10 space-x-1">
+            <div className="inline-flex items-center rounded-md bg-blue-50 px-3 py-1 text-sm font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10 space-x-1">
               Total:
               <Suspense
                 fallback={
@@ -33,23 +34,23 @@ export default async function AdminPage() {
                   </span>
                 }
               >
-               <GetUserCount />
+               <GetBccRegistrationCount/>
               </Suspense>
-            </div> */}
+            </div>
           </div>
         </div>
 
         {/* Table Card */}
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
           {/* User Data Table Component */}
-          {/* <Suspense fallback={<TableLoader />}>
-            <UserData />
-          </Suspense> */}
+          <Suspense fallback={<TableLoader />}>
+            <BccRegistrationDatas />
+          </Suspense>
         </div>
       </div>
-      <EventTimerAdd />
+      {/* <EventTimerAdd /> */}
       {/* ইভেন্ট লিস্ট কন্টেইনার */}
-      <div className="space-y-4">
+      {/* <div className="space-y-4">
         {events?.length === 0 ? (
           <p className="text-gray-500 text-center">No events found.</p>
         ) : (
@@ -58,7 +59,7 @@ export default async function AdminPage() {
             <EventCard key={event.id} event={event} />
           ))
         )}
-      </div>
+      </div> */}
     </div>
   );
 }

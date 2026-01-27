@@ -4,20 +4,19 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import {
-  CalendarDays,
   CheckCircle2,
   Clock,
   CreditCard,
   Info,
+  Landmark,
   MapPin,
-  MonitorPlay, 
-  Smartphone, 
-  Landmark, 
+  MonitorPlay,
+  Smartphone,
 } from "lucide-react";
-
+import Countdown from "./CountDown";
+import { RegistrationDeadline } from "@/app/constants/data";
 
 export default function BccDescription() {
   return (
@@ -42,8 +41,11 @@ export default function BccDescription() {
       </div>
 
       {/* Accordion Section */}
-      <Accordion type="single" collapsible className="w-full bg-white rounded-lg border shadow-sm">
-        
+      <Accordion
+        type="single"
+        collapsible
+        className="w-full bg-white rounded-lg border shadow-sm"
+      >
         {/* 1. Course Details */}
         <AccordionItem value="item-1">
           <AccordionTrigger className="px-4 hover:no-underline hover:bg-gray-50">
@@ -89,96 +91,133 @@ export default function BccDescription() {
         </AccordionItem>
 
         {/* 2. Registration Fees & Payment Info */}
-<AccordionItem value="item-2">
-  <AccordionTrigger className="px-4 hover:no-underline hover:bg-gray-50">
-    <div className="flex items-center gap-2 text-left">
-      <CreditCard className="h-5 w-5 text-green-600" />
-      <span className="font-semibold text-gray-800">
-        Registration Fees & Payment
-      </span>
-    </div>
-  </AccordionTrigger>
-  <AccordionContent className="px-4 pb-4">
-    <div className="space-y-6 mt-2">
-      
-      {/* Fee Structure */}
-      <div className="space-y-3">
-        <div className="flex justify-between items-center border-b pb-2">
-          <span className="text-gray-700">General (Students-JnU)</span>
-          <span className="font-bold text-gray-900">500 BDT</span>
-        </div>
-        <div className="flex justify-between items-center border-b pb-2">
-          <span className="text-gray-700">General (Others)</span>
-          <span className="font-bold text-gray-900">1000 BDT</span>
-        </div>
-        <div className="flex justify-between items-center border-b pb-2 bg-yellow-50 p-2 rounded">
-          <div className="flex flex-col">
-            <span className="text-gray-900 font-medium">JnUITS General Members</span>
-            <span className="text-xs text-yellow-700">*Collect Coupon From Messenger</span>
-          </div>
-          <span className="font-bold text-green-700">200 BDT</span>
-        </div>
-      </div>
+        <AccordionItem value="item-2">
+          <AccordionTrigger className="px-4 hover:no-underline hover:bg-gray-50">
+            <div className="flex items-center gap-2 text-left">
+              <CreditCard className="h-5 w-5 text-green-600" />
+              <span className="font-semibold text-gray-800">
+                Registration Fees & Payment
+              </span>
+            </div>
+          </AccordionTrigger>
+          <AccordionContent className="px-4 pb-4">
+            <div className="space-y-6 mt-2">
+              {/* Fee Structure */}
+              <div className="space-y-3">
+                <div className="flex justify-between items-center border-b pb-2">
+                  <span className="text-gray-700">General (Students-JnU)</span>
+                  <span className="font-bold text-gray-900">500 BDT</span>
+                </div>
+                <div className="flex justify-between items-center border-b pb-2">
+                  <span className="text-gray-700">General (Others)</span>
+                  <span className="font-bold text-gray-900">1000 BDT</span>
+                </div>
+                <div className="flex justify-between items-center border-b pb-2 bg-yellow-50 p-2 rounded">
+                  <div className="flex flex-col">
+                    <span className="text-gray-900 font-medium">
+                      JnUITS General Members
+                    </span>
+                    <span className="text-xs text-yellow-700">
+                      *Collect Coupon From Messenger
+                    </span>
+                  </div>
+                  <span className="font-bold text-green-700">200 BDT</span>
+                </div>
+              </div>
 
-      <h3 className="font-bold text-gray-900 pt-2 border-t">Payment Methods</h3>
+              <h3 className="font-bold text-gray-900 pt-2 border-t">
+                Payment Methods
+              </h3>
 
-      {/* Option A: Mobile Wallet */}
-      <div className="bg-pink-50 p-4 rounded-lg border border-pink-100">
-        <div className="flex items-center gap-2 mb-3">
-          <Smartphone className="h-5 w-5 text-pink-600" />
-          <h4 className="font-bold text-gray-800">Mobile Wallet (bKash / Nagad)</h4>
-        </div>
-        
-        {/* Number Display */}
-        <div className="bg-white p-3 rounded border border-pink-200 text-center mb-4">
-          <p className="text-xs text-gray-500 uppercase tracking-wide">Send Money (Personal)</p>
-          <div className="flex justify-center items-center gap-2 mt-1">
-            <p className="text-xl font-mono font-bold text-pink-600 select-all">01740960116</p>
-          </div>
-          <p className="text-xs text-gray-400 mt-1">Treasurer JnUITS</p>
-        </div>
+              {/* Option A: Mobile Wallet */}
+              <div className="bg-pink-50 p-4 rounded-lg border border-pink-100">
+                <div className="flex items-center gap-2 mb-3">
+                  <Smartphone className="h-5 w-5 text-pink-600" />
+                  <h4 className="font-bold text-gray-800">
+                    Mobile Wallet (bKash / Nagad)
+                  </h4>
+                </div>
 
-        {/* Steps */}
-        <ul className="text-sm text-gray-700 space-y-2 list-disc pl-4">
-          <li>Select the <strong>Send Money</strong> option.</li>
-          <li>
-            Amount: <span className="font-bold text-pink-700">510 BDT</span> (JnU) / <span className="font-bold text-pink-700">1020 BDT</span> (Others).
-          </li>
-          <li>Reference: Type your <strong>Student ID</strong>.</li>
-          <li>Take a <strong>Screenshot</strong> of the confirmation.</li>
-        </ul>
-      </div>
+                {/* Number Display */}
+                <div className="bg-white p-3 rounded border border-pink-200 text-center mb-4">
+                  <p className="text-xs text-gray-500 uppercase tracking-wide">
+                    Send Money (Personal)
+                  </p>
+                  <div className="flex justify-center items-center gap-2 mt-1">
+                    <p className="text-xl font-mono font-bold text-pink-600 select-all">
+                      01740960116
+                    </p>
+                  </div>
+                  <p className="text-xs text-gray-400 mt-1">Treasurer JnUITS</p>
+                </div>
 
-      {/* Option B: Bank Deposit */}
-      <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
-        <div className="flex items-center gap-2 mb-3">
-          <Landmark className="h-5 w-5 text-gray-700" />
-          <h4 className="font-bold text-gray-800">Bank Deposit (Agrani Bank)</h4>
-        </div>
+                {/* Steps */}
+                <ul className="text-sm text-gray-700 space-y-2 list-disc pl-4">
+                  <li>
+                    Select the <strong>Send Money</strong> option.
+                  </li>
+                  <li>
+                    Amount:{" "}
+                    <span className="font-bold text-pink-700">510 BDT</span>{" "}
+                    (JnU) /{" "}
+                    <span className="font-bold text-pink-700">1020 BDT</span>{" "}
+                    (Others).
+                  </li>
+                  <li>
+                    Reference: Type your <strong>Student ID</strong>.
+                  </li>
+                  <li>
+                    Take a <strong>Screenshot</strong> of the confirmation.
+                  </li>
+                </ul>
+              </div>
 
-        <div className="text-sm text-gray-600 mb-4 space-y-1 bg-white p-3 rounded border">
-          <p><span className="font-semibold">Branch:</span> Jagannath University Branch</p>
-          <p><span className="font-semibold">Acc Name:</span> Jagannath University IT Society</p>
-          <p><span className="font-semibold">Acc Number:</span> <span className="font-mono font-bold text-gray-900 select-all">0200013199689</span></p>
-        </div>
+              {/* Option B: Bank Deposit */}
+              <div className="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                <div className="flex items-center gap-2 mb-3">
+                  <Landmark className="h-5 w-5 text-gray-700" />
+                  <h4 className="font-bold text-gray-800">
+                    Bank Deposit (Agrani Bank)
+                  </h4>
+                </div>
 
-        <ul className="text-sm text-gray-700 space-y-2 list-disc pl-4">
-          <li>Fill up a deposit form.</li>
-          <li>
-            Deposit <span className="font-bold">500 BDT</span> (JnU) / <span className="font-bold">1000 BDT</span> (Others).
-          </li>
-          <li>Collect the slip after deposit.</li>
-          <li>Take a clear <strong>Photo</strong> of the payment slip.</li>
-        </ul>
-      </div>
+                <div className="text-sm text-gray-600 mb-4 space-y-1 bg-white p-3 rounded border">
+                  <p>
+                    <span className="font-semibold">Branch:</span> Jagannath
+                    University Branch
+                  </p>
+                  <p>
+                    <span className="font-semibold">Acc Name:</span> Jagannath
+                    University IT Society
+                  </p>
+                  <p>
+                    <span className="font-semibold">Acc Number:</span>{" "}
+                    <span className="font-mono font-bold text-gray-900 select-all">
+                      0200013199689
+                    </span>
+                  </p>
+                </div>
 
-      <div className="text-xs text-center text-gray-500 italic bg-blue-50 p-2 rounded">
-        😊 Please ensure all details are correct before making the payment.
-      </div>
+                <ul className="text-sm text-gray-700 space-y-2 list-disc pl-4">
+                  <li>Fill up a deposit form.</li>
+                  <li>
+                    Deposit <span className="font-bold">500 BDT</span> (JnU) /{" "}
+                    <span className="font-bold">1000 BDT</span> (Others).
+                  </li>
+                  <li>Collect the slip after deposit.</li>
+                  <li>
+                    Take a clear <strong>Photo</strong> of the payment slip.
+                  </li>
+                </ul>
+              </div>
 
-    </div>
-  </AccordionContent>
-</AccordionItem>
+              <div className="text-xs text-center text-gray-500 italic bg-blue-50 p-2 rounded">
+                😊 Please ensure all details are correct before making the
+                payment.
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
 
         {/* 3. How to Register */}
         <AccordionItem value="item-3">
@@ -231,21 +270,12 @@ export default function BccDescription() {
       </Accordion>
 
       {/* Footer / Deadline Section */}
-      <Alert className="bg-blue-200 text-white border-none">
-        <CalendarDays className="h-4 w-4 text-blue-800 " />
-        <AlertTitle className="text-blue-800">Registration Deadline</AlertTitle>
-        <AlertDescription className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
-          <span>5 February, 2026</span>
-          <div className="flex gap-4 text-sm underline text-gray-600">
-             <a href="https://jnuits.org.bd/bcc" target="_blank" rel="noreferrer" className="hover:text-white transition">
-                Facebook Event
-             </a>
-             <a href="mailto:itsociety@association.jnu.ac.bd" className="hover:text-white transition">
-                Email Support
-             </a>
-          </div>
-        </AlertDescription>
-      </Alert>
+
+      <Countdown
+        date={RegistrationDeadline}
+        examName="Registration Deadline"
+        reslut="Registration Closed, Stay Tuned for Next Season!"
+      />
     </div>
   );
 }

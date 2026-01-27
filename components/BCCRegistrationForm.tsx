@@ -2,11 +2,15 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import * as z from "zod";
 
-import { BccFormSchema, DEPARTMENTS } from "@/app/constants/data";
+import {
+  BccFormSchema,
+  DEPARTMENTS,
+  RegistrationDeadline,
+} from "@/app/constants/data";
 import { FileUploadField } from "./HandelUpload";
 
 import { deleteImage } from "@/action/imageDelete";
@@ -42,11 +46,11 @@ import { uploadToImageKit } from "@/lib/handelUpload";
 import { toast } from "sonner";
 
 export default function BCCRegistrationForm() {
+  const [closeRegistration, setCloseRegistration] = useState(false);
   const [loading, setLoading] = useState(false);
   const [couponVerified, setCouponVerified] = useState(false);
   const [couponInput, setCouponInput] = useState("");
   const [paymentPreview, setPaymentPreview] = useState<string | null>(null);
-
   const [paymentFile, setPaymentFile] = useState<File | null>(null);
 
   // --- Form Initialization ---
@@ -186,6 +190,16 @@ export default function BCCRegistrationForm() {
     "20th",
   ];
   const skillOptions = ["No Experience", "Basic", "Intermediate", "Proficient"];
+
+  useEffect(() => {
+    const isClosedRegistration = new Date(RegistrationDeadline) < new Date();
+    if (isClosedRegistration) {
+      toast.error(
+        "Registration period has ended. You can no longer register for BCC.",
+      );
+      setCloseRegistration(true);
+    }
+  }, []);
 
   return (
     <div className="min-h-screen flex justify-center items-center py-10">
@@ -592,7 +606,7 @@ export default function BCCRegistrationForm() {
               <Button
                 type="submit"
                 className="w-full relative overflow-hidden bg-blue-500 hover:bg-blue-600 transition-all"
-                disabled={loading}
+                disabled={loading || closeRegistration}
               >
                 {/* ✅ Fix: Valid Tailwind Gradient */}
                 <div className="absolute inset-0 -translate-x-full animate-shimmer pointer-events-none">

@@ -164,3 +164,6 @@ export const BccFormSchema = z.object({
   paymentScreenshotFileId: z.string().optional().or(z.literal("")),
   paidAmount: z.number().optional(),
 });
+
+
+export const RegistrationDeadline = "2026-02-15T23:59:59Z";

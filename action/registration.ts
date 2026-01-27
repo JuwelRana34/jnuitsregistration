@@ -401,7 +401,114 @@ export async function getUsers() {
   }
 }
 
+// bcc section 
+export async function BccRegistrationData() {
+  try {
+    const auth = new google.auth.GoogleAuth({
+      credentials: {
+        client_email: process.env.GOOGLE_CLIENT_EMAIL!,
+        private_key: process.env.GOOGLE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
+      },
+      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+    });
 
+    const sheets = google.sheets({ version: "v4", auth });
+
+    // ২. ডাটা রিড করা (values.get)
+    const response = await sheets.spreadsheets.values.get({
+      spreadsheetId: process.env.GOOGLE_SHEET_ID!,
+      range: "bccRegistration!A2:Q",
+    });
+
+    // ৩. ডাটা রিটার্ন করা
+    const rows = response.data.values;
+
+    if (!rows || rows.length === 0) {
+      return [];
+    }
+
+    // অ্যারে থেকে অবজেক্টে কনভার্ট করা
+    const users = rows.map((row) => ({
+      name: row[0] || "",
+      email: row[2] || "",
+      phone: row[1] || "",
+      TNXid: row[6] || "",
+      batch: row[9] || "",
+      createdAt: row[11] || "",
+      status: row[5] || "",
+
+    }));
+
+    return users;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+    return [];
+  }
+}
+
+export async function updateBccStatus(tnxId: string, newStatus: string) {
+  if (
+    !process.env.GOOGLE_PRIVATE_KEY ||
+    !process.env.GOOGLE_CLIENT_EMAIL ||
+    !process.env.GOOGLE_SHEET_ID
+  ) {
+    throw new Error("Env variables are missing");
+  }
+
+  try {
+    // ১. অথেনটিকেশন (আপনার বিদ্যমান কোড অনুযায়ী)
+    const auth = new google.auth.GoogleAuth({
+      credentials: {
+        client_email: process.env.GOOGLE_CLIENT_EMAIL!,
+        private_key: process.env.GOOGLE_PRIVATE_KEY!.replace(/\\n/g, "\n"),
+      },
+      scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+    });
+
+    const sheets = google.sheets({ version: "v4", auth });
+    const spreadsheetId = process.env.GOOGLE_SHEET_ID!;
+
+    // ২. প্রথমে সব Transaction ID নিয়ে আসি (Column N)
+    // Sheet1 এ Transaction ID আছে ১৪তম কলামে (N)
+    const idList = await sheets.spreadsheets.values.get({
+      spreadsheetId,
+      range: "bccRegistration!G:G", // G কলামে সব Transaction ID আছে
+    });
+
+    const rows = idList.data.values;
+    if (!rows) return { success: false, message: "No data found" };
+
+    // ৩. নির্দিষ্ট Transaction ID এর রো নাম্বার বের করা
+    // findIndex ব্যবহার করছি। যেহেতু শিট ১ থেকে শুরু হয়, তাই index + 1 হবে।
+    const rowIndex = rows.findIndex((row) => row[0] === tnxId);
+
+    if (rowIndex === -1) {
+      return { success: false, message: "Transaction ID not found" };
+    }
+
+    // Google Sheets এ রো ১ থেকে শুরু হয়, তাই (rowIndex + 1)
+    const sheetRowNumber = rowIndex + 1;
+
+    // ৪. স্ট্যাটাস আপডেট করা (Column F)
+    // আপনার ডাটা অনুযায়ী Status আছে ৭ম কলামে (F)
+    await sheets.spreadsheets.values.update({
+      spreadsheetId,
+      range: `bccRegistration!F${sheetRowNumber}`, // যেমন: bccRegistration!F5
+      valueInputOption: "USER_ENTERED",
+      requestBody: {
+        values: [[newStatus]],
+      },
+    });
+
+    // ৫. ক্যাশ রিভ্যালিডেট করা
+    revalidatePath("/admin"); // বা আপনার ড্যাশবোর্ড পাথ
+
+    return { success: true, message: newStatus };
+  } catch (error) {
+    console.error("Update Status Error:", error);
+    return { success: false, error: error instanceof Error ? error.message : "Update failed" };
+  }
+}
 
 export async function revalidateUserList() {
   "use server";

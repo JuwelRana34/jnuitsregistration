@@ -1,8 +1,9 @@
-import { BccRegistrationData, getUsers } from "@/action/registration";
-import ImagekitImageShow from "@/components/ImagekitImageShow";
+import { BccRegistrationData } from "@/action/registration";
+import StatusDropdown from "./StatusDropdown";
 
-export default async function UserData() {
-  const users = await getUsers();
+export default async function BccRegistrationDatas() {
+  const users = await BccRegistrationData();
+
   return (
     <>
       {/* Responsive Table Wrapper */}
@@ -42,16 +43,8 @@ export default async function UserData() {
                 >
                   {/* Column: Profile */}
                   <td className="px-6 py-4">
-                    <div className="flex items-center gap-4">
-                      {/* 1. Add specific classes here to target the image inside */}
-                      <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full border border-gray-200 [&_img]:h-full [&_img]:w-full [&_img]:object-cover object-center">
-                        {/* 2. You don't need the extra div wrapper anymore */}
-                        <ImagekitImageShow image={user.photo} />
-                      </div>
-
-                      <div className="font-medium text-gray-900 capitalize">
-                        {user.name}
-                      </div>
+                    <div className="font-medium text-gray-900 capitalize">
+                      {user.name}
                     </div>
                   </td>
 
@@ -82,19 +75,13 @@ export default async function UserData() {
                     </div>
                   </td>
 
-                  {/* Column: Status */}
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span
-                      className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium capitalize ring-1 ring-inset ${
-                        user.status === "success"
-                          ? "bg-green-50 text-green-700 ring-green-600/20"
-                          : user.status === "cancel"
-                          ? "bg-red-50 text-red-700 ring-red-600/10"
-                          : "bg-yellow-50 text-yellow-800 ring-yellow-600/20"
-                      }`}
-                    >
-                      {user.status}
-                    </span>
+                  {/* Column: Status (UPDATED) */}
+                  <td className="px-1 py-4 whitespace-nowrap">
+                    {/* Pass current status and the ID needed to find the row in Google Sheet */}
+                    <StatusDropdown
+                      currentStatus={user.status}
+                      tnxId={user.TNXid}
+                    />
                   </td>
 
                   {/* Column: Date */}
@@ -140,9 +127,4 @@ export default async function UserData() {
       </div>
     </>
   );
-}
-
-export async function GetBccRegistrationCount(){
-  const users = await BccRegistrationData();
-  return  <span className="px-1">{users.length}</span>;
 }

@@ -27,7 +27,7 @@ export const uploadToImageKit = async (file: File) => {
     token,
     signature,
     publicKey,
-    folder: "/member_uploads",
+    folder: "/BccPaymentScreenshots",
     useUniqueFileName: true,
   });
   return response;

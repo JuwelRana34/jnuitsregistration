@@ -110,7 +110,7 @@ export const MemberSchema = z.object({
 
 export const BccFormSchema = z.object({
   // Category & Payment
-  category: z.enum(["jnu_student", "jnuits_member", "others"]),
+  category: z.enum(["JnU Student", "others"]),
   couponCode: z.string().optional(),
 
   // Personal Info
@@ -165,15 +165,14 @@ export const BccFormSchema = z.object({
   paidAmount: z.number().optional(),
 });
 
-
 export const RegistrationDeadline = "2026-02-15T23:59:59Z";
 
 export const BccMail = (email: string, fullName: string) => {
-    return {
-        from: `"JNU IT Society" <jnuitsbd@gmail.com>`,
-        to: email,
-        subject: "Registration Confirmed - BCC Season 8 (JnUITS)",
-        html: `
+  return {
+    from: `"JNU IT Society" <jnuitsbd@gmail.com>`,
+    to: email,
+    subject: "Registration Confirmed - BCC Season 8 (JnUITS)",
+    html: `
     <!DOCTYPE html>
     <html>
     <head>
@@ -255,5 +254,5 @@ export const BccMail = (email: string, fullName: string) => {
     </body>
     </html>
   `,
-      };
-}
+  };
+};

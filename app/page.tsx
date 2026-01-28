@@ -18,7 +18,7 @@ export default function HomePage() {
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
               <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
             </span>
-            Registration Open until{" "}
+            BCC Registration Open until{" "}
             {new Date(RegistrationDeadline).toLocaleDateString("en-US", {
               month: "long",
               day: "numeric",
@@ -60,6 +60,11 @@ export default function HomePage() {
               </Button>
             </Link>
           </div>
+
+          <div className="mt-5 text-sm text-rose-500 bg-red-200 px-4 py-2 outline-1 outline-red-300 rounded-full inline-block font-medium animate-pulse">
+  <span>New member and ODDO workshop registration is now closed!!  </span>
+</div>
+
         </div>
       </section>
 

@@ -44,6 +44,7 @@ import {
 } from "@/components/ui/select";
 import { uploadToImageKit } from "@/lib/handelUpload";
 import { toast } from "sonner";
+import { couponVerify } from "@/action/couponVerify";
 
 export default function BCCRegistrationForm() {
   const [closeRegistration, setCloseRegistration] = useState(false);
@@ -57,7 +58,7 @@ export default function BCCRegistrationForm() {
   const form = useForm<z.infer<typeof BccFormSchema>>({
     resolver: zodResolver(BccFormSchema),
     defaultValues: {
-      category: "jnu_student",
+      category: "JnU Student",
       emailReadConfirmation: false,
       skill_computerBasics: "Basic",
       skill_msOffice: "Basic",
@@ -96,20 +97,20 @@ export default function BCCRegistrationForm() {
     name: "category",
   });
 
-  // ✅ Fix: Derived State for Fee (No useEffect)
-  const SECRET_COUPON = "JNUITS2026";
+
   let fee = 500;
-  if (selectedCategory === "jnuits_member") {
+  if (selectedCategory === "JnU Student") {
     fee = couponVerified ? 200 : 500;
   } else if (selectedCategory === "others") {
     fee = 1000;
   }
 
   // --- Handlers ---
-  const handleCouponVerify = () => {
-    if (couponInput === SECRET_COUPON) {
+  const handleCouponVerify = async () => {
+    const res = await couponVerify(couponInput);
+    if (res && res.isValid) {
       setCouponVerified(true);
-      toast.success("Coupon Applied! Fee is now 200 BDT.");
+      toast.success(`Coupon Applied! Fee is now ${res.discount} BDT`);
     } else {
       setCouponVerified(false);
       toast.error("Invalid Coupon, Please enter a valid coupon code.");
@@ -140,13 +141,11 @@ export default function BCCRegistrationForm() {
         paymentScreenshot: paymentRes.url,
         paymentScreenshotFileId: paymentRes.fileId,
         paidAmount: fee,
+        couponCode:couponInput
       };
-
-      console.log("Submitting Payload:", finalData, paymentRes.url);
 
       // ৪. সার্ভার অ্যাকশন কল
       const res = await BccRegistration(finalData);
-      console.log("duplicare", res);
       if (res.success === false) {
         if (paymentRes.fileId) {
           await deleteImage(paymentRes.fileId);
@@ -236,20 +235,13 @@ export default function BCCRegistrationForm() {
                           defaultValue={field.value}
                           className="grid grid-cols-1 md:grid-cols-3 gap-4"
                         >
+                        
                           <FormItem className="flex items-center space-x-3 space-y-0">
                             <FormControl>
-                              <RadioGroupItem value="jnu_student" />
+                              <RadioGroupItem value="JnU Student" />
                             </FormControl>
                             <FormLabel className="font-normal cursor-pointer">
-                              JnU Student (500 BDT)
-                            </FormLabel>
-                          </FormItem>
-                          <FormItem className="flex items-center space-x-3 space-y-0">
-                            <FormControl>
-                              <RadioGroupItem value="jnuits_member" />
-                            </FormControl>
-                            <FormLabel className="font-normal cursor-pointer">
-                              JnUITS Member (200 BDT)
+                              JnU Student
                             </FormLabel>
                           </FormItem>
                           <FormItem className="flex items-center space-x-3 space-y-0">
@@ -257,7 +249,7 @@ export default function BCCRegistrationForm() {
                               <RadioGroupItem value="others" />
                             </FormControl>
                             <FormLabel className="font-normal cursor-pointer">
-                              Others (1000 BDT)
+                              Others
                             </FormLabel>
                           </FormItem>
                         </RadioGroup>
@@ -267,7 +259,7 @@ export default function BCCRegistrationForm() {
                   )}
                 />
 
-                {selectedCategory === "jnuits_member" && (
+                {selectedCategory === "JnU Student" && (
                   <div className="mt-4 flex gap-2 items-end max-w-sm animate-in fade-in slide-in-from-top-2">
                     <div className="grid w-full items-center gap-1.5">
                       <label className="text-sm font-medium">

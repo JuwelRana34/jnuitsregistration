@@ -244,6 +244,7 @@ export async function BccRegistration(data: z.infer<typeof BccFormSchema>) {
             data.paidAmount,
             data.whatsappNumber,
             data.emailReadConfirmation ? "Yes" : "No",
+            data.couponCode ?? "",
           ],
         ],
       },
@@ -414,7 +415,7 @@ export async function BccRegistrationData() {
     // ২. ডাটা রিড করা (values.get)
     const response = await sheets.spreadsheets.values.get({
       spreadsheetId: process.env.GOOGLE_SHEET_ID!,
-      range: "bccRegistration!A2:Q",
+      range: "bccRegistration!A2:R",
     });
 
     // ৩. ডাটা রিটার্ন করা
@@ -433,6 +434,7 @@ export async function BccRegistrationData() {
       batch: row[9] || "",
       createdAt: row[11] || "",
       status: row[5] || "",
+      couponCode: row[16] || "",
     }));
 
     return users;

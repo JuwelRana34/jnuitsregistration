@@ -1,5 +1,6 @@
 import { BccRegistrationData } from "@/action/registration";
 import StatusDropdown from "./StatusDropdown";
+import TextCopyBtn from "./TextCopyBtn";
 
 export default async function BccRegistrationDatas() {
   const users = await BccRegistrationData();
@@ -71,8 +72,17 @@ export default async function BccRegistrationDatas() {
                       <span>TNX:</span>
                       <span className="bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200">
                         {user.TNXid}
-                      </span>
+                      </span> <TextCopyBtn text={user.TNXid} />
                     </div>
+                    {user.couponCode && (
+                      <div className="flex pt-3 items-center gap-1.5 text-gray-600 font-mono text-xs">
+                      <span>COUPON:</span>
+                      <span className="bg-blue-100 px-1.5 py-0.5 rounded border border-blue-200">
+                        {user.couponCode}
+                      </span>
+                      <TextCopyBtn text={user.couponCode} />
+                    </div>
+                    )}
                   </td>
 
                   {/* Column: Status (UPDATED) */}

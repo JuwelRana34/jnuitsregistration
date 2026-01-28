@@ -15,7 +15,7 @@ export default function StatusDropdown({fullName, email, currentStatus, tnxId }:
     try {
       const res = await updateBccStatus(fullName,email,tnxId, newStatus);
       if (res.success) {
-        toast.success(`Status Updated Successfully — Status changed to ${res.message}`);
+        toast.success(`Status Updated Successfully — Status changed to ${res.message} for ${fullName}`);
       }
     } catch {
       toast.error("Failed to update status. Please try again.");

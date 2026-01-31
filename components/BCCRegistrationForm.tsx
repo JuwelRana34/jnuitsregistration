@@ -113,7 +113,7 @@ export default function BCCRegistrationForm() {
       toast.success(`Coupon Applied! Fee is now ${res.discount} BDT`);
     } else {
       setCouponVerified(false);
-      toast.error("Invalid Coupon, Please enter a valid coupon code.");
+      toast.error(`${res?.discount || "Invalid Coupon Code"}`);
     }
   };
 

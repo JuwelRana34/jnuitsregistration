@@ -2,7 +2,7 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, Loader2 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import * as z from "zod";
 
@@ -13,6 +13,7 @@ import {
 } from "@/app/constants/data";
 import { FileUploadField } from "./HandelUpload";
 
+import { couponVerify } from "@/action/couponVerify";
 import { deleteImage } from "@/action/imageDelete";
 import { BccRegistration } from "@/action/registration";
 import { Button } from "@/components/ui/button";
@@ -44,7 +45,6 @@ import {
 } from "@/components/ui/select";
 import { uploadToImageKit } from "@/lib/handelUpload";
 import { toast } from "sonner";
-import { couponVerify } from "@/action/couponVerify";
 
 export default function BCCRegistrationForm() {
   const [closeRegistration, setCloseRegistration] = useState(false);
@@ -53,7 +53,7 @@ export default function BCCRegistrationForm() {
   const [couponInput, setCouponInput] = useState("");
   const [paymentPreview, setPaymentPreview] = useState<string | null>(null);
   const [paymentFile, setPaymentFile] = useState<File | null>(null);
-
+  const [isPending, couponTransition] = useTransition();
   // --- Form Initialization ---
   const form = useForm<z.infer<typeof BccFormSchema>>({
     resolver: zodResolver(BccFormSchema),
@@ -97,7 +97,6 @@ export default function BCCRegistrationForm() {
     name: "category",
   });
 
-
   let fee = 500;
   if (selectedCategory === "JnU Student") {
     fee = couponVerified ? 200 : 500;
@@ -107,14 +106,19 @@ export default function BCCRegistrationForm() {
 
   // --- Handlers ---
   const handleCouponVerify = async () => {
-    const res = await couponVerify(couponInput);
-    if (res && res.isValid) {
-      setCouponVerified(true);
-      toast.success(`Coupon Applied! Fee is now ${res.discount} BDT`);
-    } else {
-      setCouponVerified(false);
-      toast.error(`${res?.discount || "Invalid Coupon Code"}`);
-    }
+    couponTransition(async () => {
+      // ১. সার্ভার অ্যাকশন কল
+      const res = await couponVerify(couponInput);
+
+      // ২. রেসপন্স চেক করা
+      if (res && res.isValid) {
+        setCouponVerified(true);
+        toast.success(`Coupon Applied! Fee is now ${res.discount} BDT`);
+      } else {
+        setCouponVerified(false);
+        toast.error(`${res?.discount || "Invalid Coupon Code"}`);
+      }
+    });
   };
 
   async function onSubmit(values: z.infer<typeof BccFormSchema>) {
@@ -141,7 +145,7 @@ export default function BCCRegistrationForm() {
         paymentScreenshot: paymentRes.url,
         paymentScreenshotFileId: paymentRes.fileId,
         paidAmount: fee,
-        couponCode:couponInput
+        couponCode: couponInput,
       };
 
       // ৪. সার্ভার অ্যাকশন কল
@@ -235,7 +239,6 @@ export default function BCCRegistrationForm() {
                           defaultValue={field.value}
                           className="grid grid-cols-1 md:grid-cols-3 gap-4"
                         >
-                        
                           <FormItem className="flex items-center space-x-3 space-y-0">
                             <FormControl>
                               <RadioGroupItem value="JnU Student" />
@@ -275,11 +278,15 @@ export default function BCCRegistrationForm() {
                     <Button
                       type="button"
                       onClick={handleCouponVerify}
-                      disabled={couponVerified}
+                      // isPending থাকলে বাটন ডিজেবল হবে
+                      disabled={couponVerified || isPending}
                       variant={couponVerified ? "secondary" : "default"}
                     >
-                      {couponVerified ? (
-                        <Check className="w-4 h-4 mr-1" />
+                      {/* লোডিং এর সময় স্পিনার দেখাবে */}
+                      {isPending ? (
+                        <Loader2 className="w-4 h-4 mr-1 animate-spin" />
+                      ) : couponVerified ? (
+                        <Check className="w-4 h-4  p-1 mr-1 text-green-500" />
                       ) : (
                         "Apply"
                       )}

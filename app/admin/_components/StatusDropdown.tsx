@@ -1,9 +1,20 @@
 "use client";
 import { updateBccStatus } from "@/action/registration";
+import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
-export default function StatusDropdown({fullName, email, currentStatus, tnxId }: {fullName: string, email: string, currentStatus: string; tnxId: string}) {
+export default function StatusDropdown({
+  fullName,
+  email,
+  currentStatus,
+  tnxId,
+}: {
+  fullName: string;
+  email: string;
+  currentStatus: string;
+  tnxId: string;
+}) {
   const [status, setStatus] = useState(currentStatus);
   const [loading, setLoading] = useState(false);
 
@@ -13,9 +24,11 @@ export default function StatusDropdown({fullName, email, currentStatus, tnxId }:
     setLoading(true);
 
     try {
-      const res = await updateBccStatus(fullName,email,tnxId, newStatus);
+      const res = await updateBccStatus(fullName, email, tnxId, newStatus);
       if (res.success) {
-        toast.success(`Status Updated Successfully — Status changed to ${res.message} for ${fullName}`);
+        toast.success(
+          `Status Updated Successfully — Status changed to ${res.message} for ${fullName}`,
+        );
       }
     } catch {
       toast.error("Failed to update status. Please try again.");
@@ -43,6 +56,9 @@ export default function StatusDropdown({fullName, email, currentStatus, tnxId }:
         <option value="success">Success</option>
         <option value="cancel">Cancel</option>
       </select>
+      {loading && (
+        <Loader2 className="absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 animate-spin text-gray-500" />
+      )}
     </div>
   );
 }

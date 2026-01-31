@@ -1,5 +1,8 @@
+
 import BCCRegistrationForm from "@/components/BCCRegistrationForm";
 import BccDescription from "./_components/BccDescription";
+
+
 export default function BCCPage() {
   return (
     <div className="min-h-screen bg-gray-50 py-12">

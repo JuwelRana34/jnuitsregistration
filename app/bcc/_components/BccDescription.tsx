@@ -1,3 +1,5 @@
+"use client";
+import { RegistrationDeadline } from "@/app/constants/data";
 import {
   Accordion,
   AccordionContent,
@@ -15,9 +17,18 @@ import {
   MonitorPlay,
   Smartphone,
 } from "lucide-react";
+import dynamic from "next/dynamic";
+import Image from "next/image";
 import Countdown from "./CountDown";
-import { RegistrationDeadline } from "@/app/constants/data";
 
+const PDFViewer = dynamic(() => import("@/components/PDFViewer"), {
+  ssr: false,
+  loading: () => (
+    <div className="p-4 text-center bg-gray-100 rounded">
+      Loading PDF Module...
+    </div>
+  ),
+});
 export default function BccDescription() {
   return (
     <div className="w-full max-w-3xl mx-auto space-y-6 p-1">
@@ -79,13 +90,15 @@ export default function BccDescription() {
                   <p className="text-sm">Offline at Computer Lab</p>
                 </div>
               </div>
-              <div className="flex items-start gap-3 p-3 bg-gray-50 rounded-md">
+            </div>
+            <div>
+              <div className="flex justify-center items-center gap-2 py-2">
                 <Info className="h-5 w-5 text-indigo-500 mt-0.5" />
-                <div>
-                  <p className="font-semibold text-gray-900">Module</p>
-                  <p className="text-sm">Coming Soon</p>
-                </div>
+
+                <p className="font-semibold text-gray-900">Module</p>
               </div>
+
+              <PDFViewer pdfUrl="https://ik.imagekit.io/r9aeycvzdd/BCC%20Modulev8.pdf?updatedAt=1769872775946" />
             </div>
           </AccordionContent>
         </AccordionItem>
@@ -276,6 +289,15 @@ export default function BccDescription() {
         examName="Registration Deadline"
         reslut="Registration Closed, Stay Tuned for Next Season!"
       />
+      <div className=" w-full h-auto">
+        <Image
+          src={"/Bcc.png"}
+          width={500}
+          height={500}
+          alt="BCC Logo"
+          className="mx-auto my-4"
+        ></Image>
+      </div>
     </div>
   );
 }

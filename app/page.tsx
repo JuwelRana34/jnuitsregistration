@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, BookOpen, Cpu, Trophy } from "lucide-react";
+import { ArrowRight, BookOpen, Cpu, Monitor, Trophy } from "lucide-react";
 import Link from "next/link";
 import { RegistrationDeadline } from "./constants/data";
 
@@ -27,16 +27,21 @@ export default function HomePage() {
           </div>
 
           <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
-            Master the Digital World <br />
+            Learn the Basics. Unlock Digital Opportunities. <br />
             <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-indigo-600">
-              with AI & Technology
+              BCC (Season 8)
             </span>
           </h1>
 
           <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            Join the <strong>Basic Computer Course (Season 8)</strong> by JnU IT
-            Society. Equip yourself with essential skills for the 4th Industrial
-            Revolution. Open for Students, Alumni, and Professionals.
+            Develop practical computer skills needed for education, career, and
+            daily tasks. This course covers core digital knowledge for beginners
+            and non-technical learners.
+            <strong>
+              By JnU IT Society | Open for Students, Alumni, and Professionals.
+            </strong>{" "}
+            Equip yourself with essential skills for the 4th Industrial
+            Revolution.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
@@ -62,53 +67,47 @@ export default function HomePage() {
           </div>
 
           <div className="mt-5 text-sm text-rose-500 bg-red-200 px-4 py-2 outline-1 outline-red-300 rounded-full inline-block font-medium animate-pulse">
-  <span>New member and ODDO workshop registration is now closed!!  </span>
-</div>
-
+            <span>
+              New member and ODDO workshop registration is now closed!!{" "}
+            </span>
+          </div>
         </div>
       </section>
 
       {/* --- Features Grid --- */}
-      <section className="py-20 px-6 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-slate-900">
-              Why Join This Course?
-            </h2>
-            <p className="text-slate-500 mt-2">
-              Comprehensive learning designed for your career growth.
-            </p>
-          </div>
+     <section className="py-20 px-6 bg-white">
+  <div className="max-w-6xl mx-auto">
+    <div className="text-center mb-12">
+      <h2 className="text-3xl font-bold text-slate-900">
+        Why Join This Course?
+      </h2>
+      <p className="text-slate-500 mt-2">
+        Beginner-friendly training designed to build your digital confidence.
+      </p>
+    </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <FeatureCard
-              icon={<Cpu className="h-8 w-8 text-indigo-500" />}
-              title="AI Integration"
-              desc="Learn how to use modern AI tools to boost your productivity 10x faster."
-            />
-            <FeatureCard
-              icon={<BookOpen className="h-8 w-8 text-blue-500" />}
-              title="Practical Skills"
-              desc="Hands-on training on MS Office, Google Workspace, and essential computer basics."
-            />
-            <FeatureCard
-              icon={<Trophy className="h-8 w-8 text-yellow-500" />}
-              title="Certification"
-              desc="Receive a prestigious certificate from JnUITS upon successful completion."
-            />
-          </div>
-        </div>
-      </section>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <FeatureCard
+        icon={<Monitor className="h-8 w-8 text-indigo-500" />}
+        title="Computer Fundamentals"
+        desc="Understand how computers work, learn basic operations, file management, and essential system skills."
+      />
+      <FeatureCard
+        icon={<BookOpen className="h-8 w-8 text-blue-500" />}
+        title="Essential Software Skills"
+        desc="Hands-on training in MS Word, Excel, PowerPoint, internet browsing, email, and online tools."
+      />
+      <FeatureCard
+        icon={<Trophy className="h-8 w-8 text-yellow-500" />}
+        title="Certificate of Completion"
+        desc="Receive an official certificate from JnU IT Society after successfully finishing the course."
+      />
+    </div>
+  </div>
+</section>
 
-      {/* --- Details Strip --- */}
-      {/* <section className="py-12 bg-slate-900 text-white">
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          <StatItem icon={<Users />} value="500+" label="Students Trained" />
-          <StatItem icon={<Calendar />} value="2 Days" label="Weekly Classes" />
-          <StatItem icon={<Cpu />} value="Online" label="Class Platform" />
-          <StatItem icon={<Trophy />} value="S-08" label="Current Season" />
-        </div>
-      </section> */}
+
+
 
       {/* --- Footer --- */}
       <footer className="py-8 bg-slate-950 text-slate-400 text-center text-sm">

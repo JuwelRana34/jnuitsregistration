@@ -125,20 +125,9 @@ export default function BccDescription() {
                   <span className="text-gray-700">General (Others)</span>
                   <span className="font-bold text-gray-900">1000 BDT</span>
                 </div>
-                <div className="flex justify-between items-center border-b pb-2 bg-yellow-50 p-2 rounded">
-                  <div className="flex flex-col">
-                    <span className="text-gray-900 font-medium">
-                      JnUITS General Members
-                    </span>
-                    <span className="text-xs text-yellow-700">
-                      *Collect Coupon From Messenger
-                    </span>
-                  </div>
-                  <span className="font-bold text-green-700">200 BDT</span>
-                </div>
               </div>
 
-              <h3 className="font-bold text-gray-900 pt-2 border-t">
+              <h3 className="font-bold text-gray-900 ">
                 Payment Methods
               </h3>
 

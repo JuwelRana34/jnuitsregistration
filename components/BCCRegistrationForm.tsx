@@ -499,7 +499,7 @@ export default function BCCRegistrationForm() {
                       // ✅ Fix: Type casting
                       name={skill.id as keyof z.infer<typeof BccFormSchema>}
                       render={({ field }) => (
-                        <FormItem className="bg-white p-3 border rounded shadow-sm">
+                        <FormItem className="bg-white p-3  rounded">
                           <FormLabel className="font-medium">
                             {skill.label}
                           </FormLabel>

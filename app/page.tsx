@@ -1,83 +1,48 @@
 import { EventCard } from "@/components/EventsCard";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, BookOpen, Monitor, Trophy } from "lucide-react";
-import Link from "next/link";
+import { BookOpen, Monitor, Trophy } from "lucide-react";
 import { RegistrationDeadline } from "./constants/data";
+import { AuroraText } from "@/components/ui/aurora-text";
 
 export default function HomePage() {
+  const COURSES = [
+    {
+      id: 1,
+      title: "Basic Computer Course",
+      season: "Season-8",
+      description: "Master MS Office, Windows, and Essential Digital Skills.",
+      image: "/BCC.png",
+      location: "JnU IT Society, Dhaka",
+      link: "/bcc",
+      badge: "Live",
+      deadline: RegistrationDeadline,
+    },
+    {
+      id: 2,
+      title: "Touch Typing",
+      season: "course 1.0",
+      description:
+        "Master the Keyboard. The ultimate guide to speed typing without looking at the keys.",
+      image: null,
+      location: "JnU IT Society, Dhaka",
+      link: "/touch-typing",
+      badge: "Comming Soon",
+      deadline: RegistrationDeadline,
+    },
+  ];
   return (
     <div className="min-h-screen bg-slate-50 font-sans selection:bg-blue-100">
       {/* --- Hero Section --- */}
-      <section className="relative pt-20 pb-0 px-6 overflow-hidden">
-        {/* Background Gradients */}
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-200 h-125 bg-blue-200/50 rounded-full blur-[100px] -z-10" />
-
-        <div className="max-w-4xl mx-auto text-center space-y-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-100 text-blue-600 text-sm font-medium">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-            </span>
-            BCC Registration Open until{" "}
-            {new Date(RegistrationDeadline).toLocaleDateString("en-US", {
-              month: "long",
-              day: "numeric",
-              year: "numeric",
-            })}
-          </div>
-
-          <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
-            Learn the Basics. Unlock Digital Opportunities. <br />
-            <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-indigo-600">
-              BCC (Season 8)
-            </span>
-          </h1>
-
-          <p className="text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
-            Develop practical computer skills needed for education, career, and
-            daily tasks. This course covers core digital knowledge for beginners
-            and non-technical learners.
-            <strong>
-              By JnU IT Society | Open for Students, Alumni, and Professionals.
-            </strong>{" "}
-            Equip yourself with essential skills for the 4th Industrial
-            Revolution.
-          </p>
-
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-            {/* 🔥 MAIN CTA BUTTON LINKING TO FORM 🔥 */}
-            <Link href="/bcc">
-              <Button
-                size="lg"
-                className="h-12 px-8 text-lg rounded-full bg-blue-600 hover:bg-blue-700 shadow-lg shadow-blue-200 transition-all hover:scale-105"
-              >
-                Register Now <ArrowRight className="ml-2 h-5 w-5" />
-              </Button>
-            </Link>
-
-            <Link href="https://join.jnuits.org.bd/bcc" target="_blank">
-              <Button
-                size="lg"
-                variant="ghost"
-                className="h-12 px-8 text-lg rounded-full"
-              >
-                Learn More
-              </Button>
-            </Link>
-          </div>
-
-          <div className="mt-5 text-sm text-rose-500 bg-red-200 px-4 py-2 outline-1 outline-red-300 rounded-full inline-block font-medium animate-pulse">
-            <span>
-              New member and ODDO workshop registration is now closed!!{" "}
-            </span>
-          </div>
-        </div>
-      </section>
-
+        <h1 className="text-4xl  font-bold text-center text-slate-700 py-8">
+         <AuroraText> JnU IT Society •</AuroraText> Our Courses 
+        </h1>
       {/* EventCard */}
 
-      <EventCard />
+      <div className=" md:flex justify-center items-center gap-4 p-3 pb-5 md:p-0 md:pb-0">
+        {COURSES.map((course) => (
+          <EventCard key={course.id} course={course} />
+        ))}
+      </div>
 
       {/* --- Features Grid --- */}
       <section className="py-20 px-6 bg-white">

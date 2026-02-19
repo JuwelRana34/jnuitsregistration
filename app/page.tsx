@@ -1,6 +1,7 @@
+import { EventCard } from "@/components/EventsCard";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowRight, BookOpen, Cpu, Monitor, Trophy } from "lucide-react";
+import { ArrowRight, BookOpen, Monitor, Trophy } from "lucide-react";
 import Link from "next/link";
 import { RegistrationDeadline } from "./constants/data";
 
@@ -8,7 +9,7 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-slate-50 font-sans selection:bg-blue-100">
       {/* --- Hero Section --- */}
-      <section className="relative pt-20 pb-32 px-6 overflow-hidden">
+      <section className="relative pt-20 pb-0 px-6 overflow-hidden">
         {/* Background Gradients */}
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-200 h-125 bg-blue-200/50 rounded-full blur-[100px] -z-10" />
 
@@ -74,40 +75,42 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* EventCard */}
+
+      <EventCard />
+
       {/* --- Features Grid --- */}
-     <section className="py-20 px-6 bg-white">
-  <div className="max-w-6xl mx-auto">
-    <div className="text-center mb-12">
-      <h2 className="text-3xl font-bold text-slate-900">
-        Why Join This Course?
-      </h2>
-      <p className="text-slate-500 mt-2">
-        Beginner-friendly training designed to build your digital confidence.
-      </p>
-    </div>
+      <section className="py-20 px-6 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-slate-900">
+              Why Join This Course?
+            </h2>
+            <p className="text-slate-500 mt-2">
+              Beginner-friendly training designed to build your digital
+              confidence.
+            </p>
+          </div>
 
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <FeatureCard
-        icon={<Monitor className="h-8 w-8 text-indigo-500" />}
-        title="Computer Fundamentals"
-        desc="Understand how computers work, learn basic operations, file management, and essential system skills."
-      />
-      <FeatureCard
-        icon={<BookOpen className="h-8 w-8 text-blue-500" />}
-        title="Essential Software Skills"
-        desc="Hands-on training in MS Word, Excel, PowerPoint, internet browsing, email, and online tools."
-      />
-      <FeatureCard
-        icon={<Trophy className="h-8 w-8 text-yellow-500" />}
-        title="Certificate of Completion"
-        desc="Receive an official certificate from JnU IT Society after successfully finishing the course."
-      />
-    </div>
-  </div>
-</section>
-
-
-
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <FeatureCard
+              icon={<Monitor className="h-8 w-8 text-indigo-500" />}
+              title="Computer Fundamentals"
+              desc="Understand how computers work, learn basic operations, file management, and essential system skills."
+            />
+            <FeatureCard
+              icon={<BookOpen className="h-8 w-8 text-blue-500" />}
+              title="Essential Software Skills"
+              desc="Hands-on training in MS Word, Excel, PowerPoint, internet browsing, email, and online tools."
+            />
+            <FeatureCard
+              icon={<Trophy className="h-8 w-8 text-yellow-500" />}
+              title="Certificate of Completion"
+              desc="Receive an official certificate from JnU IT Society after successfully finishing the course."
+            />
+          </div>
+        </div>
+      </section>
 
       {/* --- Footer --- */}
       <footer className="py-8 bg-slate-950 text-slate-400 text-center text-sm">
@@ -141,25 +144,5 @@ function FeatureCard({
         <p className="text-slate-600 leading-relaxed">{desc}</p>
       </CardContent>
     </Card>
-  );
-}
-
-function StatItem({
-  icon,
-  value,
-  label,
-}: {
-  icon: React.ReactNode;
-  value: string;
-  label: string;
-}) {
-  return (
-    <div className="flex flex-col items-center space-y-2">
-      <div className="opacity-50 mb-1">{icon}</div>
-      <div className="text-3xl font-bold">{value}</div>
-      <div className="text-slate-400 text-sm uppercase tracking-wider">
-        {label}
-      </div>
-    </div>
   );
 }

@@ -25,21 +25,21 @@ export function EventCard() {
         <CardHeader>
           <div className="flex items-center justify-between">
             <CardTitle className="text-xl font-bold">
-              BCC <AuroraText>Season-8</AuroraText>{" "}
+              Basic Computer Course <AuroraText>Season-8</AuroraText>{" "}
             </CardTitle>
             <span className="bg-green-100 text-green-500 rounded-full px-2 py-1 text-xs animate-pulse border border-blue-300 font-medium">
               Live
             </span>
           </div>
           <CardDescription>
-            The future of AI and Decentralization
+            Master MS Office, Windows, and Essential Digital Skills.
           </CardDescription>
         </CardHeader>
 
         <CardContent>
           <div className="flex flex-col gap-4">
             {/* Event Image/Banner */}
-            <div className="relative h-44 w-full overflow-hidden rounded-xl bg-linear-to-br from-indigo-600 via-purple-600 to-pink-500">
+            <div className="relative h-44 w-full overflow-hidden rounded bg-linear-to-br from-indigo-600 via-purple-600 to-pink-500">
               <div className="absolute inset-0 flex items-center justify-center opacity-80">
                 <Users className="h-24 w-24 text-white" />
                 <Image

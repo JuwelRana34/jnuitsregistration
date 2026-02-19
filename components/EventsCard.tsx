@@ -11,6 +11,7 @@ import { Calendar, MapPin, Users } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
+import { AnimatedGradientText } from "./ui/animated-gradient-text";
 import { AuroraText } from "./ui/aurora-text";
 import { BorderBeam } from "./ui/border-beam";
 import { ShimmerButton } from "./ui/shimmer-button";
@@ -34,11 +35,13 @@ interface EventCardProps {
 
 export function EventCard({ course }: EventCardProps) {
   const formattedDate = new Date(course.deadline).toLocaleDateString("en-US", {
+    timeZone: "Asia/Dhaka",
     month: "long",
     day: "numeric",
     year: "numeric",
   });
   const formattedTime = new Date(course.deadline).toLocaleTimeString("en-US", {
+    timeZone: "Asia/Dhaka",
     hour: "2-digit",
     minute: "2-digit",
   });
@@ -100,9 +103,10 @@ export function EventCard({ course }: EventCardProps) {
             <div className="flex items-center gap-2 text-xs font-medium text-slate-600">
               <Calendar className="size-3.5 text-primary" />
               {course.id === 1 ? (
-                <span>
-                  {formattedDate} • {formattedTime}
-                </span>
+                <AnimatedGradientText>
+                  {" "}
+                  Deadline: {formattedDate} • {formattedTime}{" "}
+                </AnimatedGradientText>
               ) : (
                 <p>To be announced soon</p>
               )}
@@ -143,7 +147,7 @@ export function EventCard({ course }: EventCardProps) {
         delay={4}
         size={300}
         borderWidth={2}
-        className={`from-transparent ${ course.id === 1 ? "via-green-500" : "via-fuchsia-500"} to-transparent`}
+        className={`from-transparent ${course.id === 1 ? "via-green-500" : "via-fuchsia-500"} to-transparent`}
       />
     </Card>
   );

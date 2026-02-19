@@ -1,8 +1,8 @@
 import { EventCard } from "@/components/EventsCard";
+import { AuroraText } from "@/components/ui/aurora-text";
 import { Card, CardContent } from "@/components/ui/card";
 import { BookOpen, Monitor, Trophy } from "lucide-react";
 import { RegistrationDeadline } from "./constants/data";
-import { AuroraText } from "@/components/ui/aurora-text";
 
 export default function HomePage() {
   const COURSES = [
@@ -33,9 +33,9 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-slate-50 font-sans selection:bg-blue-100">
       {/* --- Hero Section --- */}
-        <h1 className="text-4xl  font-bold text-center text-slate-700 py-8">
-         <AuroraText> JnU IT Society •</AuroraText> Our Courses 
-        </h1>
+      <h1 className="text-4xl  font-bold text-center text-slate-700 py-8">
+        <AuroraText> JnU IT Society •</AuroraText> Our Courses
+      </h1>
       {/* EventCard */}
 
       <div className=" md:flex justify-center items-center gap-4 p-3 pb-5 md:p-0 md:pb-0">

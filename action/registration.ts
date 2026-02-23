@@ -344,6 +344,7 @@ export async function BccRegistration(data: z.infer<typeof BccFormSchema>) {
       await transporter.sendMail(mailOptions);
     }
 
+    revalidatePath("/");
     return { success: true };
   } catch (error) {
     console.error("Server Action Error:", error);

@@ -4,6 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { BookOpen, Monitor, Trophy } from "lucide-react";
 import { RegistrationDeadline } from "./constants/data";
 
+export const revalidate =86000;
+
 export default function HomePage() {
   const COURSES = [
     {

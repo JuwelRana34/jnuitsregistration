@@ -330,8 +330,7 @@ export async function couponVerify(couponCode: string) {
     });
 
     const rows = existingData.data.values || [];
-    // ১. আগে চেক করি কুপনটি ইতিমধ্যে ব্যবহার হয়েছে কিনা (Used Check)
-    // আমরা find ব্যবহার করছি যাতে লুপের মতো কাজ করে এবং ম্যাচ পেলে থামে
+
     const isAlreadyUsed = rows.find((row) => row[16] === couponCode);
 
     if (isAlreadyUsed) {
@@ -341,8 +340,6 @@ export async function couponVerify(couponCode: string) {
       };
     }
 
-    // ২. যদি ব্যবহার না হয়ে থাকে, তাহলে চেক করি এটি ভ্যালিড কুপন কিনা (Validity Check)
-    // এটি লুপের বাইরে হতে হবে
     if (validCoupons[couponCode] !== undefined) {
       return {
         isValid: true,
@@ -350,7 +347,6 @@ export async function couponVerify(couponCode: string) {
       };
     }
 
-    // ৩. যদি ভ্যালিড লিস্টেও না থাকে
     return {
       isValid: false,
       discount: "Invalid Coupon Code",

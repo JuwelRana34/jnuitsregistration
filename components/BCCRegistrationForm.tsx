@@ -54,6 +54,10 @@ export default function BCCRegistrationForm() {
   const [paymentPreview, setPaymentPreview] = useState<string | null>(null);
   const [paymentFile, setPaymentFile] = useState<File | null>(null);
   const [isPending, couponTransition] = useTransition();
+  
+  // ✅ Fix: State name typo corrected and type added
+  const [discountAmount, setDiscountAmount] = useState<number>(0);
+
   // --- Form Initialization ---
   const form = useForm<z.infer<typeof BccFormSchema>>({
     resolver: zodResolver(BccFormSchema),
@@ -97,26 +101,37 @@ export default function BCCRegistrationForm() {
     name: "category",
   });
 
+  // ✅ Fix: Fee Calculation logic using correct state name
   let fee = 500;
   if (selectedCategory === "JnU Student") {
-    fee = couponVerified ? 200 : 500;
+    fee = couponVerified ? discountAmount : 500;
   } else if (selectedCategory === "others") {
     fee = 1000;
   }
 
-  // --- Handlers ---
+  // --- Handlers (Fixed Coupon Verify) ---
   const handleCouponVerify = async () => {
-    couponTransition(async () => {
-      // ১. সার্ভার অ্যাকশন কল
-      const res = await couponVerify(couponInput);
+    if (!couponInput) return;
 
-      // ২. রেসপন্স চেক করা
-      if (res && res.isValid) {
-        setCouponVerified(true);
-        toast.success(`Coupon Applied! Fee is now ${res.discount} BDT`);
-      } else {
+    couponTransition(async () => {
+      try {
+        const res = await couponVerify(couponInput);
+
+        if (res && res.isValid) {
+          setCouponVerified(true);
+          setDiscountAmount(Number(res.discount) || 0);
+          toast.success(`Coupon Applied! Fee is now ${res.discount} BDT`);
+        } else {
+          setCouponVerified(false);
+          setDiscountAmount(0);
+          
+          const errorMsg = typeof res?.discount === 'string' ? res.discount : "Invalid Coupon Code";
+          toast.error(errorMsg);
+        }
+      } catch {
         setCouponVerified(false);
-        toast.error(`${res?.discount || "Invalid Coupon Code"}`);
+        setDiscountAmount(0);
+        toast.error("Something went wrong verifying coupon");
       }
     });
   };
@@ -145,7 +160,7 @@ export default function BCCRegistrationForm() {
         paymentScreenshot: paymentRes.url,
         paymentScreenshotFileId: paymentRes.fileId,
         paidAmount: fee,
-        couponCode: couponInput,
+        couponCode: couponVerified ? couponInput : "", // Only send coupon if verified
       };
 
       // ৪. সার্ভার অ্যাকশন কল
@@ -165,6 +180,7 @@ export default function BCCRegistrationForm() {
       setPaymentPreview(null);
       setCouponVerified(false);
       setCouponInput("");
+      setDiscountAmount(0);
 
       toast.success("Registration Submitted Successfully!", {
         description: "Check your email for confirmation.",
@@ -181,16 +197,8 @@ export default function BCCRegistrationForm() {
 
   // --- Lists ---
   const batches = [
-    "11th",
-    "12th",
-    "13th",
-    "14th",
-    "15th",
-    "16th",
-    "17th",
-    "18th",
-    "19th",
-    "20th",
+    "11th", "12th", "13th", "14th", "15th", 
+    "16th", "17th", "18th", "19th", "20th",
   ];
   const skillOptions = ["No Experience", "Basic", "Intermediate", "Proficient"];
 
@@ -235,6 +243,7 @@ export default function BCCRegistrationForm() {
                             // Reset coupon logic here
                             setCouponVerified(false);
                             setCouponInput("");
+                            setDiscountAmount(0);
                           }}
                           defaultValue={field.value}
                           className="grid grid-cols-1 md:grid-cols-3 gap-4"
@@ -278,11 +287,9 @@ export default function BCCRegistrationForm() {
                     <Button
                       type="button"
                       onClick={handleCouponVerify}
-                      // isPending থাকলে বাটন ডিজেবল হবে
-                      disabled={couponVerified || isPending}
+                      disabled={couponVerified || isPending || !couponInput}
                       variant={couponVerified ? "secondary" : "default"}
                     >
-                      {/* লোডিং এর সময় স্পিনার দেখাবে */}
                       {isPending ? (
                         <Loader2 className="w-4 h-4 mr-1 animate-spin" />
                       ) : couponVerified ? (
@@ -480,7 +487,7 @@ export default function BCCRegistrationForm() {
                 </div>
               )}
 
-              {/* --- Section 4: Skills Assessment (Fixed Types) --- */}
+              {/* --- Section 4: Skills Assessment --- */}
               <div className="space-y-4">
                 <h3 className="text-lg font-semibold border-b pb-2">
                   Tell us about your Skills{" "}
@@ -496,7 +503,6 @@ export default function BCCRegistrationForm() {
                     <FormField
                       key={skill.id}
                       control={form.control}
-                      // ✅ Fix: Type casting
                       name={skill.id as keyof z.infer<typeof BccFormSchema>}
                       render={({ field }) => (
                         <FormItem className="bg-white p-3  rounded">
@@ -505,7 +511,6 @@ export default function BCCRegistrationForm() {
                           </FormLabel>
                           <Select
                             onValueChange={field.onChange}
-                            // ✅ Fix: Controlled value instead of defaultValue
                             value={field.value as string}
                           >
                             <FormControl>
@@ -528,7 +533,7 @@ export default function BCCRegistrationForm() {
                 </div>
               </div>
 
-              {/* --- Section 6: Payment Upload (Manual State) --- */}
+              {/* --- Section 6: Payment Upload --- */}
               <div className="space-y-4">
                 <FormField
                   control={form.control}
@@ -574,7 +579,6 @@ export default function BCCRegistrationForm() {
                       onClear={handlePaymentClear}
                     />
                   </FormControl>
-                  {/* ম্যানুয়াল এরর হ্যান্ডলিং চাইলে এখানে কাস্টম মেসেজ দেখাতে পারেন */}
                 </FormItem>
               </div>
 
@@ -607,7 +611,6 @@ export default function BCCRegistrationForm() {
                 className="w-full relative overflow-hidden bg-blue-500 hover:bg-blue-600 transition-all"
                 disabled={loading || closeRegistration}
               >
-                {/* ✅ Fix: Valid Tailwind Gradient */}
                 <div className="absolute inset-0 -translate-x-full animate-shimmer pointer-events-none">
                   <div className="h-full w-48 bg-linear-to-r from-transparent via-blue-300/30 to-transparent -skew-x-45 blur-[2px]" />
                 </div>

@@ -118,7 +118,7 @@ export const BccFormSchema = z.object({
   gender: z.enum(["Male", "Female", "Other"]),
   phoneNumber: z.string().min(11, "Valid phone number required."),
   whatsappNumber: z.string().min(11, "Valid WhatsApp number required."),
-  facebookLink: z.string().url("Please enter a valid Facebook profile URL."),
+  facebookLink: z.string().optional(),
 
   // Academic Info (Conditional logic applied in UI, but schema allows optional for 'others')
   studentId: z.string().optional(),

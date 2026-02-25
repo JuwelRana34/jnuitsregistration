@@ -396,7 +396,7 @@ export default function BCCRegistrationForm() {
                 name="facebookLink"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel className="label-required">
+                    <FormLabel>
                       Facebook Profile Link
                     </FormLabel>
                     <FormControl>

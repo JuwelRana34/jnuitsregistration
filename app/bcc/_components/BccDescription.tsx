@@ -110,7 +110,7 @@ export default function BccDescription() {
               <CreditCard className="h-5 w-5 text-green-600" />
               <span className="font-semibold text-gray-800">
                 Registration Fees & Payment
-              </span>
+              </span> 
             </div>
           </AccordionTrigger>
           <AccordionContent className="px-4 pb-4">

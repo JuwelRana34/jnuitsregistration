@@ -569,7 +569,7 @@ export default function BCCRegistrationForm() {
                     Payment Screenshot
                   </FormLabel>
                   <FormDescription>
-                    Please pay {fee} BDT and upload the screenshot.
+                    Please pay {fee} BDT to <span className=" italic text-blue-500 ">01740960116 Send Money(Personal) </span>  and upload the screenshot.
                   </FormDescription>
                   <FormControl>
                     <FileUploadField

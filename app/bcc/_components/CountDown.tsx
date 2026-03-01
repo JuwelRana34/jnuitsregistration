@@ -1,8 +1,13 @@
 "use client";
 
-import FlipClockCountdown from "@leenguyen/react-flip-clock-countdown";
-import "@leenguyen/react-flip-clock-countdown/dist/index.css";
+import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
+import "@leenguyen/react-flip-clock-countdown/dist/index.css";
+
+const FlipClockCountdown = dynamic(
+  () => import("@leenguyen/react-flip-clock-countdown"),
+  { ssr: false }
+);
 
 export default function Countdown({
   date,
@@ -29,45 +34,31 @@ export default function Countdown({
         setDigitSize({ width: 50, height: 70, fontSize: 32 });
       }
     };
-
-    updateSize(); // initial check
+    updateSize();
     window.addEventListener("resize", updateSize);
     return () => window.removeEventListener("resize", updateSize);
   }, []);
 
   return (
-    <div className="max-w-xl mx-auto my-5  bg-white rounded-xl  border border-gray-200 overflow-hidden transition ">
-      {/* Header */}
+    <div className="max-w-xl mx-auto my-5 bg-white rounded-xl border border-gray-200 overflow-hidden transition">
       <div className="bg-linear-to-r from-blue-600 to-indigo-600 text-white py-4 text-center">
         <h2 className="text-xl font-semibold tracking-wide capitalize">{examName}</h2>
       </div>
-
-      {/* Countdown Body */}
-      <div className="p-6 flex flex-col items-center justify-center  ">
-       { new Date(date) < new Date() ? "" : <h3 className="text-gray-700 font-medium mb-4 text-sm tracking-wide uppercase">
-          Time Remaining
-        </h3>} 
-
+      <div className="p-6 flex flex-col items-center justify-center">
+        {new Date(date) < new Date() ? "" : (
+          <h3 className="text-gray-700 font-medium mb-4 text-sm tracking-wide uppercase">
+            Time Remaining
+          </h3>
+        )}
         <FlipClockCountdown
           to={new Date(date).getTime()}
           labels={["Days", "Hours", "Minutes", "Seconds"]}
-          labelStyle={{
-            fontSize: 12,
-            fontWeight: 600,
-            textTransform: "uppercase",
-            color: "#4B5563",
-          }}
-          digitBlockStyle={{
-            width: digitSize.width,
-            height: digitSize.height,
-            fontSize: digitSize.fontSize,
-            fontWeight: "bold",
-            borderRadius: 5,
-          }}
+          labelStyle={{ fontSize: 12, fontWeight: 600, textTransform: "uppercase", color: "#4B5563" }}
+          digitBlockStyle={{ width: digitSize.width, height: digitSize.height, fontSize: digitSize.fontSize, fontWeight: "bold", borderRadius: 5 }}
           dividerStyle={{ color: "#4B5563", height: 1 }}
           duration={0.6}
         >
-          <h1 className=" animate-pulse capitalize text-rose-400 font-semibold text-3xl  md:text-4xl">{reslut }</h1>
+          <h1 className="animate-pulse capitalize text-rose-400 font-semibold text-3xl md:text-4xl">{reslut}</h1>
         </FlipClockCountdown>
       </div>
     </div>

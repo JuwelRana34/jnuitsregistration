@@ -19,8 +19,16 @@ import {
 } from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
-import Countdown from "./CountDown";
+// import Countdown from "./CountDown";
 
+const Countdown = dynamic(() => import("./CountDown"), {
+  ssr: false,
+  loading: () => (
+    <div className="p-4 text-center bg-gray-100 rounded">
+      Loading...
+    </div>
+  ),
+});
 const PDFViewer = dynamic(() => import("@/components/PDFViewer"), {
   ssr: false,
   loading: () => (

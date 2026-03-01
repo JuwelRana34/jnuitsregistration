@@ -313,6 +313,27 @@ export async function couponVerify(couponCode: string) {
 "B220201143": 1,
 "B230402081": 1,
 
+"ax9Klm2QpR":200,
+"zT7vNq4WxY":200,
+"bL3rTy8UiO":200,
+"mP6sDf1GhJ":200,
+"qW2eRt9YuI":200,
+"nB5vCx7ZaS":200,
+"kJ8hGf3DsA":200,
+"uY1tRe6WqZ":200,
+"pO4iUk0LmN":200,
+"rT9yUi2OpL":200,
+"vC3xZa8SdF":200,
+"wE7rTy5UiK":200,
+"dF2gHj9KlQ":200,
+"sA6zXc1VbN":200,
+"tY8uIo4PqW":200,
+"gH5jKl7ZxC":200,
+"lP0oIk3JuY":200,
+"xC9vBn2MaS":200,
+"eR4tYu6IoP":200,
+"cV1bNm8QwE":200,
+
   };
 
   if (

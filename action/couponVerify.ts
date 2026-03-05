@@ -357,6 +357,13 @@ export async function couponVerify(couponCode: string) {
 "B230202044":200,
 "B240601067":200,
 "B210502067":200,
+"taseen4620@gmail.com":400,
+"Robiulislamroxy7@gmail.com":400,
+"rizvihow@gmail.com":400,
+"anikatasninlamiya@gmail.com":400,
+"tasinrahman.sifat@gmail.com":400,
+"chaiti.chaki99@gmail.com":400,
+"mia764653@gmail.com":400,
 
   };
 

@@ -16,6 +16,7 @@ import { AuroraText } from "./ui/aurora-text";
 import { BorderBeam } from "./ui/border-beam";
 import { ShimmerButton } from "./ui/shimmer-button";
 import { Skeleton } from "./ui/skeleton";
+import { RegistrationDeadline } from "@/app/constants/data";
 
 export interface Course {
   id: number;
@@ -45,6 +46,7 @@ export function EventCard({ course }: EventCardProps) {
     hour: "2-digit",
     minute: "2-digit",
   });
+  const isClosedRegistration = new Date(RegistrationDeadline) < new Date();
 
   return (
     <Card className="relative w-full max-w-87.5 overflow-hidden transition-all hover:shadow-xl border-none shadow-md mb-5 ">
@@ -103,7 +105,7 @@ export function EventCard({ course }: EventCardProps) {
             <div className="flex items-center gap-2 text-xs font-medium text-slate-600">
               <Calendar className="size-3.5 text-primary" />
               {course.id === 1 ? (
-                <AnimatedGradientText>
+               !isClosedRegistration && <AnimatedGradientText>
                   {" "}
                   Deadline: {formattedDate} • {formattedTime}{" "}
                 </AnimatedGradientText>

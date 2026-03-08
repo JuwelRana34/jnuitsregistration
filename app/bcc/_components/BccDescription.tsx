@@ -21,6 +21,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import Countdown from "./CountDown";
 
+
 const PDFViewer = dynamic(() => import("@/components/PDFViewer"), {
   ssr: false,
   loading: () => (
@@ -29,7 +30,10 @@ const PDFViewer = dynamic(() => import("@/components/PDFViewer"), {
     </div>
   ),
 });
+
 export default function BccDescription() {
+const isClosedRegistration = new Date(RegistrationDeadline) < new Date();
+
   return (
     <div className="w-full max-w-3xl mx-auto space-y-6 p-1">
       {/* Header Section */}
@@ -273,11 +277,11 @@ export default function BccDescription() {
 
       {/* Footer / Deadline Section */}
 
-      <Countdown
+   {!isClosedRegistration && <Countdown
         date={RegistrationDeadline}
         examName="Registration Deadline"
         reslut="Registration Closed, Stay Tuned for Next Season!"
-      />
+      />}
       <div className=" w-full h-auto">
         <Image
           src={"/Bcc.png"}

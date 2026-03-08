@@ -2,15 +2,11 @@
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, Loader2 } from "lucide-react";
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import * as z from "zod";
 
-import {
-  BccFormSchema,
-  DEPARTMENTS,
-  RegistrationDeadline,
-} from "@/app/constants/data";
+import { BccFormSchema, DEPARTMENTS } from "@/app/constants/data";
 import { FileUploadField } from "./HandelUpload";
 
 import { couponVerify } from "@/action/couponVerify";
@@ -47,14 +43,13 @@ import { uploadToImageKit } from "@/lib/handelUpload";
 import { toast } from "sonner";
 
 export default function BCCRegistrationForm() {
-  const [closeRegistration, setCloseRegistration] = useState(false);
   const [loading, setLoading] = useState(false);
   const [couponVerified, setCouponVerified] = useState(false);
   const [couponInput, setCouponInput] = useState("");
   const [paymentPreview, setPaymentPreview] = useState<string | null>(null);
   const [paymentFile, setPaymentFile] = useState<File | null>(null);
   const [isPending, couponTransition] = useTransition();
-  
+
   // ✅ Fix: State name typo corrected and type added
   const [discountAmount, setDiscountAmount] = useState<number>(0);
 
@@ -124,8 +119,11 @@ export default function BCCRegistrationForm() {
         } else {
           setCouponVerified(false);
           setDiscountAmount(0);
-          
-          const errorMsg = typeof res?.discount === 'string' ? res.discount : "Invalid Coupon Code";
+
+          const errorMsg =
+            typeof res?.discount === "string"
+              ? res.discount
+              : "Invalid Coupon Code";
           toast.error(errorMsg);
         }
       } catch {
@@ -197,20 +195,28 @@ export default function BCCRegistrationForm() {
 
   // --- Lists ---
   const batches = [
-    "11th", "12th", "13th", "14th", "15th", 
-    "16th", "17th", "18th", "19th", "20th",
+    "11th",
+    "12th",
+    "13th",
+    "14th",
+    "15th",
+    "16th",
+    "17th",
+    "18th",
+    "19th",
+    "20th",
   ];
   const skillOptions = ["No Experience", "Basic", "Intermediate", "Proficient"];
 
-  useEffect(() => {
-    const isClosedRegistration = new Date(RegistrationDeadline) < new Date();
-    if (isClosedRegistration) {
-      toast.error(
-        "Registration period has ended. You can no longer register for BCC.",
-      );
-      setCloseRegistration(true);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const isClosedRegistration = new Date(RegistrationDeadline) < new Date();
+  //   if (isClosedRegistration) {
+  //     toast.error(
+  //       "Registration period has ended. You can no longer register for BCC.",
+  //     );
+  //     setCloseRegistration(true);
+  //   }
+  // }, []);
 
   return (
     <div className="min-h-screen flex justify-center items-center py-10">
@@ -396,9 +402,7 @@ export default function BCCRegistrationForm() {
                 name="facebookLink"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>
-                      Facebook Profile Link
-                    </FormLabel>
+                    <FormLabel>Facebook Profile Link</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="https://facebook.com/username"
@@ -569,7 +573,11 @@ export default function BCCRegistrationForm() {
                     Payment Screenshot
                   </FormLabel>
                   <FormDescription>
-                    Please pay {fee} BDT to <span className=" italic text-blue-500 ">01740960116 Send Money(Personal) </span>  and upload the screenshot.
+                    Please pay {fee} BDT to{" "}
+                    <span className=" italic text-blue-500 ">
+                      01740960116 Send Money(Personal){" "}
+                    </span>{" "}
+                    and upload the screenshot.
                   </FormDescription>
                   <FormControl>
                     <FileUploadField
@@ -609,7 +617,7 @@ export default function BCCRegistrationForm() {
               <Button
                 type="submit"
                 className="w-full relative overflow-hidden bg-blue-500 hover:bg-blue-600 transition-all"
-                disabled={loading || closeRegistration}
+                disabled={loading}
               >
                 <div className="absolute inset-0 -translate-x-full animate-shimmer pointer-events-none">
                   <div className="h-full w-48 bg-linear-to-r from-transparent via-blue-300/30 to-transparent -skew-x-45 blur-[2px]" />

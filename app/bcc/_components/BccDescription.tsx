@@ -277,11 +277,11 @@ const isClosedRegistration = new Date(RegistrationDeadline) < new Date();
 
       {/* Footer / Deadline Section */}
 
-   {!isClosedRegistration && <Countdown
+ <Countdown
         date={RegistrationDeadline}
         examName="Registration Deadline"
         reslut="Registration Closed, Stay Tuned for Next Season!"
-      />}
+      />
       <div className=" w-full h-auto">
         <Image
           src={"/Bcc.png"}

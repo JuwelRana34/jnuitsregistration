@@ -16,7 +16,7 @@ export default function HomePage() {
       image: "/BCC.png",
       location: "JnU IT Society, Dhaka",
       link: "/bcc",
-      badge: "Live",
+      badge: "closed",
       deadline: RegistrationDeadline,
     },
     {

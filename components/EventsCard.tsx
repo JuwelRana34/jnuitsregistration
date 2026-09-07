@@ -65,7 +65,7 @@ export function EventCard({ course }: EventCardProps) {
             {course.badge}
           </span>
         </div>
-        <CardDescription className="line-clamp-2">
+        <CardDescription className="line-clamp-4">
           {course.description}
         </CardDescription>
       </CardHeader>
@@ -104,14 +104,17 @@ export function EventCard({ course }: EventCardProps) {
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-xs font-medium text-slate-600">
               <Calendar className="size-3.5 text-primary" />
-              {course.id === 1 ? (
-               !isClosedRegistration && <AnimatedGradientText>
+              {/* {course.id === 1 ? (
+               !isClosedRegistration &&  */}
+
+               <AnimatedGradientText>
                   {" "}
                   Deadline: {formattedDate} • {formattedTime}{" "}
                 </AnimatedGradientText>
-              ) : (
+              
+              {/* ) : (
                 <p>To be announced soon</p>
-              )}
+              )} */}
             </div>
             <div className="flex items-center gap-2 text-xs font-medium text-slate-600">
               <MapPin className="size-3.5 text-primary" />

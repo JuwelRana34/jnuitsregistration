@@ -20,8 +20,8 @@ export default function HomePage() {
     //   deadline: RegistrationDeadline,
     // },
     {
-      id: 1,
-      title: " Join JnU IT Society: 2026 Recruitment ",
+      id: 2,
+      title: " Join JnU IT Society: Recruitment ",
       season: "2026",
       description:
         "Ignite your passion for technology! Join the Jagannath University IT Society (JnUITS) to connect with fellow tech enthusiasts, participate in exclusive workshops, and build real-world skills. Secure your spot and help shape the future of tech on campus.",

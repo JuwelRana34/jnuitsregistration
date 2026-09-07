@@ -125,7 +125,7 @@ export function EventCard({ course }: EventCardProps) {
       </CardContent>
 
       <CardFooter>
-        {course.id === 1 ? (
+        {course.id !== 1 ? (
           <Link href={course.link} className="w-full">
             <ShimmerButton className="w-full shadow-lg">
               <span className="flex items-center justify-center gap-2 text-sm font-bold text-white">

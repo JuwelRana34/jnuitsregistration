@@ -28,7 +28,7 @@ export default function HomePage() {
       image: null,
       location: "JnU IT Society, Dhaka",
       link: "https://forms.gle/s7Eizcv1VyM9mSL27",
-      badge: "Ongoing",
+      badge: "Live",
       deadline: RegistrationDeadline,
     },
   ];
@@ -36,7 +36,7 @@ export default function HomePage() {
     <div className="min-h-screen bg-slate-50 font-sans selection:bg-blue-100">
       {/* --- Hero Section --- */}
       <h1 className="text-4xl  font-bold text-center text-slate-700 py-8">
-        <AuroraText> JnU IT Society •</AuroraText> Our Courses
+        <AuroraText> JnU IT Society •</AuroraText> Recruitment 2026
       </h1>
       {/* EventCard */}
 

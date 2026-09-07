@@ -8,27 +8,27 @@ export const revalidate =86000;
 
 export default function HomePage() {
   const COURSES = [
+    // {
+    //   id: 1,
+    //   title: "Basic Computer Course",
+    //   season: "Season-8",
+    //   description: "Master MS Office, Windows, and Essential Digital Skills.",
+    //   image: "/BCC.png",
+    //   location: "JnU IT Society, Dhaka",
+    //   link: "/bcc",
+    //   badge: "closed",
+    //   deadline: RegistrationDeadline,
+    // },
     {
       id: 1,
-      title: "Basic Computer Course",
-      season: "Season-8",
-      description: "Master MS Office, Windows, and Essential Digital Skills.",
-      image: "/BCC.png",
-      location: "JnU IT Society, Dhaka",
-      link: "/bcc",
-      badge: "closed",
-      deadline: RegistrationDeadline,
-    },
-    {
-      id: 2,
-      title: "Touch Typing",
-      season: "course 1.0",
+      title: " Join JnU IT Society: 2026 Recruitment ",
+      season: "2026",
       description:
-        "Master the Keyboard. The ultimate guide to speed typing without looking at the keys.",
+        "Ignite your passion for technology! Join the Jagannath University IT Society (JnUITS) to connect with fellow tech enthusiasts, participate in exclusive workshops, and build real-world skills. Secure your spot and help shape the future of tech on campus.",
       image: null,
       location: "JnU IT Society, Dhaka",
-      link: "/touch-typing",
-      badge: "Comming Soon",
+      link: "https://forms.gle/s7Eizcv1VyM9mSL27",
+      badge: "Ongoing",
       deadline: RegistrationDeadline,
     },
   ];

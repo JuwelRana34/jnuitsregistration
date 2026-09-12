@@ -93,7 +93,7 @@ export function EventCard({ course }: EventCardProps) {
                 <Suspense
                   fallback={<Skeleton className="h-3 w-8 bg-white/20" />}
                 >
-                  {course.id === 2 ? <p> 0 </p> : <GetBccRegistrationCount />}
+                  {course.id === 2 ? <p>80+ </p> : <GetBccRegistrationCount />}
                 </Suspense>
                 <span className="opacity-80">attending</span>
               </div>

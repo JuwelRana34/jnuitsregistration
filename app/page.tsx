@@ -25,7 +25,7 @@ export default function HomePage() {
       season: "2026",
       description:
         "Ignite your passion for technology! Join the Jagannath University IT Society (JnUITS) to connect with fellow tech enthusiasts, participate in exclusive workshops, and build real-world skills. Secure your spot and help shape the future of tech on campus.",
-      image: null,
+      image: "/technocrat.jpeg",
       location: "JnU IT Society, Dhaka",
       link: "https://forms.gle/s7Eizcv1VyM9mSL27",
       badge: "Live",

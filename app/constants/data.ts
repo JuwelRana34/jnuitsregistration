@@ -165,7 +165,7 @@ export const BccFormSchema = z.object({
   paidAmount: z.number().optional(),
 });
 
-export const RegistrationDeadline = "2026-09-22T12:00:00Z";
+export const RegistrationDeadline = "2026-10-03T12:00:00Z";
 
 export const BccMail = (email: string, fullName: string) => {
   return {
